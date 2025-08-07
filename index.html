@@ -96,6 +96,7 @@
             font-size: 1.2rem;
             color: var(--text-dark);
             text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-svg {
@@ -144,7 +145,7 @@
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: 110vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -175,9 +176,9 @@
         }
 
         .hero-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
+            width: 187px;
+            height: 187px;
+            margin: 0 auto 1.5rem;
             animation: float 6s ease-in-out infinite;
         }
 
@@ -285,6 +286,29 @@
             margin-bottom: 3rem;
         }
 
+        /* Icon styles for track and expect sections */
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .expect-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Tracks Section */
         .tracks {
             background: var(--bg-light);
@@ -324,18 +348,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .track-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
         .track-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
@@ -369,19 +381,6 @@
 
         .expect-item {
             text-align: center;
-        }
-
-        .expect-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
         }
 
         .expect-item h3 {
@@ -455,26 +454,35 @@
         }
 
         .participant-logos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
+            align-items: center;
         }
 
         .participant-logo {
-            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            padding: 1rem;
             background: white;
             border-radius: 10px;
-            font-weight: 600;
-            color: var(--text-dark);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .participant-logo:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .participant-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            width: auto;
+            height: auto;
         }
 
         /* Footer */
@@ -531,6 +539,10 @@
             .section-title {
                 font-size: 2rem;
             }
+
+            .participant-logos {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
         }
 
         /* Scroll animations */
@@ -559,10 +571,10 @@
     <!-- Navigation -->
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="logo-nav" aria-label="Zurich AI Safety Day Home">
+            <a href="#top" class="logo-nav" aria-label="Zurich AI Safety Day Home">
                 <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
                     <title id="logo-title">Zurich AI Safety Day Logo</title>
-                    <!-- Mini version of the logo with outer connections -->
+                    <!-- Mini version of the logo WITHOUT outer connections -->
                     <circle cx="30" cy="30" r="8" fill="#3498DB"/>
                     <circle cx="30" cy="15" r="5" fill="#2980B9"/>
                     <circle cx="42" cy="22" r="5" fill="#2980B9"/>
@@ -570,20 +582,13 @@
                     <circle cx="30" cy="45" r="5" fill="#2980B9"/>
                     <circle cx="18" cy="38" r="5" fill="#2980B9"/>
                     <circle cx="18" cy="22" r="5" fill="#2980B9"/>
-                    <!-- Inner connections to center -->
+                    <!-- Inner connections to center only -->
                     <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
                     <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
                     <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
                     <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
                     <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
                     <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <!-- Outer connections between nodes -->
-                    <line x1="30" y1="15" x2="42" y2="22" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
-                    <line x1="42" y1="22" x2="42" y2="38" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
-                    <line x1="42" y1="38" x2="30" y2="45" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
-                    <line x1="30" y1="45" x2="18" y2="38" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
-                    <line x1="18" y1="38" x2="18" y2="22" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
-                    <line x1="18" y1="22" x2="30" y2="15" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
                     <!-- Zurich flag in center -->
                     <clipPath id="centerMini">
                         <circle cx="30" cy="30" r="8"/>
@@ -593,7 +598,7 @@
                     </g>
                     <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
                 </svg>
-                <span>ZAIS</span>
+                <span>ZAISD</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#tracks">Focus Tracks</a></li>
@@ -608,9 +613,9 @@
     <!-- Main content -->
     <main id="main">
         <!-- Hero Section -->
-        <section class="hero" role="banner">
+        <section id="top" class="hero" role="banner">
             <svg class="network-animation" viewBox="0 0 1200 800" aria-hidden="true">
-                <!-- Animated network background -->
+                <!-- Animated network background with more strands -->
                 <defs>
                     <filter id="glow">
                         <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -620,7 +625,7 @@
                         </feMerge>
                     </filter>
                 </defs>
-                <!-- Static animated lines for performance -->
+                <!-- Multiple animated lines for richer background -->
                 <line x1="100" y1="100" x2="300" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
                 </line>
@@ -630,7 +635,36 @@
                 <line x1="500" y1="150" x2="700" y2="300" stroke="rgba(255,255,255,0.1)" stroke-width="1">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" begin="1s" repeatCount="indefinite"/>
                 </line>
-                <!-- Static animated nodes -->
+                <line x1="200" y1="600" x2="400" y2="500" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.1;0.25;0.1" dur="4s" begin="0.3s" repeatCount="indefinite"/>
+                </line>
+                <line x1="800" y1="200" x2="1000" y2="350" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.1;0.25;0.1" dur="3.5s" begin="1.5s" repeatCount="indefinite"/>
+                </line>
+                <line x1="900" y1="600" x2="1100" y2="550" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.1;0.2;0.1" dur="4s" begin="2s" repeatCount="indefinite"/>
+                </line>
+                <line x1="150" y1="400" x2="350" y2="450" stroke="rgba(255,255,255,0.08)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.08;0.2;0.08" dur="3.5s" begin="0.7s" repeatCount="indefinite"/>
+                </line>
+                <!-- New lines in lower section behind buttons -->
+                <line x1="100" y1="700" x2="400" y2="650" stroke="rgba(255,255,255,0.08)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.05;0.15;0.05" dur="4s" begin="0.2s" repeatCount="indefinite"/>
+                </line>
+                <line x1="450" y1="680" x2="750" y2="700" stroke="rgba(255,255,255,0.08)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.05;0.15;0.05" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+                </line>
+                <line x1="800" y1="720" x2="1100" y2="680" stroke="rgba(255,255,255,0.08)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.05;0.12;0.05" dur="4s" begin="2.5s" repeatCount="indefinite"/>
+                </line>
+                <line x1="250" y1="750" x2="550" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.04;0.1;0.04" dur="3.8s" begin="0.8s" repeatCount="indefinite"/>
+                </line>
+                <line x1="600" y1="740" x2="900" y2="750" stroke="rgba(255,255,255,0.06)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.04;0.1;0.04" dur="4.2s" begin="1.8s" repeatCount="indefinite"/>
+                </line>
+                <!-- All nodes with matching line endpoints -->
+                <!-- Upper section nodes -->
                 <circle cx="100" cy="100" r="3" fill="rgba(255,255,255,0.3)" filter="url(#glow)">
                     <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
                 </circle>
@@ -640,11 +674,69 @@
                 <circle cx="500" cy="150" r="3" fill="rgba(255,255,255,0.3)" filter="url(#glow)">
                     <animate attributeName="r" values="3;5;3" dur="3s" begin="1s" repeatCount="indefinite"/>
                 </circle>
+                <circle cx="700" cy="300" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="200" cy="600" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="4s" begin="0.3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="400" cy="500" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="4s" begin="0.8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="800" cy="200" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="3.5s" begin="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="1000" cy="350" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="3.5s" begin="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="900" cy="600" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="4s" begin="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="1100" cy="550" r="2" fill="rgba(255,255,255,0.2)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;4;2" dur="4s" begin="2.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="150" cy="400" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="3.5s" begin="0.7s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="350" cy="450" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="3.5s" begin="1s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Lower section nodes -->
+                <circle cx="100" cy="700" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="4s" begin="0.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="400" cy="650" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="450" cy="680" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="750" cy="700" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="3.5s" begin="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="800" cy="720" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="4s" begin="2.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="1100" cy="680" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="4s" begin="2.8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="250" cy="750" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="3.8s" begin="0.8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="550" cy="720" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="3.8s" begin="1.1s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="600" cy="740" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="4.2s" begin="1.8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="900" cy="750" r="2" fill="rgba(255,255,255,0.15)" filter="url(#glow)">
+                    <animate attributeName="r" values="2;3;2" dur="4.2s" begin="2.1s" repeatCount="indefinite"/>
+                </circle>
             </svg>
             <div class="hero-content">
                 <svg class="hero-logo" viewBox="0 0 120 120" role="img" aria-labelledby="hero-logo-title">
                     <title id="hero-logo-title">Zurich AI Safety Day Network Logo</title>
-                    <!-- Full logo with outer connections -->
+                    <!-- Full logo WITHOUT outer connections, slightly bigger -->
                     <circle cx="60" cy="60" r="10" fill="white" stroke="white" stroke-width="1"/>
                     <circle cx="60" cy="35" r="6" fill="rgba(255,255,255,0.9)"/>
                     <circle cx="80" cy="47" r="6" fill="rgba(255,255,255,0.9)"/>
@@ -652,20 +744,13 @@
                     <circle cx="60" cy="85" r="6" fill="rgba(255,255,255,0.9)"/>
                     <circle cx="40" cy="73" r="6" fill="rgba(255,255,255,0.9)"/>
                     <circle cx="40" cy="47" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <!-- Inner connections -->
+                    <!-- Inner connections only -->
                     <line x1="60" y1="60" x2="60" y2="35" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
                     <line x1="60" y1="60" x2="80" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
                     <line x1="60" y1="60" x2="80" y2="73" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
                     <line x1="60" y1="60" x2="60" y2="85" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
                     <line x1="60" y1="60" x2="40" y2="73" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
                     <line x1="60" y1="60" x2="40" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <!-- Outer connections -->
-                    <line x1="60" y1="35" x2="80" y2="47" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <line x1="80" y1="47" x2="80" y2="73" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <line x1="80" y1="73" x2="60" y2="85" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <line x1="60" y1="85" x2="40" y2="73" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <line x1="40" y1="73" x2="40" y2="47" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <line x1="40" y1="47" x2="60" y2="35" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
                     <clipPath id="centerCircle">
                         <circle cx="60" cy="60" r="10"/>
                     </clipPath>
@@ -691,17 +776,49 @@
                 <p class="section-subtitle">Deep dive into the areas that matter most to you</p>
                 <div class="tracks-grid">
                     <article class="track-card">
-                        <div class="track-icon" aria-hidden="true">🔬</div>
+                        <div class="icon-wrapper" aria-hidden="true">
+                            <svg width="30" height="30" viewBox="0 0 30 30" fill="white">
+                                <!-- Lock with circuit pattern -->
+                                <path d="M9 13 L9 10 C9 6, 11 3, 15 3 C19 3, 21 6, 21 10 L21 13" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <rect x="7" y="13" width="16" height="14" rx="2" fill="none" stroke="white" stroke-width="2"/>
+                                <!-- Circuit pattern inside lock -->
+                                <circle cx="15" cy="18" r="1.5" fill="white"/>
+                                <circle cx="11" cy="22" r="1" fill="white"/>
+                                <circle cx="19" cy="22" r="1" fill="white"/>
+                                <line x1="15" y1="18" x2="11" y2="22" stroke="white" stroke-width="1" opacity="0.8"/>
+                                <line x1="15" y1="18" x2="19" y2="22" stroke="white" stroke-width="1" opacity="0.8"/>
+                                <line x1="11" y1="22" x2="19" y2="22" stroke="white" stroke-width="1" opacity="0.6"/>
+                            </svg>
+                        </div>
                         <h3>Technical AI Safety</h3>
                         <p>Explore cutting-edge research in interpretability, scalable oversight, and alignment benchmarks. Connect with researchers pushing the boundaries of AI safety.</p>
                     </article>
                     <article class="track-card">
-                        <div class="track-icon" aria-hidden="true">🏛️</div>
+                        <div class="icon-wrapper" aria-hidden="true">
+                            <svg width="30" height="30" viewBox="0 0 30 30" fill="white">
+                                <!-- Shield with checkmark -->
+                                <path d="M15 2 L25 7 L25 16 C25 22 15 27 15 27 C15 27 5 22 5 16 L5 7 Z" stroke="white" stroke-width="1.5" fill="none"/>
+                                <path d="M10 15 L13 18 L20 11" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
                         <h3>AI Governance</h3>
                         <p>Navigate the policy landscape, regulatory frameworks, and governance mechanisms essential for responsible AI deployment at scale.</p>
                     </article>
                     <article class="track-card">
-                        <div class="track-icon" aria-hidden="true">🚀</div>
+                        <div class="icon-wrapper" aria-hidden="true">
+                            <svg width="30" height="30" viewBox="0 0 30 30" fill="white">
+                                <!-- Building blocks pyramid -->
+                                <!-- Bottom row - 3 blocks -->
+                                <rect x="5" y="20" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <rect x="12" y="20" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <rect x="19" y="20" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <!-- Middle row - 2 blocks -->
+                                <rect x="8.5" y="13" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <rect x="15.5" y="13" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <!-- Top block -->
+                                <rect x="12" y="6" width="6" height="6" fill="white" stroke="white" stroke-width="1.5"/>
+                            </svg>
+                        </div>
                         <h3>Field Building & Careers</h3>
                         <p>Discover success stories, funding pathways, and community health initiatives. Find your path in the growing AI safety ecosystem.</p>
                     </article>
@@ -716,22 +833,89 @@
                 <p class="section-subtitle">A full day focused on AI safety</p>
                 <div class="expect-grid">
                     <article class="expect-item">
-                        <div class="expect-icon" aria-hidden="true">🎤</div>
+                        <div class="expect-icon-wrapper" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                                <!-- Podium/stage icon -->
+                                <rect x="8" y="15" width="24" height="20" rx="2" fill="none" stroke="white" stroke-width="2"/>
+                                <circle cx="20" cy="10" r="3" fill="white"/>
+                                <path d="M15 25 L25 25" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M12 30 L28 30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
                         <h3>Keynotes & Sessions</h3>
                         <p>Engage with thought leaders across technical research, governance, and field-building tracks. Sessions designed for all expertise levels.</p>
                     </article>
                     <article class="expect-item">
-                        <div class="expect-icon" aria-hidden="true">🤝</div>
+                        <div class="expect-icon-wrapper" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                                <!-- Organization fair with 2 wider booths -->
+                                <!-- Booths (tables) -->
+                                <rect x="7" y="18" width="12" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <rect x="21" y="18" width="12" height="6" fill="none" stroke="white" stroke-width="1.5"/>
+                                <!-- People behind booths (staff) -->
+                                <circle cx="13" cy="14" r="1.5" fill="white"/>
+                                <circle cx="27" cy="14" r="1.5" fill="white"/>
+                                <!-- People in front (attendees) -->
+                                <circle cx="10" cy="28" r="1.5" fill="white"/>
+                                <circle cx="16" cy="30" r="1.5" fill="white"/>
+                                <circle cx="24" cy="30" r="1.5" fill="white"/>
+                                <circle cx="30" cy="28" r="1.5" fill="white"/>
+                                <circle cx="20" cy="32" r="1.5" fill="white"/>
+                            </svg>
+                        </div>
                         <h3>Organization Fair</h3>
                         <p>Connect with 10+ leading AI safety organizations eager to meet potential collaborators, researchers, and team members.</p>
                     </article>
                     <article class="expect-item">
-                        <div class="expect-icon" aria-hidden="true">🌐</div>
+                        <div class="expect-icon-wrapper" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                                <!-- Larger network without square frame -->
+                                <!-- Corner nodes -->
+                                <circle cx="10" cy="10" r="2.5" fill="white"/>
+                                <circle cx="30" cy="10" r="2.5" fill="white"/>
+                                <circle cx="30" cy="30" r="2.5" fill="white"/>
+                                <circle cx="10" cy="30" r="2.5" fill="white"/>
+                                <!-- Center node -->
+                                <circle cx="20" cy="20" r="3" fill="white"/>
+                                <!-- Additional nodes -->
+                                <circle cx="20" cy="8" r="2" fill="white"/>
+                                <circle cx="32" cy="20" r="2" fill="white"/>
+                                <circle cx="20" cy="32" r="2" fill="white"/>
+                                <circle cx="8" cy="20" r="2" fill="white"/>
+                                <!-- Connections -->
+                                <line x1="10" y1="10" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
+                                <line x1="30" y1="10" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
+                                <line x1="30" y1="30" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
+                                <line x1="10" y1="30" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
+                                <line x1="20" y1="8" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
+                                <line x1="32" y1="20" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
+                                <line x1="20" y1="32" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
+                                <line x1="8" y1="20" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
+                                <!-- Outer connections -->
+                                <line x1="10" y1="10" x2="30" y2="10" stroke="white" stroke-width="1" opacity="0.4"/>
+                                <line x1="30" y1="10" x2="30" y2="30" stroke="white" stroke-width="1" opacity="0.4"/>
+                                <line x1="30" y1="30" x2="10" y2="30" stroke="white" stroke-width="1" opacity="0.4"/>
+                                <line x1="10" y1="30" x2="10" y2="10" stroke="white" stroke-width="1" opacity="0.4"/>
+                            </svg>
+                        </div>
                         <h3>Structured Networking</h3>
                         <p>Participate in carefully designed activities that match you with peers, mentors, and hiring teams based on your interests.</p>
                     </article>
                     <article class="expect-item">
-                        <div class="expect-icon" aria-hidden="true">💡</div>
+                        <div class="expect-icon-wrapper" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                                <!-- Larger rectangle with circle of dots inside -->
+                                <rect x="4" y="8" width="32" height="24" rx="2" fill="none" stroke="white" stroke-width="2"/>
+                                <!-- Circle of dots -->
+                                <circle cx="20" cy="20" r="2" fill="white"/>
+                                <circle cx="20" cy="13" r="1.5" fill="white"/>
+                                <circle cx="27" cy="16.5" r="1.5" fill="white"/>
+                                <circle cx="27" cy="23.5" r="1.5" fill="white"/>
+                                <circle cx="20" cy="27" r="1.5" fill="white"/>
+                                <circle cx="13" cy="23.5" r="1.5" fill="white"/>
+                                <circle cx="13" cy="16.5" r="1.5" fill="white"/>
+                            </svg>
+                        </div>
                         <h3>Catalyst Sessions</h3>
                         <p>Join closed-door discussions that spark Swiss-led projects and partnerships, contributing to the next wave of AI safety initiatives.</p>
                     </article>
@@ -774,24 +958,56 @@
                 <h2 id="participants-title" class="section-title">Who's Participating</h2>
                 <p class="section-subtitle">Leading organizations in AI safety</p>
                 <div class="participant-logos">
-                    <div class="participant-logo">UK AISI</div>
-                    <div class="participant-logo">FAR.AI</div>
-                    <div class="participant-logo">Apollo Research</div>
-                    <div class="participant-logo">Goodfire</div>
-                    <div class="participant-logo">Palisade Research</div>
-                    <div class="participant-logo">Simon Institute</div>
-                    <div class="participant-logo">Talos Network</div>
-                    <div class="participant-logo">Arcadia Impact</div>
-                    <div class="participant-logo">Pour Demain</div>
-                    <div class="participant-logo">MATS</div>
-                    <div class="participant-logo">BlueDot Impact</div>
-                    <div class="participant-logo">Impact Academy</div>
-                    <div class="participant-logo">High Impact Professionals</div>
-                    <div class="participant-logo">SuccessIf</div>
+                    <a href="https://www.aisi.gov.uk/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/UK-AISI.svg" alt="UK AISI">
+                    </a>
+                    <a href="https://far.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/FARAI.svg" alt="FAR.AI">
+                    </a>
+                    <a href="https://apolloresearch.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Apollo.svg" alt="Apollo Research">
+                    </a>
+                    <a href="https://goodfire.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/goodfire.svg" alt="Goodfire">
+                    </a>
+                    <a href="https://palisaderesearch.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Palisade.svg" alt="Palisade Research">
+                    </a>
+                    <a href="https://simoninstitute.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/SI.svg" alt="Simon Institute">
+                    </a>
+                    <a href="https://www.talosnetwork.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Talos.svg" alt="Talos Network">
+                    </a>
+                    <a href="https://arcadiaimpact.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/arcadia.svg" alt="Arcadia Impact">
+                    </a>
+                    <a href="https://mats.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/MATS.svg" alt="MATS">
+                    </a>
+                    <a href="https://impactacademy.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Impact-Academy.svg" alt="Impact Academy">
+                    </a>
+                    <a href="https://highimpactprofessionals.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/HIP-transparent-logo.svg" alt="High Impact Professionals">
+                    </a>
+                    <a href="https://successif.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Successif_COLOUR.svg" alt="SuccessIf">
+                    </a>
                 </div>
-                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">
-                    <strong>Hosted by:</strong> BlueDot Impact & Zurich AI Safety (ZAIS)
-                </p>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="color: var(--text-light); font-size: 1.2rem; margin-bottom: 1.5rem;">
+                        Hosted by
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 3rem; align-items: center;">
+                        <a href="https://bluedot.org/" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
+                            <img src="assets/BlueDot.svg" alt="BlueDot Impact" style="height: 60px;">
+                        </a>
+                        <a href="https://zurich.aisafety.ch/" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
+                            <img src="assets/ZAIS.svg" alt="Zurich AI Safety (ZAIS)" style="height: 60px;">
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -801,10 +1017,8 @@
         <div class="footer-content">
             <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
             <div class="footer-links">
-                <a href="mailto:contact@zurichaisafety.day">Contact</a>
-                <a href="javascript:void(0)" onclick="alert('Code of Conduct coming soon')">Code of Conduct</a>
-                <a href="javascript:void(0)" onclick="alert('Privacy Policy coming soon')">Privacy Policy</a>
-                <a href="javascript:void(0)" onclick="alert('Accessibility statement coming soon')">Accessibility</a>
+                <a href="mailto:zurich@aisafety.ch">Contact</a>
+                <a href="code-of-conduct.html">Code of Conduct</a>
             </div>
         </div>
     </footer>
@@ -843,16 +1057,35 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId !== '#') {
-                    const target = document.querySelector(targetId);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
+                    if (targetId === '#top') {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
                         });
+                    } else {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
                     }
                 }
             });
         });
+
+        // Logo click to top functionality
+        const logoNav = document.querySelector('.logo-nav');
+        if (logoNav) {
+            logoNav.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
 
         // IntersectionObserver with fallback for older browsers
         if ('IntersectionObserver' in window) {
@@ -879,9 +1112,6 @@
             });
             document.body.classList.add('no-animation');
         }
-
-        // Limited network animation for performance (removed continuous creation)
-        // The static SVG animations in the HTML are sufficient
     </script>
 </body>
 </html>
