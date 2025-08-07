@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zurich AI Safety Day - September 27, 2025</title>
+    <meta name="description" content="Join 200+ researchers, engineers, and policymakers shaping the future of AI safety in Zurich. September 27, 2025 at ETH Zurich.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #3498DB;
+            --dark-blue: #2980B9;
+            --text-dark: #2C3E50;
+            --text-light: #95A5A6;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
+            --accent: #E74C3C;
+        }
+
+        /* Fallback for browsers that don't support CSS custom properties */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2C3E50;
+            overflow-x: hidden;
+        }
+
+        /* Skip to main content link for screen readers */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Visible focus indicators for accessibility */
+        a:focus,
+        button:focus {
+            outline: 3px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            /* Fallback for browsers that don't support backdrop-filter */
+            background: white;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+            nav {
+                background: rgba(255, 255, 255, 0.95);
+            }
+        }
+
+        nav.scrolled {
+            border-bottom: 1px solid rgba(52, 152, 219, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo-svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .register-btn {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .register-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Main content wrapper */
+        main {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .network-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .date {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-blue);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Tracks Section */
+        .tracks {
+            background: var(--bg-light);
+        }
+
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Fallback for browsers that don't support CSS Grid */
+        @supports not (display: grid) {
+            .tracks-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .track-card {
+                flex: 0 1 300px;
+                margin: 1rem;
+            }
+        }
+
+        .track-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .track-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .track-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .track-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* What to Expect */
+        .expect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        @supports not (display: grid) {
+            .expect-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .expect-item {
+                flex: 0 1 250px;
+                margin: 1.5rem;
+            }
+        }
+
+        .expect-item {
+            text-align: center;
+        }
+
+        .expect-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .expect-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .expect-item p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Why Zurich */
+        .why-zurich {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-zurich .section-title,
+        .why-zurich .section-subtitle {
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @supports not (display: grid) {
+            .stats-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .stat-card {
+                flex: 0 1 200px;
+                margin: 1rem;
+            }
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            /* Fallback for browsers that don't support backdrop-filter */
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Participants */
+        .participants {
+            background: var(--bg-light);
+        }
+
+        .participant-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .participant-logo {
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .participant-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .date {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Fallback for browsers without animation support */
+        .no-animation .fade-in {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="#" class="logo-nav" aria-label="Zurich AI Safety Day Home">
+                <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
+                    <title id="logo-title">Zurich AI Safety Day Logo</title>
+                    <!-- Mini version of the logo with outer connections -->
+                    <circle cx="30" cy="30" r="8" fill="#3498DB"/>
+                    <circle cx="30" cy="15" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="22" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="30" cy="45" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="22" r="5" fill="#2980B9"/>
+                    <!-- Inner connections to center -->
+                    <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <!-- Outer connections between nodes -->
+                    <line x1="30" y1="15" x2="42" y2="22" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
+                    <line x1="42" y1="22" x2="42" y2="38" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
+                    <line x1="42" y1="38" x2="30" y2="45" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
+                    <line x1="30" y1="45" x2="18" y2="38" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
+                    <line x1="18" y1="38" x2="18" y2="22" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
+                    <line x1="18" y1="22" x2="30" y2="15" stroke="#3498DB" stroke-width="1" opacity="0.2"/>
+                    <!-- Zurich flag in center -->
+                    <clipPath id="centerMini">
+                        <circle cx="30" cy="30" r="8"/>
+                    </clipPath>
+                    <g clip-path="url(#centerMini)">
+                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
+                    </g>
+                    <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
+                </svg>
+                <span>ZAIS</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#tracks">Focus Tracks</a></li>
+                <li><a href="#expect">What to Expect</a></li>
+                <li><a href="#why">Why Zurich</a></li>
+                <li><a href="#participants">Participants</a></li>
+            </ul>
+            <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="register-btn" target="_blank" rel="noopener noreferrer">Register Now</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero" role="banner">
+            <svg class="network-animation" viewBox="0 0 1200 800" aria-hidden="true">
+                <!-- Animated network background -->
+                <defs>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <!-- Static animated lines for performance -->
+                <line x1="100" y1="100" x2="300" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
+                </line>
+                <line x1="300" y1="200" x2="500" y2="150" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+                </line>
+                <line x1="500" y1="150" x2="700" y2="300" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" begin="1s" repeatCount="indefinite"/>
+                </line>
+                <!-- Static animated nodes -->
+                <circle cx="100" cy="100" r="3" fill="rgba(255,255,255,0.3)" filter="url(#glow)">
+                    <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="300" cy="200" r="3" fill="rgba(255,255,255,0.3)" filter="url(#glow)">
+                    <animate attributeName="r" values="3;5;3" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="500" cy="150" r="3" fill="rgba(255,255,255,0.3)" filter="url(#glow)">
+                    <animate attributeName="r" values="3;5;3" dur="3s" begin="1s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+            <div class="hero-content">
+                <svg class="hero-logo" viewBox="0 0 120 120" role="img" aria-labelledby="hero-logo-title">
+                    <title id="hero-logo-title">Zurich AI Safety Day Network Logo</title>
+                    <!-- Full logo with outer connections -->
+                    <circle cx="60" cy="60" r="10" fill="white" stroke="white" stroke-width="1"/>
+                    <circle cx="60" cy="35" r="6" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="80" cy="47" r="6" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="80" cy="73" r="6" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="60" cy="85" r="6" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="40" cy="73" r="6" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="40" cy="47" r="6" fill="rgba(255,255,255,0.9)"/>
+                    <!-- Inner connections -->
+                    <line x1="60" y1="60" x2="60" y2="35" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="80" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="80" y2="73" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="60" y2="85" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="40" y2="73" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="40" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                    <!-- Outer connections -->
+                    <line x1="60" y1="35" x2="80" y2="47" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    <line x1="80" y1="47" x2="80" y2="73" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    <line x1="80" y1="73" x2="60" y2="85" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    <line x1="60" y1="85" x2="40" y2="73" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    <line x1="40" y1="73" x2="40" y2="47" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    <line x1="40" y1="47" x2="60" y2="35" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    <clipPath id="centerCircle">
+                        <circle cx="60" cy="60" r="10"/>
+                    </clipPath>
+                    <g clip-path="url(#centerCircle)">
+                        <path d="M 50 50 L 70 70 L 50 70 Z" fill="#3498DB"/>
+                    </g>
+                    <circle cx="60" cy="60" r="10" fill="none" stroke="white" stroke-width="2"/>
+                </svg>
+                <h1>Zurich AI Safety Day</h1>
+                <p class="date">September 27, 2025 · ETH Zurich</p>
+                <p class="tagline">Join 200+ researchers, engineers, policymakers, and career-transitioners from Zurich's tech ecosystem to shape the future of responsible AI development.</p>
+                <div class="hero-cta">
+                    <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="btn-primary" target="_blank" rel="noopener noreferrer">Register Now</a>
+                    <a href="#tracks" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Focus Tracks -->
+        <section id="tracks" class="tracks fade-in" role="region" aria-labelledby="tracks-title">
+            <div class="container">
+                <h2 id="tracks-title" class="section-title">Three Focus Tracks</h2>
+                <p class="section-subtitle">Deep dive into the areas that matter most to you</p>
+                <div class="tracks-grid">
+                    <article class="track-card">
+                        <div class="track-icon" aria-hidden="true">🔬</div>
+                        <h3>Technical AI Safety</h3>
+                        <p>Explore cutting-edge research in interpretability, scalable oversight, and alignment benchmarks. Connect with researchers pushing the boundaries of AI safety.</p>
+                    </article>
+                    <article class="track-card">
+                        <div class="track-icon" aria-hidden="true">🏛️</div>
+                        <h3>AI Governance</h3>
+                        <p>Navigate the policy landscape, regulatory frameworks, and governance mechanisms essential for responsible AI deployment at scale.</p>
+                    </article>
+                    <article class="track-card">
+                        <div class="track-icon" aria-hidden="true">🚀</div>
+                        <h3>Field Building & Careers</h3>
+                        <p>Discover success stories, funding pathways, and community health initiatives. Find your path in the growing AI safety ecosystem.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- What to Expect -->
+        <section id="expect" class="expect fade-in" role="region" aria-labelledby="expect-title">
+            <div class="container">
+                <h2 id="expect-title" class="section-title">What to Expect</h2>
+                <p class="section-subtitle">A full day focused on AI safety</p>
+                <div class="expect-grid">
+                    <article class="expect-item">
+                        <div class="expect-icon" aria-hidden="true">🎤</div>
+                        <h3>Keynotes & Sessions</h3>
+                        <p>Engage with thought leaders across technical research, governance, and field-building tracks. Sessions designed for all expertise levels.</p>
+                    </article>
+                    <article class="expect-item">
+                        <div class="expect-icon" aria-hidden="true">🤝</div>
+                        <h3>Organization Fair</h3>
+                        <p>Connect with 10+ leading AI safety organizations eager to meet potential collaborators, researchers, and team members.</p>
+                    </article>
+                    <article class="expect-item">
+                        <div class="expect-icon" aria-hidden="true">🌐</div>
+                        <h3>Structured Networking</h3>
+                        <p>Participate in carefully designed activities that match you with peers, mentors, and hiring teams based on your interests.</p>
+                    </article>
+                    <article class="expect-item">
+                        <div class="expect-icon" aria-hidden="true">💡</div>
+                        <h3>Catalyst Sessions</h3>
+                        <p>Join closed-door discussions that spark Swiss-led projects and partnerships, contributing to the next wave of AI safety initiatives.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Zurich -->
+        <section id="why" class="why-zurich fade-in" role="region" aria-labelledby="why-title">
+            <div class="container">
+                <h2 id="why-title" class="section-title">Why Zurich?</h2>
+                <p class="section-subtitle">The perfect hub for AI safety innovation</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">5,000+</div>
+                        <div class="stat-label">Tech Professionals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Top 3</div>
+                        <div class="stat-label">Global AI Research Hub</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">AI Labs & Companies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">#1</div>
+                        <div class="stat-label">Innovation in Europe</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    With powerhouses like Google, Anthropic, Meta, and ETH - and a rapidly expanding AI-safety network - Zurich offers a uniquely dense mix of research, industry, and policy talent. Switzerland's tradition of neutrality and its emerging role in global AI governance make it the ideal hub for building the future of safe, beneficial AI.
+                </p>
+            </div>
+        </section>
+
+        <!-- Participants -->
+        <section id="participants" class="participants fade-in" role="region" aria-labelledby="participants-title">
+            <div class="container">
+                <h2 id="participants-title" class="section-title">Who's Participating</h2>
+                <p class="section-subtitle">Leading organizations in AI safety</p>
+                <div class="participant-logos">
+                    <div class="participant-logo">UK AISI</div>
+                    <div class="participant-logo">FAR.AI</div>
+                    <div class="participant-logo">Apollo Research</div>
+                    <div class="participant-logo">Goodfire</div>
+                    <div class="participant-logo">Palisade Research</div>
+                    <div class="participant-logo">Simon Institute</div>
+                    <div class="participant-logo">Talos Network</div>
+                    <div class="participant-logo">Arcadia Impact</div>
+                    <div class="participant-logo">Pour Demain</div>
+                    <div class="participant-logo">MATS</div>
+                    <div class="participant-logo">BlueDot Impact</div>
+                    <div class="participant-logo">Impact Academy</div>
+                    <div class="participant-logo">High Impact Professionals</div>
+                    <div class="participant-logo">SuccessIf</div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">
+                    <strong>Hosted by:</strong> BlueDot Impact & Zurich AI Safety (ZAIS)
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
+            <div class="footer-links">
+                <a href="mailto:contact@zurichaisafety.day">Contact</a>
+                <a href="javascript:void(0)" onclick="alert('Code of Conduct coming soon')">Code of Conduct</a>
+                <a href="javascript:void(0)" onclick="alert('Privacy Policy coming soon')">Privacy Policy</a>
+                <a href="javascript:void(0)" onclick="alert('Accessibility statement coming soon')">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Throttle function for performance
+        function throttle(func, delay) {
+            let lastCall = 0;
+            return function(...args) {
+                const now = new Date().getTime();
+                if (now - lastCall < delay) {
+                    return;
+                }
+                lastCall = now;
+                return func(...args);
+            }
+        }
+
+        // Navbar scroll effect with throttling and error handling
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            const handleScroll = throttle(function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }, 100);
+            
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        // Smooth scrolling for anchor links with error handling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // IntersectionObserver with fallback for older browsers
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        } else {
+            // Fallback for browsers without IntersectionObserver
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+            document.body.classList.add('no-animation');
+        }
+
+        // Limited network animation for performance (removed continuous creation)
+        // The static SVG animations in the HTML are sufficient
+    </script>
+</body>
+</html>
