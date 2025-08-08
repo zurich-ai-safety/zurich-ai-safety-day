@@ -479,11 +479,27 @@
         }
 
         .participant-logo img {
-            max-width: 100%;
-            max-height: 60px;
-            width: auto;
-            height: auto;
-        }
+    max-width: 140px;  /* Increased from 100% */
+    max-height: 70px;   /* Increased from 60px */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform: scale(1.4);  /* Zoom in to crop whitespace */
+}
+
+/* Force display for problem SVGs */
+.participant-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;  /* Ensure minimum height */
+    padding: 0.5rem;    /* Reduced padding */
+    background: white;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    overflow: hidden;
+}
 
         /* Footer */
         footer {
