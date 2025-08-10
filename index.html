@@ -394,6 +394,67 @@
             line-height: 1.6;
         }
 
+        /* Venue Section */
+        .venue {
+            background: white;
+        }
+
+        .venue-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .venue-hero {
+            grid-column: 1 / -1;
+            height: 400px;
+        }
+
+        @supports not (display: grid) {
+            .venue-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .venue-image {
+                flex: 0 1 calc(50% - 0.75rem);
+                margin: 0.75rem;
+            }
+            .venue-hero {
+                flex: 1 1 100%;
+            }
+        }
+
+        .venue-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 300px;
+            background: var(--bg-light);
+        }
+
+        .venue-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .venue-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .venue-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
         /* Why Zurich */
         .why-zurich {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -478,12 +539,21 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
-       .participant-logo img {
+        .participant-logo img,
+        .participant-logo object {
             max-width: 100%;
             max-height: 60px;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 60px;
+            pointer-events: none;
+            display: block;
+            text-align: center;
+            line-height: 60px;
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
+
         /* Footer */
         footer {
             background: var(--text-dark);
@@ -541,6 +611,66 @@
 
             .participant-logos {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            /* Stack venue images on mobile */
+            .venue-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .venue-hero {
+                height: 250px;
+            }
+
+            .venue-hero {
+                height: 200px;
+            }
+
+            .venue-image {
+                height: 180px;
+            }
+            
+            /* Stack hosted-by logos vertically on mobile */
+            .participant-logos.hosted-section {
+                grid-template-columns: 1fr !important;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+
+            /* Ensure consistent sizing for all logos on mobile */
+            .participant-logo {
+                min-height: 70px;
+            }
+
+            .participant-logo object {
+                max-height: 50px;
+                max-width: 130px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .participant-logos {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .participant-logo {
+                padding: 0.75rem;
+            }
+
+            .participant-logo object {
+                max-height: 45px;
+                max-width: 110px;
+            }
+
+            .venue-image {
+                height: 200px;
+            }
+
+            .venue-description {
+                font-size: 1rem;
             }
         }
 
@@ -602,6 +732,7 @@
             <ul class="nav-links">
                 <li><a href="#tracks">Focus Tracks</a></li>
                 <li><a href="#expect">What to Expect</a></li>
+                <li><a href="#venue">Venue</a></li>
                 <li><a href="#why">Why Zurich</a></li>
                 <li><a href="#participants">Participants</a></li>
             </ul>
@@ -922,6 +1053,28 @@
             </div>
         </section>
 
+        <!-- Venue Section -->
+        <section id="venue" class="venue fade-in" role="region" aria-labelledby="venue-title">
+            <div class="container">
+                <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>
+                <p class="section-subtitle">Where Innovation Meets Tradition</p>
+                <div class="venue-grid">
+                    <div class="venue-image venue-hero">
+                        <img src="assets/eth-exterior.jpg" alt="ETH Zurich main building - iconic classical architecture facade">
+                    </div>
+                    <div class="venue-image">
+                        <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior with classical arches and ornate galleries">
+                    </div>
+                    <div class="venue-image">
+                        <img src="assets/eth-interior-modern.jpg" alt="Contemporary ETH interior with bold concrete architecture">
+                    </div>
+                </div>
+                <p class="venue-description">
+                    ETH Zurich stands as one of the world's leading universities for technology and science. Home to 21 Nobel Prize winners, including Albert Einstein, ETH combines 170 years of academic excellence with cutting-edge research facilities. The venue perfectly embodies our mission: bridging traditional academic rigor with innovative AI safety research in the heart of Europe's most innovative city.
+                </p>
+            </div>
+        </section>
+
         <!-- Why Zurich -->
         <section id="why" class="why-zurich fade-in" role="region" aria-labelledby="why-title">
             <div class="container">
@@ -958,53 +1111,55 @@
                 <p class="section-subtitle">Leading organizations in AI safety</p>
                 <div class="participant-logos">
                     <a href="https://www.aisi.gov.uk/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/UK-AISI.svg" alt="UK AISI">
+                        <object data="assets/UK-AISI.svg" type="image/svg+xml">UK AISI</object>
                     </a>
                     <a href="https://far.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/FARAI.svg" alt="FAR.AI">
+                        <object data="assets/FARAI.svg" type="image/svg+xml">FAR.AI</object>
                     </a>
                     <a href="https://apolloresearch.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Apollo.svg" alt="Apollo Research">
+                        <object data="assets/Apollo.svg" type="image/svg+xml">Apollo Research</object>
                     </a>
                     <a href="https://goodfire.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/goodfire.svg" alt="Goodfire">
+                        <object data="assets/goodfire.svg" type="image/svg+xml">Goodfire</object>
                     </a>
                     <a href="https://palisaderesearch.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Palisade.svg" alt="Palisade Research">
+                        <object data="assets/Palisade.svg" type="image/svg+xml">Palisade Research</object>
                     </a>
                     <a href="https://simoninstitute.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/SI.svg" alt="Simon Institute">
+                        <object data="assets/SI.svg" type="image/svg+xml">Simon Institute</object>
                     </a>
                     <a href="https://www.talosnetwork.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Talos.svg" alt="Talos Network">
+                        <object data="assets/Talos.svg" type="image/svg+xml">Talos Network</object>
                     </a>
                     <a href="https://arcadiaimpact.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/arcadia.svg" alt="Arcadia Impact">
+                        <object data="assets/arcadia.svg" type="image/svg+xml">Arcadia Impact</object>
                     </a>
-                    <a href="https://mats.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/MATS.svg" alt="MATS">
+                    <a href="https://www.matsprogram.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="assets/MATS.svg" type="image/svg+xml">MATS</object>
                     </a>
                     <a href="https://impactacademy.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Impact-Academy.svg" alt="Impact Academy">
+                        <object data="assets/Impact-Academy.svg" type="image/svg+xml">Impact Academy</object>
                     </a>
                     <a href="https://highimpactprofessionals.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/HIP.svg" type="image/svg+xml" style="max-height: 60px; max-width: 140px; pointer-events: none;">     HIP </object>
+                        <object data="assets/HIP.svg" type="image/svg+xml">HIP</object>
                     </a>
                     <a href="https://successif.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/Successif.svg" type="image/svg+xml" style="max-height: 60px; max-width: 140px; pointer-events: none;">     SuccessIf </object>
+                        <object data="assets/Successif.svg" type="image/svg+xml">SuccessIf</object>
                     </a>
                 </div>
                 <div style="text-align: center; margin-top: 3rem;">
                     <p style="color: var(--text-light); font-size: 1.2rem; margin-bottom: 1.5rem;">
                         Hosted by
                     </p>
-                    <div style="display: flex; justify-content: center; gap: 3rem; align-items: center;">
-                        <a href="https://bluedot.org/" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
-                            <img src="assets/BlueDot.svg" alt="BlueDot Impact" style="height: 60px;">
-                        </a>
-                        <a href="https://zurich.aisafety.ch/" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
-                            <img src="assets/ZAIS.svg" alt="Zurich AI Safety (ZAIS)" style="height: 60px;">
-                        </a>
+                    <div style="max-width: 420px; margin: 0 auto;">
+                        <div class="participant-logos hosted-section">
+                            <a href="https://bluedot.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                                <object data="assets/BlueDot.svg" type="image/svg+xml">BlueDot Impact</object>
+                            </a>
+                            <a href="https://zurich.aisafety.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                                <object data="assets/ZAIS.svg" type="image/svg+xml">Zurich AI Safety (ZAIS)</object>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
