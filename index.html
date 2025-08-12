@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zurich AI Safety Day - September 27, 2025</title>
-    <meta name="description" content="Join 200+ researchers, engineers, and policymakers shaping the future of AI safety in Zurich. September 27, 2025 at ETH Zurich.">
+    <meta name="description" content="Join 200+ researchers, engineers, students, policymakers, and career-transitioners from Zurich's tech ecosystem to shape the future of responsible AI development.">
     <style>
         * {
             margin: 0;
@@ -275,15 +275,8 @@
         .section-title {
             font-size: 2.5rem;
             text-align: center;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 1.2rem;
             margin-bottom: 3rem;
+            color: var(--text-dark);
         }
 
         /* Icon styles for track and expect sections */
@@ -394,6 +387,108 @@
             line-height: 1.6;
         }
 
+        /* Participants */
+        .participants {
+            background: var(--bg-light);
+        }
+
+        .participant-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .participant-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        a.participant-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        div.participant-logo {
+            cursor: default;
+        }
+
+        .participant-logo img,
+        .participant-logo object {
+            max-width: 100%;
+            max-height: 60px;
+            width: 100%;
+            height: 60px;
+            pointer-events: none;
+            display: block;
+            text-align: center;
+            line-height: 60px;
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Why Zurich */
+        .why-zurich {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-zurich .section-title {
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @supports not (display: grid) {
+            .stats-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .stat-card {
+                flex: 0 1 200px;
+                margin: 1rem;
+            }
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            /* Fallback for browsers that don't support backdrop-filter */
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
         /* Venue Section */
         .venue {
             background: white;
@@ -442,6 +537,12 @@
             transition: transform 0.3s ease;
         }
 
+        /* More zoomed out view for exterior image */
+        .venue-hero img {
+            object-fit: contain;
+            background: #f0f0f0;
+        }
+
         .venue-image:hover img {
             transform: scale(1.05);
         }
@@ -453,105 +554,6 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--text-light);
-        }
-
-        /* Why Zurich */
-        .why-zurich {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .why-zurich .section-title,
-        .why-zurich .section-subtitle {
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        @supports not (display: grid) {
-            .stats-grid {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .stat-card {
-                flex: 0 1 200px;
-                margin: 1rem;
-            }
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            /* Fallback for browsers that don't support backdrop-filter */
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Participants */
-        .participants {
-            background: var(--bg-light);
-        }
-
-        .participant-logos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-            align-items: center;
-        }
-
-        .participant-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80px;
-            padding: 1rem;
-            background: white;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .participant-logo:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .participant-logo img,
-        .participant-logo object {
-            max-width: 100%;
-            max-height: 60px;
-            width: 100%;
-            height: 60px;
-            pointer-events: none;
-            display: block;
-            text-align: center;
-            line-height: 60px;
-            color: var(--primary-blue);
-            font-size: 0.9rem;
-            font-weight: 500;
         }
 
         /* Footer */
@@ -700,7 +702,7 @@
     <!-- Navigation -->
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#top" class="logo-nav" aria-label="Zurich AI Safety Day Home">
+            <a href="/" class="logo-nav" aria-label="Zurich AI Safety Day Home">
                 <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
                     <title id="logo-title">Zurich AI Safety Day Logo</title>
                     <!-- Mini version of the logo WITHOUT outer connections -->
@@ -732,9 +734,9 @@
             <ul class="nav-links">
                 <li><a href="#tracks">Focus Tracks</a></li>
                 <li><a href="#expect">What to Expect</a></li>
-                <li><a href="#venue">Venue</a></li>
+                <li><a href="#participants">Who's Participating</a></li>
                 <li><a href="#why">Why Zurich</a></li>
-                <li><a href="#participants">Participants</a></li>
+                <li><a href="#venue">Venue</a></li>
             </ul>
             <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="register-btn" target="_blank" rel="noopener noreferrer">Register Now</a>
         </div>
@@ -894,8 +896,10 @@
                 <p class="tagline">Join 200+ researchers, engineers, policymakers, and career-transitioners from Zurich's tech ecosystem to shape the future of responsible AI development.</p>
                 <div class="hero-cta">
                     <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="btn-primary" target="_blank" rel="noopener noreferrer">Register Now</a>
-                    <a href="#tracks" class="btn-secondary">Learn More</a>
                 </div>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1.5rem; font-size: 1rem; animation: fadeInUp 1s ease 0.8s backwards;">
+                    Speaker lineup and detailed schedule coming soon
+                </p>
             </div>
         </section>
 
@@ -903,7 +907,6 @@
         <section id="tracks" class="tracks fade-in" role="region" aria-labelledby="tracks-title">
             <div class="container">
                 <h2 id="tracks-title" class="section-title">Three Focus Tracks</h2>
-                <p class="section-subtitle">Deep dive into the areas that matter most to you</p>
                 <div class="tracks-grid">
                     <article class="track-card">
                         <div class="icon-wrapper" aria-hidden="true">
@@ -960,7 +963,6 @@
         <section id="expect" class="expect fade-in" role="region" aria-labelledby="expect-title">
             <div class="container">
                 <h2 id="expect-title" class="section-title">What to Expect</h2>
-                <p class="section-subtitle">A full day focused on AI safety</p>
                 <div class="expect-grid">
                     <article class="expect-item">
                         <div class="expect-icon-wrapper" aria-hidden="true">
@@ -1053,62 +1055,10 @@
             </div>
         </section>
 
-        <!-- Venue Section -->
-        <section id="venue" class="venue fade-in" role="region" aria-labelledby="venue-title">
-            <div class="container">
-                <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>
-                <p class="section-subtitle">Where Innovation Meets Tradition</p>
-                <div class="venue-grid">
-                    <div class="venue-image venue-hero">
-                        <img src="assets/eth-exterior.jpg" alt="ETH Zurich main building - iconic classical architecture facade">
-                    </div>
-                    <div class="venue-image">
-                        <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior with classical arches and ornate galleries">
-                    </div>
-                    <div class="venue-image">
-                        <img src="assets/eth-interior-modern.jpg" alt="Contemporary ETH interior with bold concrete architecture">
-                    </div>
-                </div>
-                <p class="venue-description">
-                    ETH Zurich stands as one of the world's leading universities for technology and science. Home to 21 Nobel Prize winners, including Albert Einstein, ETH combines 170 years of academic excellence with cutting-edge research facilities. The venue perfectly embodies our mission: bridging traditional academic rigor with innovative AI safety research in the heart of Europe's most innovative city.
-                </p>
-            </div>
-        </section>
-
-        <!-- Why Zurich -->
-        <section id="why" class="why-zurich fade-in" role="region" aria-labelledby="why-title">
-            <div class="container">
-                <h2 id="why-title" class="section-title">Why Zurich?</h2>
-                <p class="section-subtitle">The perfect hub for AI safety innovation</p>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">5,000+</div>
-                        <div class="stat-label">Tech Professionals</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">Top 3</div>
-                        <div class="stat-label">Global AI Research Hub</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">AI Labs & Companies</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">#1</div>
-                        <div class="stat-label">Innovation in Europe</div>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    With powerhouses like Google, Anthropic, Meta, and ETH - and a rapidly expanding AI-safety network - Zurich offers a uniquely dense mix of research, industry, and policy talent. Switzerland's tradition of neutrality and its emerging role in global AI governance make it the ideal hub for building the future of safe, beneficial AI.
-                </p>
-            </div>
-        </section>
-
-        <!-- Participants -->
+        <!-- Participants - MOVED HERE -->
         <section id="participants" class="participants fade-in" role="region" aria-labelledby="participants-title">
             <div class="container">
                 <h2 id="participants-title" class="section-title">Who's Participating</h2>
-                <p class="section-subtitle">Leading organizations in AI safety</p>
                 <div class="participant-logos">
                     <a href="https://www.aisi.gov.uk/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/UK-AISI.svg" type="image/svg+xml">UK AISI</object>
@@ -1134,11 +1084,20 @@
                     <a href="https://arcadiaimpact.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/arcadia.svg" type="image/svg+xml">Arcadia Impact</object>
                     </a>
+                    <a href="https://futureoflife.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="assets/fli.svg" type="image/svg+xml">Future of Life Institute</object>
+                    </a>
+                    <a href="https://cfg.eu/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="assets/cfg.svg" type="image/svg+xml">Center for Future Generations</object>
+                    </a>
+                    <div class="participant-logo">
+                        <object data="assets/peaks.svg" type="image/svg+xml">Peaks</object>
+                    </div>
                     <a href="https://www.matsprogram.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/MATS.svg" type="image/svg+xml">MATS</object>
                     </a>
                     <a href="https://impactacademy.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/Impact-Academy.svg" type="image/svg+xml">Impact Academy</object>
+                        <object data="assets/impact-academy.svg" type="image/svg+xml">Impact Academy</object>
                     </a>
                     <a href="https://highimpactprofessionals.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/HIP.svg" type="image/svg+xml">HIP</object>
@@ -1164,6 +1123,55 @@
                 </div>
             </div>
         </section>
+
+        <!-- Why Zurich - MOVED HERE BEFORE VENUE -->
+        <section id="why" class="why-zurich fade-in" role="region" aria-labelledby="why-title">
+            <div class="container">
+                <h2 id="why-title" class="section-title">Why Zurich?</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">#1</div>
+                        <div class="stat-label">World's Leading Talent Hub</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">#2</div>
+                        <div class="stat-label">AI Engineer Density in Europe</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">7/10</div>
+                        <div class="stat-label">Top Global AI Companies Here</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">#3</div>
+                        <div class="stat-label">AI Intensity Globally</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Switzerland leads global talent rankings and hosts 7 of the world's 10 leading AI companies including Google, Meta, Microsoft, and now Anthropic and OpenAI. With the highest AI engineer density in Europe and world-class institutions like ETH Zurich, the region uniquely combines technical excellence with Switzerland's tradition of neutrality - making it the natural hub for advancing responsible AI development and global AI governance.
+                </p>
+            </div>
+        </section>
+
+        <!-- Venue Section -->
+        <section id="venue" class="venue fade-in" role="region" aria-labelledby="venue-title">
+            <div class="container">
+                <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>
+                <div class="venue-grid">
+                    <div class="venue-image venue-hero">
+                        <img src="assets/eth-exterior.jpg" alt="ETH Zurich main building - iconic classical architecture facade">
+                    </div>
+                    <div class="venue-image">
+                        <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior with classical arches and ornate galleries">
+                    </div>
+                    <div class="venue-image">
+                        <img src="assets/eth-interior-modern.jpg" alt="Contemporary ETH interior with bold concrete architecture">
+                    </div>
+                </div>
+                <p class="venue-description">
+                    ETH Zurich stands as one of the world's leading universities for technology and science. Home to 21 Nobel Prize winners, including Albert Einstein, ETH combines 170 years of academic excellence with cutting-edge research facilities. Detailed room assignments and venue logistics will be announced closer to the event.
+                </p>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -1172,7 +1180,8 @@
             <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
             <div class="footer-links">
                 <a href="mailto:zurich@aisafety.ch">Contact</a>
-                <a href="code-of-conduct.html">Code of Conduct</a>
+                <a href="mailto:zurich@aisafety.ch?subject=Organization%20Participation%20ZAISD%202025">Participate as Organization</a>
+                <a href="/code-of-conduct">Code of Conduct</a>
             </div>
         </div>
     </footer>
