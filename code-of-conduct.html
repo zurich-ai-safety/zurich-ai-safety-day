@@ -1,3 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code of Conduct - Zurich AI Safety Day</title>
+    <meta name="description" content="Code of Conduct for Zurich AI Safety Day - Our commitment to creating a safe, inclusive, and respectful environment for all participants.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #3498DB;
+            --dark-blue: #2980B9;
+            --text-dark: #2C3E50;
+            --text-light: #95A5A6;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
+            --accent: #E74C3C;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2C3E50;
+            background: #F8F9FA;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(52, 152, 219, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+        }
+
+        .register-btn {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .register-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Main content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 100px 2rem 4rem;
+            background: white;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-blue);
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+        }
+
+        .contact-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .contact-section a {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Focus styles */
+        a:focus {
+            outline: 3px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            main {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo-nav" aria-label="Return to Zurich AI Safety Day Home">
+                <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
+                    <title id="logo-title">Zurich AI Safety Day Logo</title>
+                    <!-- Mini version of the logo -->
+                    <circle cx="30" cy="30" r="8" fill="#3498DB"/>
+                    <circle cx="30" cy="15" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="22" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="30" cy="45" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="22" r="5" fill="#2980B9"/>
+                    <!-- Inner connections to center only -->
+                    <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <!-- Zurich flag in center -->
+                    <clipPath id="centerMini">
+                        <circle cx="30" cy="30" r="8"/>
+                    </clipPath>
+                    <g clip-path="url(#centerMini)">
+                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
+                    </g>
+                    <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
+                </svg>
+                <span>ZAISD</span>
+            </a>
+            <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="register-btn" target="_blank" rel="noopener noreferrer">Register Now</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <h1>Code of Conduct</h1>
+        
+        <p class="intro">Zurich AI Safety Day is committed to creating an inclusive, respectful, and safe environment for all participants. We believe that diversity of perspectives strengthens our community and advances our shared mission of ensuring AI benefits humanity.</p>
+
         <h2>Our Agreement</h2>
         <p>At the Zurich AI Safety Day all attendees agree to:</p>
         <ul>
@@ -17,12 +274,41 @@
 
         <h2>Our Approach</h2>
         <p>We understand that human interaction is complex. If you feel able, please give each other the benefit of explaining behavior you find unwelcome or offensive.</p>
-        
+
         <div class="highlight-box">
             <p><strong>If you're asked to stop a behavior that's causing a problem for someone, we expect you to stop immediately.</strong></p>
         </div>
 
         <h2>Support</h2>
-        <p>You can contact us at <a href="mailto:zurich@aisafety.ch">zurich@aisafety.ch</a> if you have any questions.</p>
-        
-        <p>All our conferences have multiple community contact people whose role is to be available for personal or interpersonal problems that come up, they will be pointed out upon registration and wear badges.</p>
+        <p>At the event we'll have multiple community contact people whose role is to be available for personal or interpersonal problems that come up, they will be pointed out upon registration and wear badges.</p>
+
+        <div class="contact-section">
+            <h2>Contact Information</h2>
+            <p>If you need to report an incident or have questions about this Code of Conduct, please contact us:</p>
+            <p><strong>Email:</strong> <a href="mailto:zurich@aisafety.ch">zurich@aisafety.ch</a></p>
+            <p><strong>During the event:</strong> Approach any staff member wearing an official badge</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
+            <div class="footer-links">
+                <a href="mailto:zurich@aisafety.ch">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Logo click to return to main page
+        const logoNav = document.querySelector('.logo-nav');
+        if (logoNav) {
+            logoNav.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = '/';
+            });
+        }
+    </script>
+</body>
+</html>
