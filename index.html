@@ -498,15 +498,10 @@
 
         .venue-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-top: 3rem;
             margin-bottom: 2rem;
-        }
-
-        .venue-hero {
-            grid-column: 1 / -1;
-            height: 400px;
         }
 
         @supports not (display: grid) {
@@ -516,11 +511,8 @@
                 justify-content: center;
             }
             .venue-image {
-                flex: 0 1 calc(50% - 0.75rem);
+                flex: 0 1 calc(33.333% - 1rem);
                 margin: 0.75rem;
-            }
-            .venue-hero {
-                flex: 1 1 100%;
             }
         }
 
@@ -528,7 +520,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 10px;
-            height: 300px;
+            height: 400px;
             background: var(--bg-light);
         }
 
@@ -540,7 +532,7 @@
         }
 
         /* More zoomed out view for exterior image */
-        .venue-hero img {
+        .venue-image:nth-child(2) img {
             object-fit: contain;
             background: #f0f0f0;
         }
@@ -617,22 +609,50 @@
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
             
-            /* Stack venue images on mobile */
+            /* Horizontal scroll gallery for venue images on mobile */
             .venue-grid {
-                grid-template-columns: 1fr;
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
                 gap: 1rem;
+                padding: 0 1rem 1rem 1rem;
+                margin: 2rem -2rem 2rem -2rem;
+                -webkit-overflow-scrolling: touch;
             }
 
-            .venue-hero {
-                height: 250px;
+            .venue-grid::-webkit-scrollbar {
+                height: 6px;
             }
 
-            .venue-hero {
-                height: 200px;
+            .venue-grid::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 3px;
+            }
+
+            .venue-grid::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 3px;
+            }
+
+            .venue-grid::-webkit-scrollbar-thumb:hover {
+                background: #555;
             }
 
             .venue-image {
-                height: 180px;
+                flex: 0 0 85%;
+                scroll-snap-align: center;
+                height: 280px;
+            }
+
+            /* First image gets full width on mobile */
+            .venue-image:first-child {
+                flex: 0 0 90%;
+            }
+
+            /* Adjust exterior image for mobile */
+            .venue-image:nth-child(2) img {
+                object-fit: contain;
+                background: #f5f5f5;
             }
             
             /* Stack hosted-by logos vertically on mobile */
@@ -669,8 +689,9 @@
                 max-width: 110px;
             }
 
+            /* Even smaller images on very small screens */
             .venue-image {
-                height: 200px;
+                height: 240px;
             }
 
             .venue-description {
@@ -1035,28 +1056,11 @@
                         <h3>Structured Networking</h3>
                         <p>Participate in carefully designed activities that match you with peers, mentors, and hiring teams based on your interests.</p>
                     </article>
-                    <!-- <article class="expect-item">
-                        <div class="expect-icon-wrapper" aria-hidden="true">
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="white"> -->
-                                <!-- Larger rectangle with circle of dots inside -->
-                                <!-- <rect x="4" y="8" width="32" height="24" rx="2" fill="none" stroke="white" stroke-width="2"/>
-                                <circle cx="20" cy="20" r="2" fill="white"/>
-                                <circle cx="20" cy="13" r="1.5" fill="white"/>
-                                <circle cx="27" cy="16.5" r="1.5" fill="white"/>
-                                <circle cx="27" cy="23.5" r="1.5" fill="white"/>
-                                <circle cx="20" cy="27" r="1.5" fill="white"/>
-                                <circle cx="13" cy="23.5" r="1.5" fill="white"/>
-                                <circle cx="13" cy="16.5" r="1.5" fill="white"/>
-                            </svg>
-                        </div>
-                        <h3>Catalyst Sessions</h3>
-                        <p>Join closed-door discussions that spark Swiss-led projects and partnerships, contributing to the next wave of AI safety initiatives.</p>
-                    </article> -->
                 </div>
             </div>
         </section>
 
-        <!-- Participants - MOVED HERE -->
+        <!-- Participants -->
         <section id="participants" class="participants fade-in" role="region" aria-labelledby="participants-title">
             <div class="container">
                 <h2 id="participants-title" class="section-title">Who's Participating</h2>
@@ -1129,7 +1133,7 @@
             </div>
         </section>
 
-        <!-- Why Zurich - MOVED HERE BEFORE VENUE -->
+        <!-- Why Zurich -->
         <section id="why" class="why-zurich fade-in" role="region" aria-labelledby="why-title">
             <div class="container">
                 <h2 id="why-title" class="section-title">Why Zurich?</h2>
@@ -1161,17 +1165,18 @@
         <section id="venue" class="venue fade-in" role="region" aria-labelledby="venue-title">
             <div class="container">
                 <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>
-                <div class="venue-grid" style="grid-template-columns: 1fr 1.5fr 1fr; gap: 1.5rem; margin-top: 3rem;">
-                    <div class="venue-image" style="height: 400px;">
+                <div class="venue-grid">
+                    <div class="venue-image">
                         <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior atrium with three-story classical arches, ornate balustrades, and natural light flooding the white marble space">
                     </div>
-                    <div class="venue-image" style="height: 400px;">
+                    <div class="venue-image">
                         <img src="assets/eth-exterior.jpg" alt="Aerial view of ETH Zurich main building with its iconic dome and symmetrical architecture overlooking the Limmat river and Zurich cityscape">
                     </div>
-                    <div class="venue-image" style="height: 400px;">
+                    <div class="venue-image">
                         <img src="assets/eth-interior-modern.jpg" alt="Modern ETH interior featuring bold concrete architecture, geometric staircases, and contemporary art installation">
                     </div>
-                </div>                <p class="venue-description">
+                </div>
+                <p class="venue-description">
                     ETH Zurich stands as one of the world's leading universities for technology and science. Home to 21 Nobel Prize winners, including Albert Einstein, ETH combines 170 years of academic excellence with cutting-edge research facilities.
                     <br><br>
                     Detailed room assignments and venue logistics will be announced closer to the event.
