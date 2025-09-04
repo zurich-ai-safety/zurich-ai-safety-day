@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="alternate icon" href="/assets/favicon.ico">
+    <title>Register - Zurich AI Safety Day - September 27, 2025</title>
+    <meta name="description" content="Register for Zurich AI Safety Day - Join 200+ researchers, engineers, students, policymakers, and career-transitioners from Zurich's tech ecosystem.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #3498DB;
+            --dark-blue: #2980B9;
+            --text-dark: #2C3E50;
+            --text-light: #95A5A6;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
+            --accent: #E74C3C;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2C3E50;
+            overflow-x: hidden;
+            background: var(--bg-light);
+        }
+
+        /* Skip to main content link for screen readers */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Visible focus indicators for accessibility */
+        a:focus,
+        button:focus {
+            outline: 3px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(52, 152, 219, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .back-btn {
+            background: transparent;
+            color: var(--primary-blue);
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--primary-blue);
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Main content wrapper */
+        main {
+            width: 100%;
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 2rem 0 3rem 0;
+            background: white;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .header .date-location {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* What to Expect Section */
+        .expect-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .expect-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .expect-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .expect-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+        }
+
+        .expect-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+        }
+
+        .expect-list li strong {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Loading state for iframe */
+        .form-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .form-loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-blue);
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .date-location {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header,
+            .expect-section,
+            .form-section {
+                margin-left: -1rem;
+                margin-right: -1rem;
+                border-radius: 10px;
+            }
+
+            .expect-list li {
+                font-size: 1rem;
+            }
+
+            .form-container {
+                height: 700px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .expect-section,
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .form-container {
+                height: 650px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo-nav" aria-label="Zurich AI Safety Day Home">
+                <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
+                    <title id="logo-title">Zurich AI Safety Day Logo</title>
+                    <!-- Mini version of the logo WITHOUT outer connections -->
+                    <circle cx="30" cy="30" r="8" fill="#3498DB"/>
+                    <circle cx="30" cy="15" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="22" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="30" cy="45" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="22" r="5" fill="#2980B9"/>
+                    <!-- Inner connections to center only -->
+                    <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <!-- Zurich flag in center -->
+                    <clipPath id="centerMini">
+                        <circle cx="30" cy="30" r="8"/>
+                    </clipPath>
+                    <g clip-path="url(#centerMini)">
+                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
+                    </g>
+                    <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
+                </svg>
+                <span>ZAISD</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/#tracks">Focus Tracks</a></li>
+                <li><a href="/#expect">What to Expect</a></li>
+                <li><a href="/#participants">Who's Participating</a></li>
+                <li><a href="/#why">Why Zurich</a></li>
+                <li><a href="/#venue">Venue</a></li>
+            </ul>
+            <a href="/" class="back-btn">Back to Main Site</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main id="main">
+        <div class="container">
+            <!-- Header Section -->
+            <section class="header fade-in" role="banner">
+                <h1>Zurich AI Safety Day</h1>
+                <p class="date-location">September 27, 2025 • ETH Zurich</p>
+                <!-- <p class="tagline">Join 200+ researchers, engineers, students, and professionals from Zurich's tech ecosystem for a one-day conference on AI Safety</p> -->
+            </section>
+
+            <!-- What to Expect Section -->
+            <section class="expect-section fade-in" role="region" aria-labelledby="expect-title">
+                <h2 id="expect-title">What to Expect</h2>
+                <ul class="expect-list">
+                    <li>
+                        <strong>Three Tracks:</strong> Technical AI Safety, AI Governance, and Field-Building & Careers - designed for all expertise levels from beginners to experts.
+                    </li>
+                    <li>
+                        <strong>Leading AI Safety Organizations:</strong> Meet and network directly with researchers and hiring managers from 16+ leading AI Safety organizations, including UK AISI, Apollo Research, FAR AI, Simon Institute, and many more.
+                    </li>
+                    <li>
+                        <strong>Speaker Sessions:</strong> Learn about the field from prominent figures at our keynote sessions and panel discussions. We will be announcing our speaker lineup shortly.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Registration Form Section -->
+            <section class="form-section fade-in" role="region" aria-labelledby="register-title">
+                <h2 id="register-title">Register Now - Free to Attend</h2>
+                <div id="form-loading" class="form-loading">Loading registration form...</div>
+                <iframe 
+                    id="registration-form"
+                    class="form-container"
+                    src="https://airtable.com/embed/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form"
+                    frameborder="0" 
+                    onmousewheel=""
+                    width="100%" 
+                    height="800"
+                    style="background: transparent; border: none; display: none;"
+                    title="Zurich AI Safety Day Registration Form"
+                    loading="lazy">
+                </iframe>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
+            <div class="footer-links">
+                <a href="mailto:zurich@aisafety.ch">Contact</a>
+                <a href="/code-of-conduct">Code of Conduct</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Logo click to main site functionality
+        const logoNav = document.querySelector('.logo-nav');
+        if (logoNav) {
+            logoNav.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = '/';
+            });
+        }
+
+        // Handle iframe loading
+        const iframe = document.getElementById('registration-form');
+        const loadingDiv = document.getElementById('form-loading');
+        
+        if (iframe && loadingDiv) {
+            iframe.addEventListener('load', function() {
+                loadingDiv.style.display = 'none';
+                iframe.style.display = 'block';
+            });
+
+            // Fallback to show iframe after 5 seconds if load event doesn't fire
+            setTimeout(function() {
+                if (iframe.style.display === 'none') {
+                    loadingDiv.style.display = 'none';
+                    iframe.style.display = 'block';
+                }
+            }, 5000);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="/#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Let these links navigate to the main page with hash
+                // The main page will handle the scrolling
+            });
+        });
+    </script>
+</body>
+</html>
