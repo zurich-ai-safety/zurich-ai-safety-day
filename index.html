@@ -367,16 +367,13 @@
             line-height: 1.6;
         }
 
-        /* Participants */
+       /* Participants */
 .participant-logos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
     align-items: center;
-    background: var(--primary-pink); /* pink background for the whole section */
-    padding: 2rem;
-    border-radius: 15px;
 }
 
 .participant-logo {
@@ -385,8 +382,8 @@
     justify-content: center;
     height: 80px;
     padding: 1rem;
-    background: #fff; /* white background for each logo "button" */
-    border: 1px solid rgba(238, 164, 215, 0.2);
+    background: #fff; /* changed to white */
+    border: 1px solid rgba(238, 164, 215, 0.1);
     border-radius: 10px;
     transition: all 0.3s ease;
     text-decoration: none;
@@ -394,7 +391,7 @@
 
 a.participant-logo:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(238, 164, 215, 0.3);
+    box-shadow: 0 5px 20px rgba(238, 164, 215, 0.2);
     border-color: var(--primary-pink);
 }
 
@@ -410,7 +407,12 @@ div.participant-logo {
     height: 60px;
     pointer-events: none;
     display: block;
-    filter: none; /* no color inversion */
+    text-align: center;
+    line-height: 60px;
+    color: var(--primary-pink);
+    font-size: 0.9rem;
+    font-weight: 500;
+    filter: none; /* ensure logos stay in original colors */
 }
 
 /* Why Zurich */
@@ -440,20 +442,20 @@ div.participant-logo {
     border-radius: 15px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: #fff;
+    color: var(--primary-pink);
 }
 
 .stat-number {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #fff;
+    color: var(--primary-pink);
 }
 
 .stat-label {
     font-size: 1.1rem;
     opacity: 0.9;
-    color: #fff;
+    color: var(--primary-pink);
 }
 
 .why-zurich p {
