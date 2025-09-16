@@ -519,6 +519,10 @@ div.participant-logo {
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: var(--bg-section);            /* contrast with the previous section */
+            padding: 6rem 0 7rem;                     /* more space above/below form */
+            border-top: 1px solid rgba(238,164,215,.08);
+            border-bottom: 1px solid rgba(238,164,215,.08);
         }
 
         .form-container {
@@ -539,11 +543,28 @@ div.participant-logo {
             font-size: 1.1rem;
         }
 
+        .form-card {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 16px;
+            background: #0f0f10;                      /* subtle card surface on dark */
+            border: 1px solid rgba(238,164,215,.12);  /* natural, soft border */
+            box-shadow: 0 10px 40px rgba(238,164,215,.08);
+            overflow: hidden;                          /* rounds the iframe corners */
+        }
+
+        .form-embed {
+            display: block;
+            width: 100%;
+            height: 820px;
+            border: 0;
+            background: transparent;
+        }
+
         .form-loading::after {
             content: '';
             width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary-blue);
+            height: 20px;border: 2px solid var(--primary-pink);
             border-top: 2px solid transparent;
             border-radius: 50%;
             margin-left: 10px;
@@ -552,11 +573,12 @@ div.participant-logo {
 
         /* Footer */
         footer {
-            background: var(--bg-dark);
+            background: var(--bg-dark);               /* keep footer as the “other” bg */
             color: var(--text-light);
-            padding: 3rem 0;
+            padding: 4rem 0;                          /* a bit more vertical space */
             text-align: center;
-            border-top: 1px solid rgba(238, 164, 215, 0.1);
+            border-top: 1px solid rgba(238,164,215,.1);
+            box-shadow: 0 -8px 40px rgba(238,164,215,.05); /* soft separation from form */
         }
 
         .footer-content {
@@ -694,32 +716,32 @@ div.participant-logo {
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
-                    <title id="logo-title">Zurich AI Safety Day Logo</title>
-                    <!-- Mini version of the logo WITHOUT outer connections -->
-                    <circle cx="30" cy="30" r="8" fill="#eea4d7"/>
-                    <circle cx="30" cy="15" r="5" fill="#eea4d7"/>
-                    <circle cx="42" cy="22" r="5" fill="#eea4d7"/>
-                    <circle cx="42" cy="38" r="5" fill="#eea4d7"/>
-                    <circle cx="30" cy="45" r="5" fill="#eea4d7"/>
-                    <circle cx="18" cy="38" r="5" fill="#eea4d7"/>
-                    <circle cx="18" cy="22" r="5" fill="#eea4d7"/>
-                    <!-- Inner connections to center only -->
-                    <line x1="30" y1="30" x2="30" y2="15" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="42" y2="22" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="42" y2="38" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="30" y2="45" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="18" y2="38" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="18" y2="22" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <!-- Zurich flag in center -->
-                    <clipPath id="centerMini">
-                        <circle cx="30" cy="30" r="8"/>
-                    </clipPath>
-                    <g clip-path="url(#centerMini)">
-                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
-                    </g>
-                    <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
-                </svg>
-                <span>ZAISD</span>
+                <title id="logo-title">Zurich AI Safety Day Logo</title>
+                <!-- Mini version of the logo WITHOUT outer connections -->
+                <circle cx="30" cy="30" r="8" fill="#3498DB"/>
+                <circle cx="30" cy="15" r="5" fill="#2980B9"/>
+                <circle cx="42" cy="22" r="5" fill="#2980B9"/>
+                <circle cx="42" cy="38" r="5" fill="#2980B9"/>
+                <circle cx="30" cy="45" r="5" fill="#2980B9"/>
+                <circle cx="18" cy="38" r="5" fill="#2980B9"/>
+                <circle cx="18" cy="22" r="5" fill="#2980B9"/>
+                <!-- Inner connections to center only -->
+                <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                <!-- Zurich flag in center -->
+                <clipPath id="centerMini">
+                    <circle cx="30" cy="30" r="8"/>
+                </clipPath>
+                <g clip-path="url(#centerMini)">
+                    <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
+                </g>
+                <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
+            </svg>
+            <span>ZAISD</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#tracks">Focus Tracks</a></li>
@@ -1070,20 +1092,21 @@ div.participant-logo {
 
         <!-- Registration Form Section -->
             <section class="form-section fade-in" role="region" aria-labelledby="register-title">
-                <h2 id="register-title" class="section-title">Register Now - Free to Attend</h2>
-                <div id="form-loading" class="form-loading">Loading registration form...</div>
-                <iframe 
-                    id="registration-form"
-                    class="form-container"
-                    src="https://airtable.com/embed/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form"
-                    frameborder="0" 
-                    onmousewheel=""
-                    width="100%" 
-                    height="800"
-                    style="background: transparent; border: none; display: none;"
-                    title="Zurich AI Safety Day Registration Form"
-                    loading="lazy">
-                </iframe>
+                <div class="container">
+                    <h2 id="register-title" class="section-title">Register Now - Free to Attend</h2>
+
+                    <div id="form-loading" class="form-loading">Loading registration form...</div>
+
+                    <div class="form-card" style="display:none;">
+                    <iframe
+                        id="registration-form"
+                        class="form-embed"
+                        src="https://airtable.com/embed/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form"
+                        title="Zurich AI Safety Day Registration Form"
+                        loading="lazy">
+                    </iframe>
+                    </div>
+                </div>
             </section>
 
     <!-- Footer -->
