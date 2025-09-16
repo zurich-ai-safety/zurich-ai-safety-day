@@ -249,8 +249,10 @@
         }
 
         .btn-secondary:hover {
-            background: var(--white);
+            background: var(--primary-pink);
             color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(238, 164, 215, 0.3);
         }
 
         @keyframes fadeInUp {
@@ -440,6 +442,7 @@ div.participant-logo {
     text-align: center;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.05); /* subtle white overlay for contrast */
+    border: 2px solid var(--primary-pink); /* ✅ pink border */
     border-radius: 15px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
