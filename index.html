@@ -675,29 +675,31 @@ div.participant-logo {
 
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="/" class="logo-nav" aria-label="Zurich AI Safety Day Home">
-                <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
+            <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
                     <title id="logo-title">Zurich AI Safety Day Logo</title>
-                    <circle cx="30" cy="30" r="8" fill="#eea4d7"/>
-                    <circle cx="30" cy="15" r="5" fill="#d688c4"/>
-                    <circle cx="42" cy="22" r="5" fill="#d688c4"/>
-                    <circle cx="42" cy="38" r="5" fill="#d688c4"/>
-                    <circle cx="30" cy="45" r="5" fill="#d688c4"/>
-                    <circle cx="18" cy="38" r="5" fill="#d688c4"/>
-                    <circle cx="18" cy="22" r="5" fill="#d688c4"/>
-                    <line x1="30" y1="30" x2="30" y2="15" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="42" y2="22" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="42" y2="38" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="30" y2="45" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="18" y2="38" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="18" y2="22" stroke="#eea4d7" stroke-width="1.5" opacity="0.3"/>
+                    <!-- Mini version of the logo WITHOUT outer connections -->
+                    <circle cx="30" cy="30" r="8" fill="#3498DB"/>
+                    <circle cx="30" cy="15" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="22" r="5" fill="#2980B9"/>
+                    <circle cx="42" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="30" cy="45" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="38" r="5" fill="#2980B9"/>
+                    <circle cx="18" cy="22" r="5" fill="#2980B9"/>
+                    <!-- Inner connections to center only -->
+                    <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
+                    <!-- Zurich flag in center -->
                     <clipPath id="centerMini">
                         <circle cx="30" cy="30" r="8"/>
                     </clipPath>
                     <g clip-path="url(#centerMini)">
-                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#000000"/>
+                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
                     </g>
-                    <circle cx="30" cy="30" r="8" fill="none" stroke="#eea4d7" stroke-width="1.5"/>
+                    <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
                 </svg>
                 <span>ZAISD</span>
             </a>
