@@ -17,6 +17,7 @@
         :root {
             --primary-pink: #eea4d7;
             --dark-pink: #d688c4;
+            --very-dark-pink: #6f3278;
             --text-light: #ffffff;
             --text-dark: #333333;
             --bg-dark: #000000;
@@ -53,7 +54,7 @@
         /* Visible focus indicators for accessibility */
         a:focus,
         button:focus {
-            outline: 3px solid var(--primary-pink);
+            outline: 3px solid var(--white);
             outline-offset: 2px;
         }
 
@@ -115,11 +116,11 @@
         }
 
         .nav-links a:hover {
-            color: var(--primary-pink);
+            color: var(--white);
         }
 
         .register-btn {
-            background: var(--primary-pink);
+            background: var(--white);
             color: black;
             padding: 0.5rem 1.5rem;
             border-radius: 25px;
@@ -129,7 +130,7 @@
         }
 
         .register-btn:hover {
-            background: var(--dark-pink);
+            background: var(--primary-pink);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(238, 164, 215, 0.3);
         }
@@ -290,7 +291,7 @@
         .icon-wrapper {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            background: linear-gradient(135deg, var(--dark-pink), var(--very-dark-pink));
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -302,7 +303,7 @@
             width: 80px;
             height: 80px;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            background: linear-gradient(135deg, var(--dark-pink), var(--very-dark-pink));
             border-radius: 50%;
             display: flex;
             align-items: center;
