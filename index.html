@@ -511,6 +511,40 @@ div.participant-logo {
             color: rgba(255, 255, 255, 0.7);
         }
 
+        /* Full-width map block inside the grid */
+        .venue-map {
+        grid-column: 1 / -1;      /* spans all columns */
+        height: 500px;            /* a bit taller for readability */
+        }
+
+        /* Ensure the PNG fits without cropping and has a neutral backdrop */
+        .venue-map img {
+        object-fit: contain;
+        background: #1a1a1a;
+        }
+
+        /* Optional: a subtle download button overlay */
+        .map-download {
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        text-decoration: none;
+        backdrop-filter: blur(6px);
+        transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .map-download:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.15);
+        }
+
+
         /* Registration Form Section */
         .form-section {
             width: 100%;
@@ -703,7 +737,7 @@ div.participant-logo {
                 <li><a href="#why">Why Zurich</a></li>
                 <li><a href="#venue">Venue</a></li>
             </ul>
-            <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="register-btn" target="_blank" rel="noopener noreferrer">Register Now</a>
+            <a href="assets/Agenda.pdf" class="register-btn" target="_blank" rel="noopener noreferrer">Agenda</a>
         </div>
     </nav>
 
@@ -766,10 +800,10 @@ div.participant-logo {
                 </svg>
                 <h1>Zurich AI Safety Day</h1>
                 <p class="date">September 27, 2025 • ETH Zurich</p>
-                <p class="tagline">Join 200+ researchers, engineers, students, and professionals from Zurich's tech ecosystem for a one-day conference on AI Safety. <br>Learn from technical pioneers, engage with governance experts, and discover opportunities to contribute. <br>Free to attend—request your spot.</p>
+                <p class="tagline">Join 200+ researchers, engineers, students, and professionals from Zurich's tech ecosystem for a one-day conference on AI Safety. <br>Learn from technical pioneers, engage with governance experts, and discover opportunities to contribute. <br>Registrations are now closed.</p>
                 <div class="hero-cta">
-                    <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="btn-primary" target="_blank" rel="noopener noreferrer">Register Now</a>
-                    <a href="assets/Agenda.pdf" class="btn-secondary" target="_blank" rel="noopener noreferrer">Agenda</a>
+                    <a href="assets/Agenda.pdf" class="btn-primary" target="_blank" rel="noopener noreferrer">Agenda</a>
+                    <!-- <a href="assets/Agenda.pdf" class="btn-secondary" target="_blank" rel="noopener noreferrer">Agenda</a> -->
                 </div>
             </div>
         </section>
@@ -943,9 +977,9 @@ div.participant-logo {
                     <a href="https://cfg.eu/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/cfg.svg" type="image/svg+xml">Center for Future Generations</object>
                     </a>
-                    <div class="participant-logo">
+                    <a href="https://peaks-office.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/peaks.svg" type="image/svg+xml">Peaks</object>
-                    </div>
+                    </a>
                     <a href="https://www.matsprogram.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/MATS.svg" type="image/svg+xml">MATS</object>
                     </a>
@@ -969,7 +1003,10 @@ div.participant-logo {
                     </a>
                     <a href="https://apartresearch.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         <object data="assets/apart_logo_black.svg" type="image/svg+xml">SuccessIf</object>
-                    </a>                    
+                    </a>    
+                    <a href="https://www.arena.education/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="assets/Arena.svg" type="image/svg+xml">Arena</object>
+                    </a>                   
                 </div>
                 <div style="text-align: center; margin-top: 3rem;">
                     <p style="color: var(--text-light); font-size: 1.2rem; margin-bottom: 1.5rem;">
@@ -1031,6 +1068,13 @@ div.participant-logo {
                     <div class="venue-image">
                         <img src="assets/eth-interior-modern.jpg" alt="Modern ETH interior featuring bold concrete architecture, geometric staircases, and contemporary art installation">
                     </div>
+                    <!-- Venue Map (PNG) -->
+                    <div class="venue-image venue-map" role="img" aria-label="ETH Zurich event venue map">
+                    <img src="assets/eth-venue-map.png"
+                        alt="ETH Zurich venue map showing main building entrances, tram stops, and event rooms">
+                    <a class="map-download" href="assets/eth-venue-map.png" download>
+                        Download map (PNG)
+                    </a>
                 </div>
                 <p class="venue-description">
                     ETH Zurich stands as one of the world's leading universities for technology and science. Home to 21 Nobel Prize winners, including Albert Einstein, ETH combines 170 years of academic excellence with cutting-edge research facilities.
