@@ -712,6 +712,39 @@ div.participant-logo {
             }
         }
 
+        @media (max-width: 768px) {
+        /* Turn the grid back into a normal vertical flow */
+        .venue-grid { display: block; margin: 0; }
+
+        /* Horizontal scroller only for the three photos */
+        .venue-grid { overflow-x: hidden; }
+        .venue-grid .venue-image { display: inline-block; vertical-align: top; }
+        .venue-grid .venue-image:nth-of-type(-n+3) {
+            /* first 3 .venue-image elements become the carousel */
+            width: 85vw;
+            height: 280px;
+            margin-right: 1rem;
+            scroll-snap-align: center;
+        }
+        /* Wrap the first three in a scrolling row */
+        .venue-grid::before, .venue-grid::after { content: ""; display: table; } /* layout guard */
+        .venue-grid { padding: 0 1rem 1rem; }
+        .venue-grid { scroll-snap-type: x mandatory; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+        .venue-grid .venue-image:nth-of-type(-n+3) { white-space: normal; }
+
+        /* Map and texts full width */
+        .venue-map,
+        #venue-map-title,
+        .venue-description { display: block; white-space: normal; }
+        .venue-map { height: 340px; }
+        .venue-map img { object-fit: contain; background:#1a1a1a; }
+        }
+
+        @media (max-width: 480px) {
+        .venue-grid .venue-image:nth-of-type(-n+3) { height: 240px; }
+        .venue-map { height: 300px; }
+        }
+
         /* Scroll animations */
         .fade-in {
             opacity: 0;
