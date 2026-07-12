@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0514">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="alternate icon" href="/assets/favicon.ico">
 
-    <title>Zurich AI Safety Day - September 27, 2025</title>
-    <meta name="description" content="Join 200+ researchers, engineers, students, policymakers, and career-transitioners from Zurich's tech ecosystem to shape the future of responsible AI development.">
+    <title>Swiss AI Safety Days 2026 - Save the Date - 7-8 November</title>
+    <meta name="description" content="Save the date: Swiss AI Safety Days 2026, 7-8 November at ETH Zurich. Two days of talks, workshops, an org fair, and high-density networking across AI safety research, governance, and careers.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Rubik+Glitch&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Swiss AI Safety Days 2026",
+      "startDate": "2026-11-07",
+      "endDate": "2026-11-08",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "ETH Zurich, Main Building",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rämistrasse 101",
+          "postalCode": "8092",
+          "addressLocality": "Zurich",
+          "addressCountry": "CH"
+        }
+      },
+      "description": "Two days connecting Europe's AI safety community: talks, workshops, an org fair, and high-density networking across research, governance, and careers.",
+      "url": "https://zurichaisafety.day/"
+    }
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -16,47 +46,117 @@
         }
 
         :root {
-            --primary-pink: #eea4d7;
-            --dark-pink: #d688c4;
-            --very-dark-pink: #6f3278;
-            --text-light: #ffffff;
-            --text-dark: #333333;
-            --bg-dark: #000000;
-            --bg-section: #1a1a1a;
-            --white: #ffffff;
-            --accent: #eea4d7;
+            --bg-0: #0a0514;
+            --bg-1: #130a23;
+            --bg-2: #1a0e2e;
+            --pink: #f2a7e3;
+            --pink-bright: #ff9ee8;
+            --magenta: #d84fc6;
+            --purple: #7a2f9e;
+            --cream: #f3e9d2;
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.72);
+            --text-faint: rgba(255, 255, 255, 0.55);
+            --border-soft: rgba(242, 167, 227, 0.18);
+            --glow-pink: rgba(216, 79, 198, 0.45);
+            --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
-        /* Fallback for browsers that don't support CSS custom properties */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: var(--font-body);
             line-height: 1.6;
-            color: #ffffff;
-            background: #000000;
+            color: var(--text);
+            background: var(--bg-0);
             overflow-x: hidden;
         }
 
-        /* Skip to main content link for screen readers */
+        /* Page-wide aurora backdrop, echoing the 2025 flyer's flowing waves */
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(122, 47, 158, 0.28), transparent 65%),
+                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(216, 79, 198, 0.16), transparent 65%),
+                linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
+        }
+
+        .backdrop::before,
+        .backdrop::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.55;
+            will-change: transform;
+        }
+
+        .backdrop::before {
+            width: 55vw;
+            height: 40vh;
+            left: -12vw;
+            top: 30vh;
+            background: radial-gradient(closest-side, rgba(216, 79, 198, 0.5), rgba(216, 79, 198, 0) 70%);
+            animation: drift-a 26s ease-in-out infinite alternate;
+        }
+
+        .backdrop::after {
+            width: 50vw;
+            height: 45vh;
+            right: -15vw;
+            bottom: -10vh;
+            background: radial-gradient(closest-side, rgba(242, 140, 220, 0.42), rgba(122, 47, 158, 0) 70%);
+            animation: drift-b 32s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift-a {
+            from { transform: translate(0, 0) rotate(-8deg) scale(1); }
+            to   { transform: translate(10vw, -12vh) rotate(6deg) scale(1.15); }
+        }
+
+        @keyframes drift-b {
+            from { transform: translate(0, 0) rotate(5deg) scale(1.1); }
+            to   { transform: translate(-8vw, -10vh) rotate(-6deg) scale(0.95); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .backdrop::before,
+            .backdrop::after,
+            .fade-in {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Skip link */
         .skip-link {
             position: absolute;
             top: -40px;
             left: 0;
-            background: var(--primary-pink);
-            color: black;
+            background: var(--pink);
+            color: var(--bg-0);
             padding: 8px;
             text-decoration: none;
-            z-index: 100;
+            z-index: 1100;
         }
 
         .skip-link:focus {
             top: 0;
         }
 
-        /* Visible focus indicators for accessibility */
-        a:focus,
-        button:focus {
-            outline: 3px solid var(--white);
-            outline-offset: 2px;
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--pink);
+            outline-offset: 3px;
+            border-radius: 4px;
         }
 
         /* Navigation */
@@ -64,18 +164,18 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(10, 5, 20, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             z-index: 1000;
             padding: 1rem 0;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
             border-bottom: 1px solid transparent;
         }
 
         nav.scrolled {
-            border-bottom: 1px solid rgba(238, 164, 215, 0.1);
-            box-shadow: 0 2px 20px rgba(238, 164, 215, 0.05);
+            border-bottom: 1px solid var(--border-soft);
+            box-shadow: 0 8px 30px rgba(216, 79, 198, 0.08);
         }
 
         .nav-container {
@@ -85,176 +185,179 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .logo-nav {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: var(--text-light);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .logo-svg {
-            width: 40px;
-            height: 40px;
-            margin-right: 12px;
+            gap: 1rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.2rem;
             list-style: none;
         }
 
         .nav-links a {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--white);
+            color: var(--pink);
         }
 
         .register-btn {
-            background: var(--white);
-            color: black;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--bg-0);
+            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            padding: 0.6rem 1.5rem;
+            border-radius: 999px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 18px rgba(216, 79, 198, 0.35);
+            white-space: nowrap;
         }
 
         .register-btn:hover {
-            background: var(--primary-pink);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(238, 164, 215, 0.3);
+            box-shadow: 0 0 30px rgba(216, 79, 198, 0.6);
         }
 
-        /* Main content wrapper */
         main {
+            position: relative;
+            z-index: 1;
             width: 100%;
         }
 
-        /* Hero Section with pink background elements */
+        section {
+            padding: 6rem 0;
+            scroll-margin-top: 90px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero */
         .hero {
-            min-height: 110vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            background: linear-gradient(135deg, #000000 0%, #1a0d1a 100%);
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(238, 164, 215, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(238, 164, 215, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(238, 164, 215, 0.1) 0%, transparent 50%);
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-        }
-
-        .network-animation {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            text-align: center;
         }
 
         .hero-content {
-            max-width: 800px;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
+            max-width: 900px;
+            padding: 6rem 2rem 2rem;
         }
 
-        .hero-logo {
-            width: 187px;
-            height: 187px;
-            margin: 0 auto 1.5rem;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .hero .eyebrow {
+            display: inline-block;
+            font-family: var(--font-tech);
+            color: var(--cream);
+            font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+            font-weight: 500;
+            letter-spacing: 0.5em;
+            text-indent: 0.5em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 1rem;
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(2.4rem, 7.5vw, 5.2rem);
+            line-height: 1.12;
+            text-transform: uppercase;
+            color: var(--pink);
+            text-shadow:
+                0 0 12px rgba(242, 167, 227, 0.55),
+                0 0 45px rgba(216, 79, 198, 0.45),
+                0 0 90px rgba(216, 79, 198, 0.25);
+            margin-bottom: 1.8rem;
             animation: fadeInUp 1s ease;
         }
 
         .hero .date {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease 0.2s backwards;
+            font-family: var(--font-tech);
+            font-size: clamp(0.95rem, 2.2vw, 1.35rem);
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.15s backwards;
+        }
+
+        .hero .date .sep {
+            color: var(--magenta);
+            margin: 0 0.6rem;
         }
 
         .hero .tagline {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            animation: fadeInUp 1s ease 0.4s backwards;
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
+            color: var(--text-muted);
+            margin: 0 auto 2.8rem;
+            line-height: 1.9;
+            max-width: 640px;
+            animation: fadeInUp 1s ease 0.3s backwards;
         }
 
         .hero-cta {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             justify-content: center;
-            animation: fadeInUp 1s ease 0.6s backwards;
+            animation: fadeInUp 1s ease 0.45s backwards;
             flex-wrap: wrap;
         }
 
-        .btn-primary {
-            background: var(--white);
-            color: black;
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
+        .btn-primary,
+        .btn-secondary {
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 1rem 2.2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
             display: inline-block;
         }
 
+        .btn-primary {
+            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            color: var(--bg-0);
+            box-shadow: 0 0 25px rgba(216, 79, 198, 0.4);
+        }
+
         .btn-primary:hover {
-            background: var(--primary-pink);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(238, 164, 215, 0.3);
+            box-shadow: 0 0 45px rgba(216, 79, 198, 0.65);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--white);
-            padding: 1rem 2rem;
-            border: 2px solid var(--white);
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
+            color: var(--pink);
+            border: 1px solid rgba(242, 167, 227, 0.55);
         }
 
         .btn-secondary:hover {
-            background: var(--primary-pink);
-            color: black;
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(238, 164, 215, 0.3);
-            border: 2px solid var(--primary-pink);
+            color: var(--text);
+            border-color: var(--pink);
+            box-shadow: 0 0 30px rgba(216, 79, 198, 0.35);
         }
 
         @keyframes fadeInUp {
@@ -268,234 +371,231 @@
             }
         }
 
-        /* Sections */
-        section {
-            padding: 5rem 0;
-            background: var(--bg-dark);
-        }
-
-        section:nth-child(even) {
-            background: var(--bg-section);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        /* Section headings */
+        .kicker {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.45em;
+            text-indent: 0.45em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            text-align: center;
+            margin-bottom: 1rem;
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-family: var(--font-tech);
+            font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
             text-align: center;
-            margin-bottom: 3rem;
-            color: var(--text-light);
-        }
-
-        /* Icon styles for track and expect sections */
-        .icon-wrapper {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--very-dark-pink), #441f4a);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-bottom: 1.5rem;
+            color: var(--text);
         }
 
-        .expect-icon-wrapper {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--very-dark-pink), #441f4a);
-            border-radius: 50%;
+        .section-lead {
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto 1.2rem;
+            font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--pink);
+            text-shadow: 0 0 25px rgba(216, 79, 198, 0.35);
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto 2rem;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.2rem 1.5rem;
+            background: linear-gradient(165deg, rgba(242, 167, 227, 0.07), rgba(122, 47, 158, 0.1));
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 167, 227, 0.45);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18);
+        }
+
+        .stat-number {
+            font-family: var(--font-tech);
+            font-size: clamp(2.1rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--pink);
+            text-shadow: 0 0 25px rgba(216, 79, 198, 0.45);
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Award laurel badge */
+        .award-badge {
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 0.9rem;
+            margin: 0.5rem auto 2.5rem;
         }
 
-        /* Tracks Section */
-        .tracks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+        .award-badge .laurel {
+            width: 40px;
+            height: 84px;
+            flex-shrink: 0;
+            color: rgba(242, 167, 227, 0.85);
+            filter: drop-shadow(0 0 12px rgba(216, 79, 198, 0.45));
         }
 
-        .track-card {
-            background: var(--bg-section);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 30px rgba(238, 164, 215, 0.1);
-            transition: all 0.3s ease;
-            border-top: 4px solid var(--very-dark-pink);
-            border: 1px solid rgba(238, 164, 215, 0.1);
+        .award-badge .laurel.right {
+            transform: scaleX(-1);
         }
 
-        .track-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(238, 164, 215, 0.2);
-            border-color: var(--very-dark-pink);
+        .award-text {
+            text-align: center;
         }
 
-        .track-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
+        .award-text .award-context {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-indent: 0.28em;
+            text-transform: uppercase;
+            color: var(--cream);
+            margin-bottom: 0.35rem;
         }
 
-        .track-card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
+        .award-text .award-title {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--pink);
+            text-shadow: 0 0 22px rgba(216, 79, 198, 0.55);
         }
 
-        /* What to Expect */
+        .award-text .award-sub {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-faint);
+            margin-top: 0.4rem;
+        }
+
+        .section-cta {
+            text-align: center;
+            margin-top: 2.8rem;
+        }
+
+        /* What to expect */
         .expect-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            gap: 2rem;
             margin-top: 3rem;
         }
 
         .expect-item {
             text-align: center;
+            padding: 2.5rem 1.8rem;
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.08));
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .expect-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 167, 227, 0.4);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.15);
+        }
+
+        .expect-icon-wrapper {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--purple), #3d1554);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(122, 47, 158, 0.5);
         }
 
         .expect-item h3 {
-            font-size: 1.3rem;
+            font-family: var(--font-tech);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             margin-bottom: 1rem;
-            color: var(--text-light);
+            color: var(--text);
         }
 
         .expect-item p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.8;
         }
 
-       /* Participants */
-.participant-logos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-    align-items: center;
-}
-
-.participant-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 80px;
-    padding: 1rem;
-    background: #fff; /* changed to white */
-    border: 1px solid rgba(238, 164, 215, 0.1);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-a.participant-logo:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(238, 164, 215, 0.2);
-    border-color: var(--primary-pink);
-}
-
-div.participant-logo {
-    cursor: default;
-}
-
-.participant-logo img,
-.participant-logo object {
-    max-width: 100%;
-    max-height: 60px;
-    width: 100%;
-    height: 60px;
-    pointer-events: none;
-    display: block;
-    text-align: center;
-    line-height: 60px;
-    color: var(--primary-pink);
-    font-size: 0.9rem;
-    font-weight: 500;
-    filter: none; /* ensure logos stay in original colors */
-}
-
-/* Why Zurich */
-.why-zurich {
-    background: #000; /* solid black background */
-    color: #fff;      /* white text */
-    position: relative;
-    overflow: hidden;
-    padding: 3rem 2rem;
-}
-
-.why-zurich .section-title {
-    color: #fff; /* ensure headings are white */
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.stat-card {
-    text-align: center;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05); /* subtle white overlay for contrast */
-    border: 2px solid var(--primary-pink); /* ✅ pink border */
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: var(--primary-pink);
-}
-
-.stat-number {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--primary-pink);
-}
-
-.stat-label {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    color: var(--primary-pink);
-}
-
-.why-zurich p {
-    color: #fff;
-}
-
-        /* Venue Section */
+        /* Venue */
         .venue-grid {
             display: grid;
             grid-template-columns: 1.1fr 1.3fr 1.1fr;
             gap: 1.5rem;
             margin-top: 3rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .venue-image {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
+            border-radius: 18px;
             height: 400px;
-            background: var(--bg-section);
-            border: 1px solid rgba(238, 164, 215, 0.1);
+            border: 1px solid var(--border-soft);
+        }
+
+        .venue-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 55%, rgba(10, 5, 20, 0.55));
+            pointer-events: none;
         }
 
         .venue-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .venue-image:nth-child(2) img {
-            object-fit: contain;
-            background: #1a1a1a;
+            transition: transform 0.5s ease;
         }
 
         .venue-image:hover img {
@@ -504,101 +604,53 @@ div.participant-logo {
 
         .venue-description {
             text-align: center;
-            max-width: 800px;
+            max-width: 780px;
             margin: 0 auto;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.7);
-            grid-column: 1 / -1;
-            justify-self: center;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-muted);
         }
 
-        #venue-map-title {
-            grid-column: 1 / -1;  /* span all grid columns */
-            text-align: center;   /* center the text */
+        /* Notify */
+        .notify-box {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        /* Full-width map block inside the grid */
-        .venue-map {
-        grid-column: 1 / -1;      /* spans all columns */
-        height: 500px;            /* a bit taller for readability */
-        }
-
-        /* Ensure the PNG fits without cropping and has a neutral backdrop */
-        .venue-map img {
-        object-fit: contain;
-        background: #1a1a1a;
-        }
-
-        /* Optional: a subtle download button overlay */
-        .map-download {
-        position: absolute;
-        right: 12px;
-        bottom: 12px;
-        padding: 0.5rem 0.75rem;
-        font-size: 0.9rem;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: #fff;
-        text-decoration: none;
-        backdrop-filter: blur(6px);
-        transition: transform 0.2s ease, background 0.2s ease;
-        }
-
-        .map-download:hover {
-        transform: translateY(-1px);
-        background: rgba(255, 255, 255, 0.15);
-        }
-
-
-        /* Registration Form Section */
-        .form-section {
+        .notify-box iframe {
             width: 100%;
-            height: 800px;
-            border: none;
-            border-radius: 10px;
-            margin-bottom: 6rem;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(242, 167, 227, 0.3);
+            border-radius: 18px;
+            background: transparent;
+            margin-top: 2rem;
+            box-shadow: 0 0 60px rgba(216, 79, 198, 0.12);
         }
 
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            border: 1px solid rgba(238, 164, 215, 0.1);
-            border-radius: 15px;
+        .notify-fallback {
+            margin-top: 1.5rem;
+            color: var(--text-faint);
+            font-size: 0.95rem;
         }
 
-        /* Loading state for iframe */
-        .form-loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 400px;
-            color: var(--text-light);
-            font-size: 1.1rem;
+        .notify-fallback a {
+            color: var(--pink);
+            text-decoration: none;
         }
 
-        .form-loading::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary-blue);
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            margin-left: 10px;
-            animation: spin 1s linear infinite;
+        .notify-fallback a:hover {
+            text-decoration: underline;
         }
 
         /* Footer */
         footer {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            padding: 3rem 0;
+            position: relative;
+            z-index: 1;
+            color: var(--text);
+            padding: 3.5rem 0;
             text-align: center;
-            border-top: 1px solid rgba(238, 164, 215, 0.1);
+            border-top: 1px solid var(--border-soft);
+            background: rgba(10, 5, 20, 0.6);
         }
 
         .footer-content {
@@ -607,32 +659,36 @@ div.participant-logo {
             padding: 0 2rem;
         }
 
+        .footer-content > p {
+            color: var(--text-faint);
+            font-size: 0.95rem;
+        }
+
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-muted);
             text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: var(--primary-pink);
+            color: var(--pink);
         }
 
-        /* Mobile Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .date {
-                font-size: 1.2rem;
+            section {
+                padding: 4.5rem 0;
             }
 
             .nav-links {
@@ -644,14 +700,6 @@ div.participant-logo {
                 align-items: center;
             }
 
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .participant-logos {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            
             .venue-grid {
                 display: flex;
                 overflow-x: auto;
@@ -667,89 +715,24 @@ div.participant-logo {
                 scroll-snap-align: center;
                 height: 280px;
             }
-
-            .venue-image:first-child {
-                flex: 0 0 90%;
-            }
-
-            .participant-logos.hosted-section {
-                grid-template-columns: 1fr !important;
-                max-width: 250px;
-                margin: 0 auto;
-            }
-
-            .participant-logo {
-                min-height: 70px;
-            }
-
-            .participant-logo object {
-                max-height: 50px;
-                max-width: 130px;
-            }
         }
 
         @media (max-width: 480px) {
-            .participant-logos {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .participant-logo {
-                padding: 0.75rem;
-            }
-
-            .participant-logo object {
-                max-height: 45px;
-                max-width: 110px;
-            }
-
             .venue-image {
                 height: 240px;
             }
 
-            .venue-description {
-                font-size: 1rem;
+            .hero .eyebrow {
+                letter-spacing: 0.32em;
+                text-indent: 0.32em;
             }
-        }
-
-        @media (max-width: 768px) {
-        /* Turn the grid back into a normal vertical flow */
-        .venue-grid { display: block; margin: 0; }
-
-        /* Horizontal scroller only for the three photos */
-        .venue-grid { overflow-x: hidden; }
-        .venue-grid .venue-image { display: inline-block; vertical-align: top; }
-        .venue-grid .venue-image:nth-of-type(-n+3) {
-            /* first 3 .venue-image elements become the carousel */
-            width: 85vw;
-            height: 280px;
-            margin-right: 1rem;
-            scroll-snap-align: center;
-        }
-        /* Wrap the first three in a scrolling row */
-        .venue-grid::before, .venue-grid::after { content: ""; display: table; } /* layout guard */
-        .venue-grid { padding: 0 1rem 1rem; }
-        .venue-grid { scroll-snap-type: x mandatory; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
-        .venue-grid .venue-image:nth-of-type(-n+3) { white-space: normal; }
-
-        /* Map and texts full width */
-        .venue-map,
-        #venue-map-title,
-        .venue-description { display: block; white-space: normal; }
-        .venue-map { height: 340px; }
-        .venue-map img { object-fit: contain; background:#1a1a1a; }
-        }
-
-        @media (max-width: 480px) {
-        .venue-grid .venue-image:nth-of-type(-n+3) { height: 240px; }
-        .venue-map { height: 300px; }
         }
 
         /* Scroll animations */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .fade-in.visible {
@@ -764,175 +747,120 @@ div.participant-logo {
     </style>
 </head>
 <body>
+    <div class="backdrop" aria-hidden="true"></div>
     <a href="#main" class="skip-link">Skip to main content</a>
 
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <span>ZAISD</span>
-            </a>
             <ul class="nav-links">
-                <li><a href="#tracks">Focus Tracks</a></li>
                 <li><a href="#expect">What to Expect</a></li>
-                <li><a href="#participants">Who's Participating</a></li>
                 <li><a href="#why">Why Zurich</a></li>
                 <li><a href="#venue">Venue</a></li>
+                <li><a href="/2025/">2025 Edition</a></li>
             </ul>
-            <a href="assets/Agenda.pdf" class="register-btn" target="_blank" rel="noopener noreferrer">Agenda</a>
+            <a href="#notify" class="register-btn">Get notified</a>
         </div>
     </nav>
 
     <main id="main">
         <section id="top" class="hero" role="banner">
-            <svg class="network-animation" viewBox="0 0 1200 800" aria-hidden="true">
-                <defs>
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                        <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <line x1="100" y1="100" x2="300" y2="200" stroke="rgba(238,164,215,0.2)" stroke-width="1">
-                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
-                </line>
-                <line x1="300" y1="200" x2="500" y2="150" stroke="rgba(238,164,215,0.2)" stroke-width="1">
-                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" begin="0.5s" repeatCount="indefinite"/>
-                </line>
-                <line x1="500" y1="150" x2="700" y2="300" stroke="rgba(238,164,215,0.2)" stroke-width="1">
-                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" begin="1s" repeatCount="indefinite"/>
-                </line>
-                <circle cx="100" cy="100" r="3" fill="rgba(238,164,215,0.4)" filter="url(#glow)">
-                    <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="300" cy="200" r="3" fill="rgba(238,164,215,0.4)" filter="url(#glow)">
-                    <animate attributeName="r" values="3;5;3" dur="3s" begin="0.5s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="500" cy="150" r="3" fill="rgba(238,164,215,0.4)" filter="url(#glow)">
-                    <animate attributeName="r" values="3;5;3" dur="3s" begin="1s" repeatCount="indefinite"/>
-                </circle>
-            </svg>
             <div class="hero-content">
-                <svg class="hero-logo" viewBox="0 0 120 120" role="img" aria-labelledby="hero-logo-title">
-                    <title id="hero-logo-title">Zurich AI Safety Day Network Logo</title>
-                    <!-- Full logo WITHOUT outer connections, slightly bigger -->
-                    <circle cx="60" cy="60" r="10" fill="white" stroke="white" stroke-width="1"/>
-                    <circle cx="60" cy="35" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <circle cx="80" cy="47" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <circle cx="80" cy="73" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <circle cx="60" cy="85" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <circle cx="40" cy="73" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <circle cx="40" cy="47" r="6" fill="rgba(255,255,255,0.9)"/>
-                    <!-- Inner connections only -->
-                    <line x1="60" y1="60" x2="60" y2="35" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <line x1="60" y1="60" x2="80" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <line x1="60" y1="60" x2="80" y2="73" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <line x1="60" y1="60" x2="60" y2="85" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <line x1="60" y1="60" x2="40" y2="73" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <line x1="60" y1="60" x2="40" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                    <clipPath id="centerCircle">
-                        <circle cx="60" cy="60" r="10"/>
-                    </clipPath>
-                    <g clip-path="url(#centerCircle)">
-                        <path d="M 50 50 L 70 70 L 50 70 Z" fill="#3498DB"/>
-                    </g>
-                    <circle cx="60" cy="60" r="10" fill="none" stroke="white" stroke-width="2"/>
-                </svg>
-                <h1>Zurich AI Safety Day</h1>
-                <p class="date">September 27, 2025 • ETH Zurich</p>
-                <p class="tagline">Join 200+ researchers, engineers, students, and professionals from Zurich's tech ecosystem for a one-day conference on AI Safety. <br>Learn from technical pioneers, engage with governance experts, and discover opportunities to contribute. <br>Registrations are now closed.</p>
+                <span class="eyebrow">Save the date</span>
+                <h1>Swiss AI Safety Days</h1>
+                <p class="date">7&ndash;8 November 2026 <span class="sep">&bull;</span> ETH Zurich</p>
+                <p class="tagline">Two days. One venue. Europe's AI safety community in one place: leading researchers, policymakers, builders, and the people about to join them.<br>Spots are limited. In 2025, applications outnumbered them.</p>
                 <div class="hero-cta">
-                    <a href="assets/Agenda.pdf" class="btn-primary" target="_blank" rel="noopener noreferrer">Agenda</a>
-                    <!-- <a href="assets/Agenda.pdf" class="btn-secondary" target="_blank" rel="noopener noreferrer">Agenda</a> -->
+                    <a href="#notify" class="btn-primary">Get notified</a>
+                    <a href="#highlights" class="btn-secondary">2025 highlights</a>
                 </div>
             </div>
         </section>
 
-        <!-- Focus Tracks -->
-        <section id="tracks" class="tracks fade-in" role="region" aria-labelledby="tracks-title">
+        <!-- 2025 Highlights -->
+        <section id="highlights" class="fade-in" role="region" aria-labelledby="highlights-title">
             <div class="container">
-                <h2 id="tracks-title" class="section-title">Three Focus Tracks</h2>
-                <div class="tracks-grid">
-                    <article class="track-card">
-                        <div class="icon-wrapper" aria-hidden="true">
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="white">
-                                <!-- Lock with circuit pattern -->
-                                <path d="M9 13 L9 10 C9 6, 11 3, 15 3 C19 3, 21 6, 21 10 L21 13" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-                                <rect x="7" y="13" width="16" height="14" rx="2" fill="none" stroke="white" stroke-width="2"/>
-                                <!-- Circuit pattern inside lock -->
-                                <circle cx="15" cy="18" r="1.5" fill="white"/>
-                                <circle cx="11" cy="22" r="1" fill="white"/>
-                                <circle cx="19" cy="22" r="1" fill="white"/>
-                                <line x1="15" y1="18" x2="11" y2="22" stroke="white" stroke-width="1" opacity="0.8"/>
-                                <line x1="15" y1="18" x2="19" y2="22" stroke="white" stroke-width="1" opacity="0.8"/>
-                                <line x1="11" y1="22" x2="19" y2="22" stroke="white" stroke-width="1" opacity="0.6"/>
-                            </svg>
-                        </div>
-                        <h3>Technical AI Safety</h3>
-                        <p>Explore cutting-edge research in interpretability, scalable oversight, and alignment benchmarks. Connect with researchers pushing the boundaries of AI safety.</p>
-                    </article>
-                    <article class="track-card">
-                        <div class="icon-wrapper" aria-hidden="true">
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="white">
-                                <!-- Shield with checkmark -->
-                                <path d="M15 2 L25 7 L25 16 C25 22 15 27 15 27 C15 27 5 22 5 16 L5 7 Z" stroke="white" stroke-width="1.5" fill="none"/>
-                                <path d="M10 15 L13 18 L20 11" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3>AI Governance</h3>
-                        <p>Navigate the policy landscape, regulatory frameworks, and governance mechanisms essential for responsible AI deployment at scale.</p>
-                    </article>
-                    <article class="track-card">
-                        <div class="icon-wrapper" aria-hidden="true">
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="white">
-                                <!-- Building blocks pyramid -->
-                                <!-- Bottom row - 3 blocks -->
-                                <rect x="5" y="20" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
-                                <rect x="12" y="20" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
-                                <rect x="19" y="20" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
-                                <!-- Middle row - 2 blocks -->
-                                <rect x="8.5" y="13" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
-                                <rect x="15.5" y="13" width="6" height="6" fill="none" stroke="white" stroke-width="1.5"/>
-                                <!-- Top block -->
-                                <rect x="12" y="6" width="6" height="6" fill="white" stroke="white" stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <h3>Field Building & Careers</h3>
-                        <p>Discover success stories, funding pathways, and talent pipeline development. Find your path in the growing AI safety ecosystem.</p>
-                    </article>
+                <span class="kicker">The 2025 edition</span>
+                <h2 id="highlights-title" class="section-title">The First Edition Set the Bar</h2>
+                <div class="award-badge">
+                    <svg class="laurel" viewBox="0 0 60 120" aria-hidden="true">
+                        <path d="M44 114 C 20 94, 10 60, 32 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <g fill="currentColor">
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(38 106) rotate(-155)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(26 92) rotate(-125)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(18 72) rotate(-100)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(16 50) rotate(-78)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(20 30) rotate(-52)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(30 13) rotate(-28)"/>
+                        </g>
+                    </svg>
+                    <div class="award-text">
+                        <span class="award-context">Swiss AI Weeks 2025</span>
+                        <span class="award-title">Best Event</span>
+                        <span class="award-sub">Recognized among more than 230 events across Switzerland</span>
+                    </div>
+                    <svg class="laurel right" viewBox="0 0 60 120" aria-hidden="true">
+                        <path d="M44 114 C 20 94, 10 60, 32 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <g fill="currentColor">
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(38 106) rotate(-155)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(26 92) rotate(-125)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(18 72) rotate(-100)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(16 50) rotate(-78)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(20 30) rotate(-52)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(30 13) rotate(-28)"/>
+                        </g>
+                    </svg>
+                </div>
+                <p class="section-intro">One day at ETH Zurich. More than 350 applications. New collaborations, new careers, and an event attendees rated among the best uses of their time. Here is what happened when Europe's AI safety community first met in Zurich.</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">210</div>
+                        <div class="stat-label">Attendees</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">21</div>
+                        <div class="stat-label">AI Safety Organizations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.6/5</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">330+</div>
+                        <div class="stat-label">Meaningful Connections Made</div>
+                    </div>
+                </div>
+                <div class="section-cta">
+                    <a href="/2025/" class="btn-secondary">Explore the 2025 Edition</a>
                 </div>
             </div>
         </section>
 
         <!-- What to Expect -->
-        <section id="expect" class="expect fade-in" role="region" aria-labelledby="expect-title">
+        <section id="expect" class="fade-in" role="region" aria-labelledby="expect-title">
             <div class="container">
+                <span class="kicker">2026</span>
                 <h2 id="expect-title" class="section-title">What to Expect</h2>
+                <p class="section-intro">This year, the event doubles to two full days. The full program lands later this year. Three things are already certain:</p>
                 <div class="expect-grid">
                     <article class="expect-item">
                         <div class="expect-icon-wrapper" aria-hidden="true">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                                <!-- Podium/stage icon -->
                                 <rect x="8" y="15" width="24" height="20" rx="2" fill="none" stroke="white" stroke-width="2"/>
                                 <circle cx="20" cy="10" r="3" fill="white"/>
                                 <path d="M15 25 L25 25" stroke="white" stroke-width="2" stroke-linecap="round"/>
                                 <path d="M12 30 L28 30" stroke="white" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <h3>Keynotes & Sessions</h3>
-                        <p>Engage with thought leaders across technical research, governance, and field-building tracks. Sessions designed for all expertise levels.</p>
+                        <h3>Talks &amp; Workshops</h3>
+                        <p>Learn from the people shaping the field. Talks and hands-on workshops across technical AI safety, governance, and careers, whether it's your first step or your life's work.</p>
                     </article>
                     <article class="expect-item">
                         <div class="expect-icon-wrapper" aria-hidden="true">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                                <!-- Organization fair with 2 wider booths -->
-                                <!-- Booths (tables) -->
                                 <rect x="7" y="18" width="12" height="6" fill="none" stroke="white" stroke-width="1.5"/>
                                 <rect x="21" y="18" width="12" height="6" fill="none" stroke="white" stroke-width="1.5"/>
-                                <!-- People behind booths (staff) -->
                                 <circle cx="13" cy="14" r="1.5" fill="white"/>
                                 <circle cx="27" cy="14" r="1.5" fill="white"/>
-                                <!-- People in front (attendees) -->
                                 <circle cx="10" cy="28" r="1.5" fill="white"/>
                                 <circle cx="16" cy="30" r="1.5" fill="white"/>
                                 <circle cx="24" cy="30" r="1.5" fill="white"/>
@@ -941,25 +869,20 @@ div.participant-logo {
                             </svg>
                         </div>
                         <h3>Organization Fair</h3>
-                        <p>Connect with 10+ leading AI safety organizations eager to meet potential collaborators, researchers, and team members.</p>
+                        <p>Meet the organizations working on AI safety, face to face. The 2025 edition led directly to new roles and collaborations across the ecosystem. Yours could be next.</p>
                     </article>
                     <article class="expect-item">
                         <div class="expect-icon-wrapper" aria-hidden="true">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                                <!-- Larger network without square frame -->
-                                <!-- Corner nodes -->
                                 <circle cx="10" cy="10" r="2.5" fill="white"/>
                                 <circle cx="30" cy="10" r="2.5" fill="white"/>
                                 <circle cx="30" cy="30" r="2.5" fill="white"/>
                                 <circle cx="10" cy="30" r="2.5" fill="white"/>
-                                <!-- Center node -->
                                 <circle cx="20" cy="20" r="3" fill="white"/>
-                                <!-- Additional nodes -->
                                 <circle cx="20" cy="8" r="2" fill="white"/>
                                 <circle cx="32" cy="20" r="2" fill="white"/>
                                 <circle cx="20" cy="32" r="2" fill="white"/>
                                 <circle cx="8" cy="20" r="2" fill="white"/>
-                                <!-- Connections -->
                                 <line x1="10" y1="10" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
                                 <line x1="30" y1="10" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
                                 <line x1="30" y1="30" x2="20" y2="20" stroke="white" stroke-width="1.5" opacity="0.7"/>
@@ -968,111 +891,27 @@ div.participant-logo {
                                 <line x1="32" y1="20" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
                                 <line x1="20" y1="32" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
                                 <line x1="8" y1="20" x2="20" y2="20" stroke="white" stroke-width="1" opacity="0.6"/>
-                                <!-- Outer connections -->
-                                <line x1="10" y1="10" x2="30" y2="10" stroke="white" stroke-width="1" opacity="0.4"/>
-                                <line x1="30" y1="10" x2="30" y2="30" stroke="white" stroke-width="1" opacity="0.4"/>
-                                <line x1="30" y1="30" x2="10" y2="30" stroke="white" stroke-width="1" opacity="0.4"/>
-                                <line x1="10" y1="30" x2="10" y2="10" stroke="white" stroke-width="1" opacity="0.4"/>
                             </svg>
                         </div>
-                        <h3>Structured Networking</h3>
-                        <p>Participate in carefully designed activities that match you with peers, mentors, and hiring teams based on your interests.</p>
+                        <h3>High-Density Networking</h3>
+                        <p>Skip the small talk. Structured 1-1s, speed networking, and roundtables built to get you the connections that matter.</p>
                     </article>
                 </div>
-            </div>
-        </section>
-
-        <!-- Participants -->
-        <section id="participants" class="participants fade-in" role="region" aria-labelledby="participants-title">
-            <div class="container">
-                <h2 id="participants-title" class="section-title">Who's Participating</h2>
-                <div class="participant-logos">
-                    <a href="https://www.aisi.gov.uk/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/UK-AISI.svg" type="image/svg+xml">UK AISI</object>
-                    </a>
-                    <a href="https://far.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/FARAI.svg" type="image/svg+xml">FAR.AI</object>
-                    </a>
-                    <a href="https://apolloresearch.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/Apollo.svg" type="image/svg+xml">Apollo Research</object>
-                    </a>
-                    <a href="https://www.anthropic.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/anthropic.svg" type="image/svg+xml">Apollo Research</object>
-                    </a>
-                    <a href="https://goodfire.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/goodfire.svg" type="image/svg+xml">Goodfire</object>
-                    </a>
-                    <a href="https://palisaderesearch.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/Palisade.svg" type="image/svg+xml">Palisade Research</object>
-                    </a>
-                    <a href="https://simoninstitute.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/SI.svg" type="image/svg+xml">Simon Institute</object>
-                    </a>
-                    <a href="https://arcadiaimpact.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/arcadia.svg" type="image/svg+xml">Arcadia Impact</object>
-                    </a>
-                    <a href="https://futureoflife.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/fli.svg" type="image/svg+xml">Future of Life Institute</object>
-                    </a>
-                    <a href="https://cfg.eu/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/cfg.svg" type="image/svg+xml">Center for Future Generations</object>
-                    </a>
-                    <a href="https://peaks-office.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/peaks.svg" type="image/svg+xml">Peaks</object>
-                    </a>
-                    <a href="https://www.matsprogram.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/MATS.svg" type="image/svg+xml">MATS</object>
-                    </a>
-                    <a href="https://impactacademy.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/impact-academy.svg" type="image/svg+xml">Impact Academy</object>
-                    </a>
-                    <a href="https://highimpactprofessionals.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/HIP.svg" type="image/svg+xml">HIP</object>
-                    </a>
-                    <a href="https://successif.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/Successif.svg" type="image/svg+xml">SuccessIf</object>
-                    </a>
-                    <a href="https://erafellowship.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/era.svg" type="image/svg+xml">SuccessIf</object>
-                    </a>
-                    <a href="https://www.pivotal-research.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/pivotal.svg" type="image/svg+xml">SuccessIf</object>
-                    </a>
-                    <a href="https://pibbss.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/pibbs.svg" type="image/svg+xml">SuccessIf</object>
-                    </a>
-                    <a href="https://zhijing-jin.com/home/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        Jinesis Lab
-                    </a>     
-                    <a href="https://apartresearch.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/apart_logo_black.svg" type="image/svg+xml">SuccessIf</object>
-                    </a>    
-                    <a href="https://www.arena.education/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="assets/Arena.svg" type="image/svg+xml">Arena</object>
-                    </a>             
-                </div>
-                <div style="text-align: center; margin-top: 3rem;">
-                    <p style="color: var(--text-light); font-size: 1.2rem; margin-bottom: 1.5rem;">
-                        Hosted by
-                    </p>
-                    <div style="max-width: 420px; margin: 0 auto;">
-                        <div class="participant-logos hosted-section">
-                            <a href="https://bluedot.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                                <object data="assets/BlueDot.svg" type="image/svg+xml">BlueDot Impact</object>
-                            </a>
-                            <a href="https://zurich.aisafety.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                                <object data="assets/ZAIS.svg" type="image/svg+xml">Zurich AI Safety (ZAIS)</object>
-                            </a>
-                        </div>
-                    </div>
+                <div class="section-cta">
+                    <a href="#notify" class="btn-primary">Get notified when applications open</a>
                 </div>
             </div>
         </section>
 
         <!-- Why Zurich -->
-        <section id="why" class="why-zurich fade-in" role="region" aria-labelledby="why-title">
+        <section id="why" class="fade-in" role="region" aria-labelledby="why-title">
             <div class="container">
+                <span class="kicker">Location</span>
                 <h2 id="why-title" class="section-title">Why Zurich?</h2>
+                <p class="section-lead">Neutral ground for a global challenge.</p>
+                <p class="section-intro">
+                    Switzerland's tradition of diplomacy makes it a natural intermediary among the world's leading AI powers. Zurich adds Europe's densest AI talent pool, ETH, and offices of 7 of the world's 10 leading AI companies, including Google, Meta, Microsoft, and Anthropic.
+                </p>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number">#1</div>
@@ -1091,68 +930,60 @@ div.participant-logo {
                         <div class="stat-label">AI Intensity Globally</div>
                     </div>
                 </div>
-                <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Switzerland leads global talent rankings and hosts 7 of the world's 10 leading AI companies including Google, Meta, Microsoft, and now Anthropic. With the highest AI engineer density in Europe and world-class institutions like ETH Zurich, it's becoming a natural hub for advancing AI safety research.
-                </p>
             </div>
         </section>
 
-         <!-- Venue Section -->
-        <section id="venue" class="venue fade-in" role="region" aria-labelledby="venue-title">
+        <!-- Venue -->
+        <section id="venue" class="fade-in" role="region" aria-labelledby="venue-title">
             <div class="container">
+                <span class="kicker">Venue</span>
                 <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>
                 <div class="venue-grid">
                     <div class="venue-image">
-                        <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior atrium with three-story classical arches, ornate balustrades, and natural light flooding the white marble space">
+                        <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior atrium with three-story classical arches, ornate balustrades, and natural light flooding the white marble space" loading="lazy">
                     </div>
                     <div class="venue-image">
-                        <img src="assets/eth-exterior.jpg" alt="Aerial view of ETH Zurich main building with its iconic dome and symmetrical architecture overlooking the Limmat river and Zurich cityscape">
+                        <img src="assets/eth-exterior.jpg" alt="Aerial view of ETH Zurich main building with its iconic dome and symmetrical architecture overlooking the Limmat river and Zurich cityscape" loading="lazy">
                     </div>
                     <div class="venue-image">
-                        <img src="assets/eth-interior-modern.jpg" alt="Modern ETH interior featuring bold concrete architecture, geometric staircases, and contemporary art installation">
+                        <img src="assets/eth-interior-modern.jpg" alt="Modern ETH interior featuring bold concrete architecture, geometric staircases, and contemporary art installation" loading="lazy">
                     </div>
                 </div>
                 <p class="venue-description">
-                    ETH Zurich stands as one of the world's leading universities for technology and science. Home to 21 Nobel Prize winners, including Albert Einstein, ETH combines 170 years of academic excellence with cutting-edge research facilities.
-                </p>
-                <!-- Venue Map (PNG) -->
-                <h3 id="venue-map-title" class="section-title">Venue Map</h3>
-                <div class="venue-image venue-map" role="img" aria-label="ETH Zurich event venue map">
-                <img src="assets/venue-map.png"
-                    alt="ETH Zurich venue map showing main building entrances, tram stops, and event rooms">
-                <a class="map-download" href="assets/venue-map.png" download>
-                    Download map (PNG)
-                </a>
-                <p class="venue-description">
-                    Adress: Rämistrasse 101, 8092 Zurich (Switzerland).<br><br>
-                    Detailed room assignments and venue logistics for participants can be found in event guide or on Swapcard.
+                    We return to the main building of ETH Zurich, one of the world's leading universities for science and technology. 21 Nobel laureates walked these halls, Albert Einstein among them. In November 2026, it's your turn.
                 </p>
             </div>
         </section>
 
-        <!-- Registration Form Section -->
-            <!-- <section class="form-section fade-in" role="region" aria-labelledby="register-title">
-                <h2 id="register-title" class="section-title">Register Now - Free to Attend</h2>
-                <div id="form-loading" class="form-loading">Loading registration form...</div>
-                <iframe 
-                    id="registration-form"
-                    class="form-container"
-                    src="https://airtable.com/embed/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form"
-                    frameborder="0" 
-                    onmousewheel=""
-                    width="100%" 
-                    height="800"
-                    style="background: transparent; border: none; display: none;"
-                    title="Zurich AI Safety Day Registration Form"
-                    loading="lazy">
-                </iframe>
-            </section>
-        -->
+        <!-- Get notified -->
+        <section id="notify" class="fade-in" role="region" aria-labelledby="notify-title">
+            <div class="container">
+                <div class="notify-box">
+                    <span class="kicker">Updates</span>
+                    <h2 id="notify-title" class="section-title">Be First in Line</h2>
+                    <p class="section-intro">Spots are limited and go to those who apply early. Leave your email and get one message when applications, speakers, and the program go live.<br>Nothing else, no spam.</p>
+                    <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></script>
+                    <iframe
+                        id="notify-form"
+                        class="airtable-embed airtable-dynamic-height"
+                        src="https://airtable.com/embed/apptCjWNpishp7FTc/shr6FQsFfwToBb7Ll"
+                        frameborder="0"
+                        title="Swiss AI Safety Days update notification signup form"
+                        width="100%"
+                        height="557"
+                        loading="lazy"
+                        style="background: transparent;">
+                    </iframe>
+                    <p class="notify-fallback">Questions or want to get involved? Write to <a href="mailto:team@aisafety.ch">team@aisafety.ch</a>.</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- Footer -->
+    <!-- Site footer -->
     <footer role="contentinfo">
         <div class="footer-content">
-            <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
+            <p>&copy; 2026 Swiss AI Safety Days. Building a safer AI future together.</p>
             <div class="footer-links">
                 <a href="mailto:team@aisafety.ch">Contact</a>
                 <a href="/code-of-conduct">Code of Conduct</a>
@@ -1174,7 +1005,7 @@ div.participant-logo {
             }
         }
 
-        // Navbar scroll effect with throttling and error handling
+        // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         if (navbar) {
             const handleScroll = throttle(function() {
@@ -1184,47 +1015,11 @@ div.participant-logo {
                     navbar.classList.remove('scrolled');
                 }
             }, 100);
-            
+
             window.addEventListener('scroll', handleScroll);
         }
 
-        // Smooth scrolling for anchor links with error handling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId && targetId !== '#') {
-                    if (targetId === '#top') {
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        const target = document.querySelector(targetId);
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
-                    }
-                }
-            });
-        });
-
-        // Logo click to top functionality
-        const logoNav = document.querySelector('.logo-nav');
-        if (logoNav) {
-            logoNav.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        }
-
-        // IntersectionObserver with fallback for older browsers
+        // Scroll animations
         if ('IntersectionObserver' in window) {
             const observerOptions = {
                 threshold: 0.1,
@@ -1243,32 +1038,11 @@ div.participant-logo {
                 observer.observe(el);
             });
         } else {
-            // Fallback for browsers without IntersectionObserver
             document.querySelectorAll('.fade-in').forEach(el => {
                 el.classList.add('visible');
             });
             document.body.classList.add('no-animation');
         }
-
-        // Handle iframe loading
-        const iframe = document.getElementById('registration-form');
-        const loadingDiv = document.getElementById('form-loading');
-        
-        if (iframe && loadingDiv) {
-            iframe.addEventListener('load', function() {
-                loadingDiv.style.display = 'none';
-                iframe.style.display = 'block';
-            });
-
-            // Fallback to show iframe after 5 seconds if load event doesn't fire
-            setTimeout(function() {
-                if (iframe.style.display === 'none') {
-                    loadingDiv.style.display = 'none';
-                    iframe.style.display = 'block';
-                }
-            }, 5000);
-        }
-
     </script>
 </body>
 </html>

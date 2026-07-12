@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0514">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+
+    <title>Zurich AI Safety Day 2025 - A Look Back at the First Edition</title>
+    <meta name="description" content="A look back at Zurich AI Safety Day 2025: 210 attendees, 21 AI safety organizations, and the Best Event of Swiss AI Weeks 2025 award.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Rubik+Glitch&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-0: #0a0514;
+            --bg-1: #130a23;
+            --bg-2: #1a0e2e;
+            --pink: #f2a7e3;
+            --pink-bright: #ff9ee8;
+            --magenta: #d84fc6;
+            --purple: #7a2f9e;
+            --cream: #f3e9d2;
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.72);
+            --text-faint: rgba(255, 255, 255, 0.55);
+            --border-soft: rgba(242, 167, 227, 0.18);
+            --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg-0);
+            overflow-x: hidden;
+        }
+
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(122, 47, 158, 0.28), transparent 65%),
+                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(216, 79, 198, 0.16), transparent 65%),
+                linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
+        }
+
+        .backdrop::before,
+        .backdrop::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.55;
+            will-change: transform;
+        }
+
+        .backdrop::before {
+            width: 55vw;
+            height: 40vh;
+            left: -12vw;
+            top: 30vh;
+            background: radial-gradient(closest-side, rgba(216, 79, 198, 0.5), rgba(216, 79, 198, 0) 70%);
+            animation: drift-a 26s ease-in-out infinite alternate;
+        }
+
+        .backdrop::after {
+            width: 50vw;
+            height: 45vh;
+            right: -15vw;
+            bottom: -10vh;
+            background: radial-gradient(closest-side, rgba(242, 140, 220, 0.42), rgba(122, 47, 158, 0) 70%);
+            animation: drift-b 32s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift-a {
+            from { transform: translate(0, 0) rotate(-8deg) scale(1); }
+            to   { transform: translate(10vw, -12vh) rotate(6deg) scale(1.15); }
+        }
+
+        @keyframes drift-b {
+            from { transform: translate(0, 0) rotate(5deg) scale(1.1); }
+            to   { transform: translate(-8vw, -10vh) rotate(-6deg) scale(0.95); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .backdrop::before,
+            .backdrop::after,
+            .fade-in {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--pink);
+            color: var(--bg-0);
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--pink);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 5, 20, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            border-bottom: 1px solid var(--border-soft);
+            box-shadow: 0 8px 30px rgba(216, 79, 198, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--pink);
+        }
+
+        .register-btn {
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--bg-0);
+            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            padding: 0.6rem 1.5rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 18px rgba(216, 79, 198, 0.35);
+            white-space: nowrap;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(216, 79, 198, 0.6);
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        section {
+            padding: 5.5rem 0;
+            scroll-margin-top: 90px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Page header */
+        .page-header {
+            padding: 11rem 0 5rem;
+            text-align: center;
+        }
+
+        .page-header .eyebrow {
+            display: inline-block;
+            font-family: var(--font-tech);
+            color: var(--cream);
+            font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+            font-weight: 500;
+            letter-spacing: 0.4em;
+            text-indent: 0.4em;
+            text-transform: uppercase;
+            margin-bottom: 1.8rem;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(2.2rem, 6.5vw, 4.2rem);
+            line-height: 1.12;
+            text-transform: uppercase;
+            color: var(--pink);
+            text-shadow:
+                0 0 12px rgba(242, 167, 227, 0.55),
+                0 0 45px rgba(216, 79, 198, 0.45),
+                0 0 90px rgba(216, 79, 198, 0.25);
+            margin-bottom: 1.5rem;
+        }
+
+        .page-header .subtitle {
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.9;
+            padding: 0 2rem;
+        }
+
+        /* Section headings */
+        .kicker {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.45em;
+            text-indent: 0.45em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-tech);
+            font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto 2rem;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.2rem 1.5rem;
+            background: linear-gradient(165deg, rgba(242, 167, 227, 0.07), rgba(122, 47, 158, 0.1));
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 167, 227, 0.45);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18);
+        }
+
+        .stat-number {
+            font-family: var(--font-tech);
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--pink);
+            text-shadow: 0 0 25px rgba(216, 79, 198, 0.45);
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Award laurel badge */
+        .award-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.9rem;
+            margin: 3rem auto 0;
+        }
+
+        .award-badge .laurel {
+            width: 40px;
+            height: 84px;
+            flex-shrink: 0;
+            color: rgba(242, 167, 227, 0.85);
+            filter: drop-shadow(0 0 12px rgba(216, 79, 198, 0.45));
+        }
+
+        .award-badge .laurel.right {
+            transform: scaleX(-1);
+        }
+
+        .award-text {
+            text-align: center;
+        }
+
+        .award-text .award-context {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-indent: 0.28em;
+            text-transform: uppercase;
+            color: var(--cream);
+            margin-bottom: 0.35rem;
+        }
+
+        .award-text .award-title {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--pink);
+            text-shadow: 0 0 22px rgba(216, 79, 198, 0.55);
+        }
+
+        .award-text .award-sub {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-faint);
+            margin-top: 0.4rem;
+        }
+
+        /* Buttons */
+        .btn-primary,
+        .btn-secondary {
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 1rem 2.2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            color: var(--bg-0);
+            box-shadow: 0 0 25px rgba(216, 79, 198, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 45px rgba(216, 79, 198, 0.65);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--pink);
+            border: 1px solid rgba(242, 167, 227, 0.55);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            color: var(--text);
+            border-color: var(--pink);
+            box-shadow: 0 0 30px rgba(216, 79, 198, 0.35);
+        }
+
+        .program-links {
+            text-align: center;
+            margin-top: 2.8rem;
+        }
+
+        /* Tracks */
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .track-card {
+            padding: 2.5rem 2rem;
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.08));
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .track-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 167, 227, 0.4);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.15);
+        }
+
+        .track-card h3 {
+            font-family: var(--font-tech);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--pink);
+        }
+
+        .track-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.8;
+        }
+
+        /* Participants */
+        .participant-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .participant-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            padding: 1rem;
+            background: #fff;
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        a.participant-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(216, 79, 198, 0.25);
+            border-color: var(--pink);
+        }
+
+        .participant-logo img,
+        .participant-logo object {
+            max-width: 100%;
+            max-height: 60px;
+            width: 100%;
+            height: 60px;
+            pointer-events: none;
+            display: block;
+            text-align: center;
+            line-height: 60px;
+            color: var(--purple);
+            font-size: 0.9rem;
+            font-weight: 500;
+            filter: none;
+        }
+
+        .hosted-section {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .hosted-label {
+            font-family: var(--font-tech);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-indent: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Resources */
+        .resource-list {
+            max-width: 700px;
+            margin: 2rem auto 0;
+            list-style: none;
+        }
+
+        .resource-list li {
+            padding: 1.3rem 1.6rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.08));
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .resource-list li:hover {
+            border-color: rgba(242, 167, 227, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .resource-list a {
+            color: var(--pink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .resource-list a:hover {
+            text-decoration: underline;
+        }
+
+        .resource-list span {
+            display: block;
+            color: var(--text-faint);
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+        }
+
+        .cta-section .hero-cta {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            color: var(--text);
+            padding: 3.5rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-soft);
+            background: rgba(10, 5, 20, 0.6);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content > p {
+            color: var(--text-faint);
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 0;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .participant-logos {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .participant-logos {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .participant-logo {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .no-animation .fade-in {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="backdrop" aria-hidden="true"></div>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#outcomes">Outcomes</a></li>
+                <li><a href="#program">Program</a></li>
+                <li><a href="#organizations">Organizations</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+            <a href="/" class="register-btn">2026 Edition</a>
+        </div>
+    </nav>
+
+    <main id="main">
+        <header class="page-header">
+            <span class="eyebrow">27 September 2025 &bull; ETH Zurich</span>
+            <h1>The 2025 Edition</h1>
+            <p class="subtitle">The first Zurich AI Safety Day brought together researchers, engineers, policymakers, and newcomers from across Europe for a full day of talks, workshops, and high-density networking.</p>
+        </header>
+
+        <!-- Outcomes -->
+        <section id="outcomes" class="fade-in" role="region" aria-labelledby="outcomes-title">
+            <div class="container">
+                <span class="kicker">Impact</span>
+                <h2 id="outcomes-title" class="section-title">Outcomes at a Glance</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">210</div>
+                        <div class="stat-label">Attendees</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">21</div>
+                        <div class="stat-label">AI Safety Organizations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">35</div>
+                        <div class="stat-label">Organization Representatives</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.6/5</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">330+</div>
+                        <div class="stat-label">Meaningful Connections Made</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">74%</div>
+                        <div class="stat-label">Rated It a Far Better Use of Time Than Alternatives</div>
+                    </div>
+                </div>
+                <div class="award-badge">
+                    <svg class="laurel" viewBox="0 0 60 120" aria-hidden="true">
+                        <path d="M44 114 C 20 94, 10 60, 32 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <g fill="currentColor">
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(38 106) rotate(-155)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(26 92) rotate(-125)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(18 72) rotate(-100)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(16 50) rotate(-78)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(20 30) rotate(-52)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(30 13) rotate(-28)"/>
+                        </g>
+                    </svg>
+                    <div class="award-text">
+                        <span class="award-context">Swiss AI Weeks 2025</span>
+                        <span class="award-title">Best Event</span>
+                        <span class="award-sub">Recognized among more than 230 events across Switzerland</span>
+                    </div>
+                    <svg class="laurel right" viewBox="0 0 60 120" aria-hidden="true">
+                        <path d="M44 114 C 20 94, 10 60, 32 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <g fill="currentColor">
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(38 106) rotate(-155)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(26 92) rotate(-125)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(18 72) rotate(-100)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(16 50) rotate(-78)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(20 30) rotate(-52)"/>
+                            <path d="M0 0 Q 9 -6 18 0 Q 9 6 0 0 Z" transform="translate(30 13) rotate(-28)"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Program -->
+        <section id="program" class="fade-in" role="region" aria-labelledby="program-title">
+            <div class="container">
+                <span class="kicker">Sessions</span>
+                <h2 id="program-title" class="section-title">The Program</h2>
+                <p class="section-intro">
+                    The day featured keynotes, panels, workshops, and lightning talks from speakers at organizations including Anthropic, Apollo Research, UK AISI, FAR.AI, the Future of Life Institute, the ETH AI Center, ERA, Successif, HIP, and Palisade Research, organized around three tracks. A two-hour organization fair and structured networking rounded out the program.
+                </p>
+                <div class="tracks-grid">
+                    <article class="track-card">
+                        <h3>Technical AI Safety</h3>
+                        <p>Research talks and panels on interpretability, evaluations, scalable oversight, and deceptive model behavior, including an evaluations panel with Apollo Research, Arcadia Impact, Palisade Research, and UK AISI.</p>
+                    </article>
+                    <article class="track-card">
+                        <h3>AI Governance</h3>
+                        <p>Sessions on the policy landscape, from EU policymaking experience to technical roadmaps for effective AI governance.</p>
+                    </article>
+                    <article class="track-card">
+                        <h3>Field Building &amp; Careers</h3>
+                        <p>Career-transition guidance, personalized advising roundtables, and pathways into AI safety for professionals and newcomers alike.</p>
+                    </article>
+                </div>
+                <div class="program-links">
+                    <a href="/assets/Agenda.pdf" class="btn-secondary" target="_blank" rel="noopener noreferrer">View the Full 2025 Agenda</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizations -->
+        <section id="organizations" class="fade-in" role="region" aria-labelledby="organizations-title">
+            <div class="container">
+                <span class="kicker">Org Fair</span>
+                <h2 id="organizations-title" class="section-title">Participating Organizations</h2>
+                <div class="participant-logos">
+                    <a href="https://www.aisi.gov.uk/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/UK-AISI.svg" type="image/svg+xml">UK AISI</object>
+                    </a>
+                    <a href="https://far.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/FARAI.svg" type="image/svg+xml">FAR.AI</object>
+                    </a>
+                    <a href="https://apolloresearch.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/Apollo.svg" type="image/svg+xml">Apollo Research</object>
+                    </a>
+                    <a href="https://www.anthropic.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/anthropic.svg" type="image/svg+xml">Anthropic</object>
+                    </a>
+                    <a href="https://goodfire.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/goodfire.svg" type="image/svg+xml">Goodfire</object>
+                    </a>
+                    <a href="https://palisaderesearch.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/Palisade.svg" type="image/svg+xml">Palisade Research</object>
+                    </a>
+                    <a href="https://simoninstitute.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/SI.svg" type="image/svg+xml">Simon Institute</object>
+                    </a>
+                    <a href="https://arcadiaimpact.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/arcadia.svg" type="image/svg+xml">Arcadia Impact</object>
+                    </a>
+                    <a href="https://futureoflife.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/fli.svg" type="image/svg+xml">Future of Life Institute</object>
+                    </a>
+                    <a href="https://cfg.eu/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/cfg.svg" type="image/svg+xml">Center for Future Generations</object>
+                    </a>
+                    <a href="https://peaks-office.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/peaks.svg" type="image/svg+xml">Peaks</object>
+                    </a>
+                    <a href="https://www.matsprogram.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/MATS.svg" type="image/svg+xml">MATS</object>
+                    </a>
+                    <a href="https://impactacademy.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/impact-academy.svg" type="image/svg+xml">Impact Academy</object>
+                    </a>
+                    <a href="https://highimpactprofessionals.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/HIP.svg" type="image/svg+xml">HIP</object>
+                    </a>
+                    <a href="https://successif.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/Successif.svg" type="image/svg+xml">Successif</object>
+                    </a>
+                    <a href="https://erafellowship.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/era.svg" type="image/svg+xml">ERA Fellowship</object>
+                    </a>
+                    <a href="https://www.pivotal-research.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/pivotal.svg" type="image/svg+xml">Pivotal Research</object>
+                    </a>
+                    <a href="https://pibbss.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/pibbs.svg" type="image/svg+xml">PIBBSS</object>
+                    </a>
+                    <a href="https://zhijing-jin.com/home/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        Jinesis Lab
+                    </a>
+                    <a href="https://apartresearch.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/apart_logo_black.svg" type="image/svg+xml">Apart Research</object>
+                    </a>
+                    <a href="https://www.arena.education/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                        <object data="/assets/Arena.svg" type="image/svg+xml">Arena</object>
+                    </a>
+                </div>
+                <div style="text-align: center; margin-top: 3.5rem;">
+                    <p class="hosted-label">Hosted by</p>
+                    <div class="participant-logos hosted-section">
+                        <a href="https://bluedot.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                            <object data="/assets/BlueDot.svg" type="image/svg+xml">BlueDot Impact</object>
+                        </a>
+                        <a href="https://zurich.aisafety.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
+                            <object data="/assets/ZAIS.svg" type="image/svg+xml">Zurich AI Safety (ZAIS)</object>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources -->
+        <section id="resources" class="fade-in" role="region" aria-labelledby="resources-title">
+            <div class="container">
+                <span class="kicker">Archive</span>
+                <h2 id="resources-title" class="section-title">Read More</h2>
+                <ul class="resource-list">
+                    <li>
+                        <a href="https://www.lesswrong.com/posts/sBWBEfa2WPPjsmzpG/learnings-from-the-zurich-ai-safety-day" target="_blank" rel="noopener noreferrer">Learnings from the Zurich AI Safety Day</a>
+                        <span>Our detailed write-up of what worked, what didn't, and what we measured.</span>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/posts/zurich-ai-safety_aisafety-zurichaisafetyday-aialignment-activity-7382396754752860162-19rr" target="_blank" rel="noopener noreferrer">Event Wrap-Up on LinkedIn</a>
+                        <span>Impressions and highlights shared after the event.</span>
+                    </li>
+                    <li>
+                        <a href="/2025/archive.html">Original 2025 Website</a>
+                        <span>The event website as it was published for the first edition.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section fade-in" role="region" aria-labelledby="cta-title">
+            <div class="container">
+                <span class="kicker">Next edition</span>
+                <h2 id="cta-title" class="section-title">Join Us in 2026</h2>
+                <p class="section-intro">The second edition takes place on 7&ndash;8 November 2026 at ETH Zurich, expanding to two full days.</p>
+                <div class="hero-cta">
+                    <a href="/#notify" class="btn-primary">Get notified</a>
+                    <a href="/" class="btn-secondary">Back to the 2026 Edition</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Site footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2026 Swiss AI Safety Days. Building a safer AI future together.</p>
+            <div class="footer-links">
+                <a href="mailto:team@aisafety.ch">Contact</a>
+                <a href="/code-of-conduct">Code of Conduct</a>
+                <a href="/">2026 Edition</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function throttle(func, delay) {
+            let lastCall = 0;
+            return function(...args) {
+                const now = new Date().getTime();
+                if (now - lastCall < delay) {
+                    return;
+                }
+                lastCall = now;
+                return func(...args);
+            }
+        }
+
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            const handleScroll = throttle(function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }, 100);
+
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        } else {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+            document.body.classList.add('no-animation');
+        }
+    </script>
+</body>
+</html>
