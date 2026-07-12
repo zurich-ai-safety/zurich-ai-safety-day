@@ -296,9 +296,21 @@
         /* Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-top: 2.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 540px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .stat-card {
@@ -878,10 +890,6 @@
                     <li>
                         <a href="https://www.linkedin.com/posts/zurich-ai-safety_aisafety-zurichaisafetyday-aialignment-activity-7382396754752860162-19rr" target="_blank" rel="noopener noreferrer">Event Wrap-Up on LinkedIn</a>
                         <span>Impressions and highlights shared after the event.</span>
-                    </li>
-                    <li>
-                        <a href="/2025/archive.html">Original 2025 Website</a>
-                        <span>The event website as it was published for the first edition.</span>
                     </li>
                 </ul>
             </div>
