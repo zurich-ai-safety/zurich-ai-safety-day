@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0514">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="alternate icon" href="/assets/favicon.ico">
-    <title>Code of Conduct - Zurich AI Safety Day</title>
-    <meta name="description" content="Code of Conduct for Zurich AI Safety Day - Our commitment to creating a safe, inclusive, and respectful environment for all participants.">
+
+    <title>Code of Conduct - Swiss AI Safety Days</title>
+    <meta name="description" content="Code of Conduct for Swiss AI Safety Days - Our commitment to creating a safe, inclusive, and respectful environment for all participants.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Rubik+Glitch&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -15,20 +21,43 @@
         }
 
         :root {
-            --primary-blue: #3498DB;
-            --dark-blue: #2980B9;
-            --text-dark: #2C3E50;
-            --text-light: #95A5A6;
-            --bg-light: #F8F9FA;
-            --white: #FFFFFF;
-            --accent: #E74C3C;
+            --bg-0: #0a0514;
+            --pink: #f2a7e3;
+            --magenta: #d84fc6;
+            --purple: #7a2f9e;
+            --cream: #f3e9d2;
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.72);
+            --text-faint: rgba(255, 255, 255, 0.55);
+            --border-soft: rgba(242, 167, 227, 0.18);
+            --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: var(--font-body);
             line-height: 1.6;
-            color: #2C3E50;
-            background: #F8F9FA;
+            color: var(--text);
+            background: var(--bg-0);
+            overflow-x: hidden;
+        }
+
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(122, 47, 158, 0.28), transparent 65%),
+                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(216, 79, 198, 0.16), transparent 65%),
+                linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--pink);
+            outline-offset: 3px;
+            border-radius: 4px;
         }
 
         /* Navigation */
@@ -36,14 +65,12 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(10, 5, 20, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             z-index: 1000;
             padding: 1rem 0;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(52, 152, 219, 0.1);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--border-soft);
         }
 
         .nav-container {
@@ -53,126 +80,158 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
         }
 
-        .logo-nav {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: var(--text-dark);
+        .nav-back {
+            color: var(--text-muted);
             text-decoration: none;
-            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
         }
 
-        .logo-svg {
-            width: 40px;
-            height: 40px;
-            margin-right: 12px;
+        .nav-back:hover {
+            color: var(--pink);
         }
 
         .register-btn {
-            background: var(--primary-blue);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--bg-0);
+            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            padding: 0.6rem 1.5rem;
+            border-radius: 999px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 18px rgba(216, 79, 198, 0.35);
+            white-space: nowrap;
         }
 
         .register-btn:hover {
-            background: var(--dark-blue);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 0 30px rgba(216, 79, 198, 0.6);
         }
 
         /* Main content */
         main {
+            position: relative;
+            z-index: 1;
             max-width: 800px;
             margin: 0 auto;
-            padding: 100px 2rem 4rem;
-            background: white;
-            min-height: 100vh;
+            padding: 10rem 2rem 5rem;
+        }
+
+        .eyebrow {
+            display: block;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.45em;
+            text-indent: 0.45em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            margin-bottom: 1rem;
         }
 
         h1 {
-            font-size: 2.5rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid var(--primary-blue);
+            font-family: var(--font-tech);
+            font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 1.5rem;
         }
 
         .intro {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.9;
         }
 
         h2 {
-            font-size: 1.8rem;
-            color: var(--text-dark);
-            margin-top: 2.5rem;
+            font-family: var(--font-tech);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-top: 2.8rem;
             margin-bottom: 1rem;
-        }
-
-        h3 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            margin-top: 2rem;
-            margin-bottom: 0.8rem;
         }
 
         p {
             margin-bottom: 1rem;
-            line-height: 1.8;
+            line-height: 1.9;
+            color: var(--text-muted);
         }
 
         ul {
-            margin-left: 2rem;
+            margin-left: 1.5rem;
             margin-bottom: 1rem;
         }
 
         li {
             margin-bottom: 0.5rem;
-            line-height: 1.8;
+            line-height: 1.9;
+            color: var(--text-muted);
+        }
+
+        li::marker {
+            color: var(--magenta);
         }
 
         .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--primary-blue);
+            background: linear-gradient(135deg, rgba(122, 47, 158, 0.35), rgba(216, 79, 198, 0.12));
+            border: 1px solid rgba(242, 167, 227, 0.35);
+            border-radius: 14px;
             padding: 1.5rem;
             margin: 2rem 0;
-            border-radius: 5px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--text);
         }
 
         .contact-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.12));
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
             padding: 2rem;
-            border-radius: 10px;
             margin-top: 3rem;
         }
 
         .contact-section h2 {
-            color: white;
             margin-top: 0;
         }
 
         .contact-section a {
-            color: white;
+            color: var(--pink);
             font-weight: 600;
+            text-decoration: none;
+        }
+
+        .contact-section a:hover {
+            text-decoration: underline;
         }
 
         /* Footer */
         footer {
-            background: var(--text-dark);
-            color: white;
-            padding: 3rem 0;
+            position: relative;
+            z-index: 1;
+            color: var(--text);
+            padding: 3.5rem 0;
             text-align: center;
-            margin-top: 4rem;
+            border-top: 1px solid var(--border-soft);
+            background: rgba(10, 5, 20, 0.6);
         }
 
         .footer-content {
@@ -181,84 +240,57 @@
             padding: 0 2rem;
         }
 
+        .footer-content > p {
+            color: var(--text-faint);
+            font-size: 0.95rem;
+        }
+
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-muted);
             text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: white;
-        }
-
-        /* Focus styles */
-        a:focus {
-            outline: 3px solid var(--primary-blue);
-            outline-offset: 2px;
+            color: var(--pink);
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
             main {
-                padding-top: 80px;
+                padding-top: 8rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <div class="backdrop" aria-hidden="true"></div>
+
     <nav role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="/" class="logo-nav" aria-label="Return to Zurich AI Safety Day Home">
-                <svg class="logo-svg" viewBox="0 0 60 60" role="img" aria-labelledby="logo-title">
-                    <title id="logo-title">Zurich AI Safety Day Logo</title>
-                    <!-- Mini version of the logo -->
-                    <circle cx="30" cy="30" r="8" fill="#3498DB"/>
-                    <circle cx="30" cy="15" r="5" fill="#2980B9"/>
-                    <circle cx="42" cy="22" r="5" fill="#2980B9"/>
-                    <circle cx="42" cy="38" r="5" fill="#2980B9"/>
-                    <circle cx="30" cy="45" r="5" fill="#2980B9"/>
-                    <circle cx="18" cy="38" r="5" fill="#2980B9"/>
-                    <circle cx="18" cy="22" r="5" fill="#2980B9"/>
-                    <!-- Inner connections to center only -->
-                    <line x1="30" y1="30" x2="30" y2="15" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="42" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="42" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="30" y2="45" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="18" y2="38" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <line x1="30" y1="30" x2="18" y2="22" stroke="#3498DB" stroke-width="1.5" opacity="0.3"/>
-                    <!-- Zurich flag in center -->
-                    <clipPath id="centerMini">
-                        <circle cx="30" cy="30" r="8"/>
-                    </clipPath>
-                    <g clip-path="url(#centerMini)">
-                        <path d="M 24 24 L 36 36 L 24 36 Z" fill="#3498DB"/>
-                    </g>
-                    <circle cx="30" cy="30" r="8" fill="none" stroke="#3498DB" stroke-width="1.5"/>
-                </svg>
-                <span>ZAISD</span>
-            </a>
-            <a href="https://airtable.com/applEiSfzBmcKcEyT/paggBq3NhyPzXejBB/form" class="register-btn" target="_blank" rel="noopener noreferrer">Register Now</a>
+            <a href="/" class="nav-back">&larr; Swiss AI Safety Days</a>
+            <a href="/#notify" class="register-btn">Get notified</a>
         </div>
     </nav>
 
-    <!-- Main content -->
     <main>
+        <span class="eyebrow">Swiss AI Safety Days 2026</span>
         <h1>Code of Conduct</h1>
-        
-        <p class="intro">Zurich AI Safety Day is committed to creating an inclusive, respectful, and safe environment for all participants. We believe that diversity of perspectives strengthens our community and advances our shared mission of ensuring AI benefits humanity.</p>
+
+        <p class="intro">Swiss AI Safety Days is committed to creating an inclusive, respectful, and safe environment for all participants. We believe that diversity of perspectives strengthens our community and advances our shared mission of ensuring AI benefits humanity.</p>
 
         <h2>Our Agreement</h2>
-        <p>At the Zurich AI Safety Day all attendees agree to:</p>
+        <p>At the Swiss AI Safety Days all attendees agree to:</p>
         <ul>
             <li>Respect the boundaries of other participants</li>
             <li>Look out for one another and try to help if you can</li>
@@ -267,7 +299,7 @@
         </ul>
 
         <h2>Professional Standards</h2>
-        <p>This is a professional learning and networking event. These behaviors don't belong at the Zurich AI Safety Day or related events:</p>
+        <p>This is a professional learning and networking event. These behaviors don't belong at the Swiss AI Safety Days or related events:</p>
         <ul>
             <li>Unwanted sexual attention or sexual harassment of any kind</li>
             <li>Using the participant database to request meetings for romantic or sexual reasons</li>
@@ -282,35 +314,25 @@
         </div>
 
         <h2>Support</h2>
-        <p>At the event we'll have multiple community contact people whose role is to be available for personal or interpersonal problems that come up, they will be pointed out upon registration and wear badges.</p>
+        <p>At the event we'll have multiple community contact people whose role is to be available for personal or interpersonal problems that come up. They will be pointed out upon registration and wear badges.</p>
 
         <div class="contact-section">
             <h2>Contact Information</h2>
             <p>If you need to report an incident or have questions about this Code of Conduct, please contact us:</p>
-            <p><strong>Email:</strong> <a href="mailto:zurich@aisafety.ch">zurich@aisafety.ch</a></p>
+            <p><strong>Email:</strong> <a href="mailto:team@aisafety.ch">team@aisafety.ch</a></p>
             <p><strong>During the event:</strong> Approach any staff member wearing an official badge</p>
         </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Site footer -->
     <footer role="contentinfo">
         <div class="footer-content">
-            <p>&copy; 2025 Zurich AI Safety Day. Building a safer AI future together.</p>
+            <p>&copy; 2026 Swiss AI Safety Days. Building a safer AI future together.</p>
             <div class="footer-links">
-                <a href="mailto:zurich@aisafety.ch">Contact</a>
+                <a href="mailto:team@aisafety.ch">Contact</a>
+                <a href="/">Home</a>
             </div>
         </div>
     </footer>
-
-    <script>
-        // Logo click to return to main page
-        const logoNav = document.querySelector('.logo-nav');
-        if (logoNav) {
-            logoNav.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = '/';
-            });
-        }
-    </script>
 </body>
 </html>
