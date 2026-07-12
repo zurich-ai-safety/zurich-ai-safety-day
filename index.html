@@ -66,6 +66,7 @@
 
         html {
             scroll-behavior: smooth;
+            background: #0a0514;
         }
 
         body {
@@ -88,49 +89,70 @@
                 linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
         }
 
-        .backdrop::before,
         .backdrop::after {
             content: '';
             position: absolute;
-            border-radius: 50%;
-            filter: blur(70px);
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+        }
+
+        .backdrop svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .backdrop g {
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .dune-a {
+            animation: sweep-a 44s linear infinite;
+            animation-delay: -16s;
             will-change: transform, opacity;
         }
 
-        .backdrop::before {
-            width: 70vw;
-            height: 55vh;
-            left: -18vw;
-            top: 25vh;
-            background: radial-gradient(closest-side, rgba(216, 79, 198, 0.55), rgba(216, 79, 198, 0) 70%);
-            animation: drift-a 13s ease-in-out infinite alternate;
+        .dune-b {
+            animation: sweep-b 58s linear infinite;
+            animation-delay: -30s;
+            will-change: transform, opacity;
         }
 
-        .backdrop::after {
-            width: 60vw;
-            height: 55vh;
-            right: -18vw;
-            bottom: -12vh;
-            background: radial-gradient(closest-side, rgba(242, 140, 220, 0.5), rgba(122, 47, 158, 0) 70%);
-            animation: drift-b 17s ease-in-out infinite alternate;
+        .dune-c {
+            animation: sweep-c 70s linear infinite;
+            animation-delay: -10s;
+            will-change: transform, opacity;
         }
 
-        @keyframes drift-a {
-            0%   { transform: translate(0, 0) rotate(-10deg) scale(0.9); opacity: 0.4; }
-            50%  { transform: translate(14vw, -14vh) rotate(4deg) scale(1.2); opacity: 0.75; }
-            100% { transform: translate(26vw, -6vh) rotate(12deg) scale(1); opacity: 0.5; }
+        @keyframes sweep-a {
+            0%   { transform: translate(-760px, 60px) rotate(-7deg); opacity: 0; }
+            10%  { opacity: 0.9; }
+            50%  { transform: translate(0, -20px) rotate(1deg); opacity: 1; }
+            90%  { opacity: 0.85; }
+            100% { transform: translate(760px, -70px) rotate(8deg); opacity: 0; }
         }
 
-        @keyframes drift-b {
-            0%   { transform: translate(0, 0) rotate(8deg) scale(1.15); opacity: 0.45; }
-            50%  { transform: translate(-16vw, -12vh) rotate(-4deg) scale(0.95); opacity: 0.75; }
-            100% { transform: translate(-6vw, -20vh) rotate(-12deg) scale(1.1); opacity: 0.4; }
+        @keyframes sweep-b {
+            0%   { transform: translate(760px, 40px) rotate(6deg); opacity: 0; }
+            12%  { opacity: 0.8; }
+            55%  { transform: translate(-40px, -10px) rotate(-2deg); opacity: 0.9; }
+            88%  { opacity: 0.75; }
+            100% { transform: translate(-760px, -60px) rotate(-8deg); opacity: 0; }
+        }
+
+        @keyframes sweep-c {
+            0%   { transform: translate(-700px, -20px) rotate(-4deg); opacity: 0; }
+            15%  { opacity: 0.5; }
+            60%  { transform: translate(80px, 10px) rotate(2deg); opacity: 0.55; }
+            100% { transform: translate(740px, 40px) rotate(5deg); opacity: 0; }
         }
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .backdrop::before,
-            .backdrop::after,
+            .backdrop g,
             .fade-in {
                 animation: none !important;
                 transition: none !important;
@@ -140,7 +162,7 @@
         /* Skip link */
         .skip-link {
             position: absolute;
-            top: -40px;
+            top: -100px;
             left: 0;
             background: var(--pink);
             color: var(--bg-0);
@@ -431,15 +453,16 @@
             background: linear-gradient(165deg, rgba(242, 167, 227, 0.07), rgba(122, 47, 158, 0.1));
             border: 1px solid var(--border-soft);
             border-radius: 18px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(18px) saturate(1.6);
+            -webkit-backdrop-filter: blur(18px) saturate(1.6);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-4px);
             border-color: rgba(242, 167, 227, 0.45);
-            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .stat-number {
@@ -530,13 +553,16 @@
             background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.08));
             border: 1px solid var(--border-soft);
             border-radius: 18px;
+            backdrop-filter: blur(18px) saturate(1.6);
+            -webkit-backdrop-filter: blur(18px) saturate(1.6);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .expect-item:hover {
             transform: translateY(-4px);
             border-color: rgba(242, 167, 227, 0.4);
-            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.15);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .expect-icon-wrapper {
@@ -748,7 +774,104 @@
     </style>
 </head>
 <body>
-    <div class="backdrop" aria-hidden="true"></div>
+    <div class="backdrop" aria-hidden="true">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <linearGradient id="duneFill1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffb3ea" stop-opacity="0.75"/>
+                    <stop offset="0.12" stop-color="#e06bd0" stop-opacity="0.5"/>
+                    <stop offset="0.38" stop-color="#7a2f9e" stop-opacity="0.32"/>
+                    <stop offset="0.72" stop-color="#2a1140" stop-opacity="0.14"/>
+                    <stop offset="1" stop-color="#0a0514" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="duneFill2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#f2a7e3" stop-opacity="0.62"/>
+                    <stop offset="0.15" stop-color="#b44bd2" stop-opacity="0.42"/>
+                    <stop offset="0.45" stop-color="#5e2382" stop-opacity="0.28"/>
+                    <stop offset="0.75" stop-color="#1c0b30" stop-opacity="0.1"/>
+                    <stop offset="1" stop-color="#0a0514" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="rimGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#ffc2ef" stop-opacity="0"/>
+                    <stop offset="0.15" stop-color="#ffc2ef" stop-opacity="0.65"/>
+                    <stop offset="0.32" stop-color="#d84fc6" stop-opacity="0.22"/>
+                    <stop offset="0.52" stop-color="#ffd3f3" stop-opacity="0.8"/>
+                    <stop offset="0.7" stop-color="#d84fc6" stop-opacity="0.28"/>
+                    <stop offset="0.86" stop-color="#ffc2ef" stop-opacity="0.55"/>
+                    <stop offset="1" stop-color="#ffc2ef" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="haloGrad" x1="0" y1="0" x2="1" y2="0" spreadMethod="repeat">
+                    <stop offset="0" stop-color="#f2a7e3" stop-opacity="0.15"/>
+                    <stop offset="0.2" stop-color="#ffc2ef" stop-opacity="0.65"/>
+                    <stop offset="0.4" stop-color="#d84fc6" stop-opacity="0.1"/>
+                    <stop offset="0.58" stop-color="#ffd3f3" stop-opacity="0.55"/>
+                    <stop offset="0.78" stop-color="#d84fc6" stop-opacity="0.18"/>
+                    <stop offset="1" stop-color="#f2a7e3" stop-opacity="0.15"/>
+                    <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1 0" dur="32s" repeatCount="indefinite"/>
+                </linearGradient>
+                <linearGradient id="haloGrad2" x1="0" y1="0" x2="1" y2="0" spreadMethod="repeat">
+                    <stop offset="0" stop-color="#f2a7e3" stop-opacity="0.12"/>
+                    <stop offset="0.25" stop-color="#ffc2ef" stop-opacity="0.5"/>
+                    <stop offset="0.45" stop-color="#b44bd2" stop-opacity="0.08"/>
+                    <stop offset="0.65" stop-color="#ffd3f3" stop-opacity="0.45"/>
+                    <stop offset="1" stop-color="#f2a7e3" stop-opacity="0.12"/>
+                    <animateTransform attributeName="gradientTransform" type="translate" values="1 0;0 0" dur="45s" repeatCount="indefinite"/>
+                </linearGradient>
+                <linearGradient id="bandGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#7a2f9e" stop-opacity="0"/>
+                    <stop offset="0.25" stop-color="#d84fc6" stop-opacity="0.3"/>
+                    <stop offset="0.5" stop-color="#f2a7e3" stop-opacity="0.45"/>
+                    <stop offset="0.78" stop-color="#b44bd2" stop-opacity="0.2"/>
+                    <stop offset="1" stop-color="#7a2f9e" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="fillBlur" x="-20%" y="-40%" width="140%" height="180%">
+                    <feGaussianBlur stdDeviation="7"/>
+                </filter>
+                <filter id="rimBlur" x="-30%" y="-400%" width="160%" height="900%">
+                    <feGaussianBlur stdDeviation="12"/>
+                </filter>
+                <filter id="haloBlur" x="-30%" y="-600%" width="160%" height="1300%">
+                    <feGaussianBlur stdDeviation="28"/>
+                </filter>
+                <filter id="bandBlur" x="-30%" y="-300%" width="160%" height="700%">
+                    <feGaussianBlur stdDeviation="40"/>
+                </filter>
+            </defs>
+            <g class="wave-scroll" data-depth="0.07">
+                <g class="dune dune-a">
+                    <path fill="url(#duneFill1)" filter="url(#fillBlur)" d="M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420 L 2800 980 L -1300 980 Z">
+                        <animate attributeName="d" dur="19s" repeatCount="indefinite" values="M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420 L 2800 980 L -1300 980 Z;M-1300 560 C -850 520, -350 640, 120 600 C 520 560, 680 720, 1070 630 C 1380 550, 1550 470, 2020 480 C 2380 490, 2620 420, 2800 460 L 2800 980 L -1300 980 Z;M-1300 650 C -780 430, -420 760, 80 540 C 480 380, 720 820, 1030 570 C 1300 420, 1650 610, 1980 400 C 2320 300, 2650 520, 2800 380 L 2800 980 L -1300 980 Z;M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420 L 2800 980 L -1300 980 Z"/>
+                    </path>
+                    <path fill="none" stroke="url(#haloGrad)" stroke-width="70" opacity="0.6" filter="url(#haloBlur)" d="M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420">
+                        <animate attributeName="d" dur="19s" repeatCount="indefinite" values="M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420;M-1300 560 C -850 520, -350 640, 120 600 C 520 560, 680 720, 1070 630 C 1380 550, 1550 470, 2020 480 C 2380 490, 2620 420, 2800 460;M-1300 650 C -780 430, -420 760, 80 540 C 480 380, 720 820, 1030 570 C 1300 420, 1650 610, 1980 400 C 2320 300, 2650 520, 2800 380;M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420"/>
+                    </path>
+                    <path fill="none" stroke="url(#rimGrad)" stroke-width="16" filter="url(#rimBlur)" d="M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420">
+                        <animate attributeName="d" dur="19s" repeatCount="indefinite" values="M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420;M-1300 560 C -850 520, -350 640, 120 600 C 520 560, 680 720, 1070 630 C 1380 550, 1550 470, 2020 480 C 2380 490, 2620 420, 2800 460;M-1300 650 C -780 430, -420 760, 80 540 C 480 380, 720 820, 1030 570 C 1300 420, 1650 610, 1980 400 C 2320 300, 2650 520, 2800 380;M-1300 600 C -800 480, -400 700, 100 560 C 500 450, 700 780, 1050 600 C 1350 460, 1600 540, 2000 440 C 2350 360, 2600 480, 2800 420"/>
+                    </path>
+                </g>
+            </g>
+            <g class="wave-scroll" data-depth="-0.1">
+                <g class="dune dune-b">
+                    <path fill="url(#duneFill2)" filter="url(#fillBlur)" d="M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660 L 2800 980 L -1300 980 Z">
+                        <animate attributeName="d" dur="23s" repeatCount="indefinite" values="M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660 L 2800 980 L -1300 980 Z;M-1300 800 C -860 770, -320 880, 140 840 C 560 800, 700 920, 1090 860 C 1400 800, 1540 700, 2030 720 C 2390 740, 2640 660, 2800 700 L 2800 980 L -1300 980 Z;M-1300 880 C -800 680, -400 960, 110 780 C 500 640, 740 990, 1060 800 C 1320 650, 1680 800, 2000 620 C 2340 540, 2660 740, 2800 600 L 2800 980 L -1300 980 Z;M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660 L 2800 980 L -1300 980 Z"/>
+                    </path>
+                    <path fill="none" stroke="url(#haloGrad2)" stroke-width="55" filter="url(#haloBlur)" opacity="0.5" d="M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660">
+                        <animate attributeName="d" dur="23s" repeatCount="indefinite" values="M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660;M-1300 800 C -860 770, -320 880, 140 840 C 560 800, 700 920, 1090 860 C 1400 800, 1540 700, 2030 720 C 2390 740, 2640 660, 2800 700;M-1300 880 C -800 680, -400 960, 110 780 C 500 640, 740 990, 1060 800 C 1320 650, 1680 800, 2000 620 C 2340 540, 2660 740, 2800 600;M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660"/>
+                    </path>
+                    <path fill="none" stroke="url(#rimGrad)" stroke-width="12" filter="url(#rimBlur)" opacity="0.7" d="M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660">
+                        <animate attributeName="d" dur="23s" repeatCount="indefinite" values="M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660;M-1300 800 C -860 770, -320 880, 140 840 C 560 800, 700 920, 1090 860 C 1400 800, 1540 700, 2030 720 C 2390 740, 2640 660, 2800 700;M-1300 880 C -800 680, -400 960, 110 780 C 500 640, 740 990, 1060 800 C 1320 650, 1680 800, 2000 620 C 2340 540, 2660 740, 2800 600;M-1300 840 C -820 730, -380 920, 130 800 C 540 700, 720 960, 1080 830 C 1360 720, 1580 780, 2010 680 C 2360 600, 2620 720, 2800 660"/>
+                    </path>
+                </g>
+            </g>
+            <g class="wave-scroll" data-depth="0.04">
+                <g class="dune dune-c" fill="none">
+                    <path stroke="url(#bandGrad)" stroke-width="90" filter="url(#bandBlur)" d="M-1300 260 C -820 340, -380 160, 120 260 C 520 340, 720 140, 1080 240 C 1360 310, 1580 240, 2010 290 C 2360 330, 2620 230, 2800 280">
+                        <animate attributeName="d" dur="27s" repeatCount="indefinite" values="M-1300 260 C -820 340, -380 160, 120 260 C 520 340, 720 140, 1080 240 C 1360 310, 1580 240, 2010 290 C 2360 330, 2620 230, 2800 280;M-1300 300 C -840 280, -350 210, 130 230 C 540 250, 700 180, 1090 210 C 1390 230, 1530 300, 2030 260 C 2380 230, 2650 300, 2800 250;M-1300 220 C -800 360, -420 130, 100 280 C 490 380, 730 120, 1060 270 C 1310 370, 1660 210, 1990 320 C 2330 400, 2670 220, 2800 310;M-1300 260 C -820 340, -380 160, 120 260 C 520 340, 720 140, 1080 240 C 1360 310, 1580 240, 2010 290 C 2360 330, 2620 230, 2800 280"/>
+                    </path>
+                </g>
+            </g>
+        </svg>
+    </div>
     <a href="#main" class="skip-link">Skip to main content</a>
 
     <nav id="navbar" role="navigation" aria-label="Main navigation">
@@ -963,15 +1086,14 @@
                     <span class="kicker">Updates</span>
                     <h2 id="notify-title" class="section-title">Be First in Line</h2>
                     <p class="section-intro">Spots are limited and go to those who apply early. Leave your email and get one message when applications, speakers, and the program go live.<br>Nothing else, no spam.</p>
-                    <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></script>
                     <iframe
                         id="notify-form"
-                        class="airtable-embed airtable-dynamic-height"
+                        class="airtable-embed"
                         src="https://airtable.com/embed/apptCjWNpishp7FTc/shr6FQsFfwToBb7Ll"
                         frameborder="0"
                         title="Swiss AI Safety Days update notification signup form"
                         width="100%"
-                        height="557"
+                        height="430"
                         loading="lazy"
                         style="background: transparent;">
                     </iframe>
@@ -1044,6 +1166,24 @@
             });
             document.body.classList.add('no-animation');
         }
+    </script>
+    <script>
+        // Waves trail the scroll with a smoothed parallax
+        (function () {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var waves = document.querySelectorAll('.wave-scroll');
+            if (!waves.length) return;
+            var target = window.scrollY, current = target;
+            window.addEventListener('scroll', function () { target = window.scrollY; }, { passive: true });
+            (function tick() {
+                current += (target - current) * 0.06;
+                waves.forEach(function (w) {
+                    var d = parseFloat(w.dataset.depth || 0);
+                    w.style.transform = 'translateY(' + (current * d).toFixed(2) + 'px) rotate(' + (current * d * 0.012).toFixed(3) + 'deg)';
+                });
+                requestAnimationFrame(tick);
+            })();
+        })();
     </script>
 </body>
 </html>
