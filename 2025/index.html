@@ -66,37 +66,38 @@
             content: '';
             position: absolute;
             border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.55;
-            will-change: transform;
+            filter: blur(70px);
+            will-change: transform, opacity;
         }
 
         .backdrop::before {
-            width: 55vw;
-            height: 40vh;
-            left: -12vw;
-            top: 30vh;
-            background: radial-gradient(closest-side, rgba(216, 79, 198, 0.5), rgba(216, 79, 198, 0) 70%);
-            animation: drift-a 26s ease-in-out infinite alternate;
+            width: 70vw;
+            height: 55vh;
+            left: -18vw;
+            top: 25vh;
+            background: radial-gradient(closest-side, rgba(216, 79, 198, 0.55), rgba(216, 79, 198, 0) 70%);
+            animation: drift-a 13s ease-in-out infinite alternate;
         }
 
         .backdrop::after {
-            width: 50vw;
-            height: 45vh;
-            right: -15vw;
-            bottom: -10vh;
-            background: radial-gradient(closest-side, rgba(242, 140, 220, 0.42), rgba(122, 47, 158, 0) 70%);
-            animation: drift-b 32s ease-in-out infinite alternate;
+            width: 60vw;
+            height: 55vh;
+            right: -18vw;
+            bottom: -12vh;
+            background: radial-gradient(closest-side, rgba(242, 140, 220, 0.5), rgba(122, 47, 158, 0) 70%);
+            animation: drift-b 17s ease-in-out infinite alternate;
         }
 
         @keyframes drift-a {
-            from { transform: translate(0, 0) rotate(-8deg) scale(1); }
-            to   { transform: translate(10vw, -12vh) rotate(6deg) scale(1.15); }
+            0%   { transform: translate(0, 0) rotate(-10deg) scale(0.9); opacity: 0.4; }
+            50%  { transform: translate(14vw, -14vh) rotate(4deg) scale(1.2); opacity: 0.75; }
+            100% { transform: translate(26vw, -6vh) rotate(12deg) scale(1); opacity: 0.5; }
         }
 
         @keyframes drift-b {
-            from { transform: translate(0, 0) rotate(5deg) scale(1.1); }
-            to   { transform: translate(-8vw, -10vh) rotate(-6deg) scale(0.95); }
+            0%   { transform: translate(0, 0) rotate(8deg) scale(1.15); opacity: 0.45; }
+            50%  { transform: translate(-16vw, -12vh) rotate(-4deg) scale(0.95); opacity: 0.75; }
+            100% { transform: translate(-6vw, -20vh) rotate(-12deg) scale(1.1); opacity: 0.4; }
         }
 
         @media (prefers-reduced-motion: reduce) {
