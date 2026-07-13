@@ -34,7 +34,7 @@
         }
       },
       "description": "Two days connecting Europe's AI safety community: talks, workshops, an org fair, and high-density networking across research, governance, and careers.",
-      "url": "https://zurichaisafety.day/"
+      "url": "https://swissaisafetydays.ch/"
     }
     </script>
 
@@ -705,6 +705,76 @@
             color: var(--pink);
         }
 
+        /* Mobile menu */
+        .nav-toggle {
+            display: none;
+            margin-left: auto;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            margin: 5px 0;
+            border-radius: 2px;
+            background: var(--text);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(10, 5, 20, 0.97);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.5rem 2rem 1rem;
+        }
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 0.95rem 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu a:active,
+        .mobile-menu a:hover {
+            color: var(--pink);
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             section {
@@ -713,6 +783,43 @@
 
             .nav-links {
                 display: none;
+            }
+
+            nav .register-btn {
+                display: none;
+            }
+
+            nav,
+            nav.scrolled {
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                border-bottom: none;
+                box-shadow: none;
+                padding: 0.75rem 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 44px;
+                height: 44px;
+                padding: 0;
+                border: 1px solid var(--border-soft);
+                border-radius: 50%;
+                background: rgba(10, 5, 20, 0.55);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+
+            .nav-toggle span {
+                margin: 2.5px 0;
+            }
+
+            .mobile-menu {
+                border-top: 1px solid var(--border-soft);
             }
 
             .hero-cta {
@@ -786,6 +893,15 @@
                 <li><a href="/2025/">2025 Edition</a></li>
             </ul>
             <a href="#notify" class="register-btn">Get notified</a>
+            <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+                <a href="#expect">What to Expect</a>
+                <a href="#why">Why Zurich</a>
+                <a href="#venue">Venue</a>
+                <a href="/2025/">2025 Edition</a>
         </div>
     </nav>
 
@@ -1031,6 +1147,23 @@
             }
         }
 
+        // Mobile menu
+        const navToggle = document.querySelector('.nav-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (navToggle && mobileMenu) {
+            navToggle.addEventListener('click', function () {
+                const open = mobileMenu.classList.toggle('open');
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            });
+            mobileMenu.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', function () {
+                    mobileMenu.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         if (navbar) {
@@ -1089,4 +1222,4 @@
         })();
     </script>
 </body>
-</html>
+</html
