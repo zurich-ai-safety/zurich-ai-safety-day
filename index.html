@@ -639,13 +639,28 @@
             text-align: center;
         }
 
-        .notify-box iframe {
-            width: 100%;
-            border: 1px solid rgba(242, 167, 227, 0.3);
-            border-radius: 18px;
-            background: transparent;
-            margin-top: 2rem;
-            box-shadow: 0 0 60px rgba(216, 79, 198, 0.12);
+        .notify-cta {
+            margin-top: 2.2rem;
+        }
+
+        /* keep our pill styling against Luma's embed stylesheet */
+        .notify-box .luma-checkout--button {
+            font-family: var(--font-tech) !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 1.1rem 2.6rem !important;
+            border-radius: 999px !important;
+            border: none !important;
+            background: linear-gradient(120deg, var(--pink), var(--magenta)) !important;
+            color: var(--bg-0) !important;
+            box-shadow: 0 0 25px rgba(216, 79, 198, 0.4);
+        }
+
+        .notify-box .luma-checkout--button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 45px rgba(216, 79, 198, 0.65);
         }
 
         .notify-fallback {
@@ -1105,19 +1120,12 @@
                 <div class="notify-box">
                     <span class="kicker">Updates</span>
                     <h2 id="notify-title" class="section-title">Be First in Line</h2>
-                    <p class="section-intro">Spots are limited and go to those who apply early. Leave your email and get one message when applications, speakers, and the program go live.<br>Nothing else, no spam.</p>
-                    <iframe
-                        id="notify-form"
-                        class="airtable-embed"
-                        src="https://airtable.com/embed/apptCjWNpishp7FTc/shr6FQsFfwToBb7Ll"
-                        frameborder="0"
-                        title="Swiss AI Safety Days update notification signup form"
-                        width="100%"
-                        height="430"
-                        loading="lazy"
-                        style="background: transparent;">
-                    </iframe>
-                    <p class="notify-fallback">Questions or want to get involved? Write to <a href="mailto:conferences@aisafety.ch">conferences@aisafety.ch</a>.</p>
+                    <p class="section-intro">One click: get the dates in your calendar and a heads-up when applications, speakers, and the program go live.<br>Nothing else, no spam.</p>
+                    <div class="notify-cta">
+                        <a href="https://luma.com/ia5l2d9q" class="btn-primary luma-checkout--button" data-luma-action="checkout" data-luma-event-id="evt-kr64fZ9dNGCDtr7">Save the date on Luma</a>
+                    </div>
+                    <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
+                    <p class="notify-fallback">This is a save-the-date, not the conference application. Applications open later this year.<br>Questions or want to get involved? Write to <a href="mailto:conferences@aisafety.ch">conferences@aisafety.ch</a>.</p>
                 </div>
             </div>
         </section>
