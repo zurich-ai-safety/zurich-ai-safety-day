@@ -587,6 +587,98 @@
             line-height: 1.8;
         }
 
+        /* Speakers */
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            /* one card: keep it centered and headline-sized, not stretched full width */
+            justify-content: center;
+        }
+
+        .speaker-card {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            align-items: center;
+            max-width: 720px;
+            justify-self: center;
+            padding: 2rem;
+            background: linear-gradient(165deg, rgba(242, 167, 227, 0.09), rgba(122, 47, 158, 0.12));
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            backdrop-filter: blur(18px) saturate(1.6);
+            -webkit-backdrop-filter: blur(18px) saturate(1.6);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 167, 227, 0.45);
+            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .speaker-photo {
+            width: 200px;
+            height: 240px;
+            border-radius: 16px;
+            object-fit: cover;
+            object-position: center top;
+            border: 1px solid var(--border-soft);
+            box-shadow: 0 0 30px rgba(122, 47, 158, 0.35);
+        }
+
+        .speaker-tag {
+            display: inline-block;
+            font-family: var(--font-tech);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-indent: 0.22em;
+            text-transform: uppercase;
+            color: var(--cream);
+            margin-bottom: 0.7rem;
+        }
+
+        .speaker-name {
+            font-family: var(--font-tech);
+            font-size: clamp(1.35rem, 3vw, 1.7rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--pink);
+            text-shadow: 0 0 22px rgba(216, 79, 198, 0.4);
+            margin-bottom: 0.4rem;
+        }
+
+        .speaker-affil {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.9rem;
+        }
+
+        .speaker-bio {
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 620px) {
+            .speaker-card {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+
+            .speaker-photo {
+                width: 168px;
+                height: 200px;
+            }
+        }
+
         /* Venue */
         .venue-grid {
             display: grid;
@@ -904,6 +996,7 @@
         <div class="nav-container">
             <ul class="nav-links">
                 <li><a href="#expect">What to Expect</a></li>
+                <li><a href="#speakers">Speakers</a></li>
                 <li><a href="#why">Why Zurich</a></li>
                 <li><a href="#venue">Venue</a></li>
                 <li><a href="/2025/">2025 Edition</a></li>
@@ -915,6 +1008,7 @@
         </div>
         <div class="mobile-menu" id="mobile-menu">
                 <a href="#expect">What to Expect</a>
+                <a href="#speakers">Speakers</a>
                 <a href="#why">Why Zurich</a>
                 <a href="#venue">Venue</a>
                 <a href="/2025/">2025 Edition</a>
@@ -1058,6 +1152,29 @@
                 </div>
                 <div class="section-cta fade-in">
                     <a href="#notify" class="btn-primary">Get notified when applications open</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Confirmed Speakers -->
+        <section id="speakers" role="region" aria-labelledby="speakers-title">
+            <div class="container">
+                <span class="kicker fade-in">Confirmed for 2026</span>
+                <h2 id="speakers-title" class="section-title fade-in">Who You'll Hear From</h2>
+                <p class="section-intro fade-in">Speaker highlights:</p>
+                <div class="speakers-grid fade-in">
+                    <article class="speaker-card">
+                        <img class="speaker-photo" src="assets/russell.jpg" alt="Portrait of Stuart Russell, Professor of Computer Science at UC Berkeley" loading="lazy" width="200" height="240">
+                        <div class="speaker-info">
+                            <span class="speaker-tag">Keynote</span>
+                            <h3 class="speaker-name">Stuart Russell</h3>
+                            <p class="speaker-affil">Distinguished Professor of Computer Science, UC Berkeley &middot; Director, Center for Human-Compatible AI</p>
+                            <p class="speaker-bio">Co-author of <em>Artificial Intelligence: A Modern Approach</em>, the standard AI textbook used in over 1,500 universities across 135 countries, and a Fellow of the Royal Society. One of the field's leading voices on keeping advanced AI under human control, a case he makes in his book <em>Human Compatible</em> and his 2021 BBC Reith Lectures.</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="section-cta fade-in">
+                    <a href="#notify" class="btn-primary">Get notified as speakers are announced</a>
                 </div>
             </div>
         </section>
