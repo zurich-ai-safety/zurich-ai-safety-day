@@ -1,0 +1,2 @@
+# Normalise line endings so editing on Windows doesn't rewrite whole files.
+* text=auto eol=lf
