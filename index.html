@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0514">
+    <meta name="theme-color" content="#080410">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
@@ -47,19 +47,54 @@
         }
 
         :root {
-            --bg-0: #0a0514;
-            --bg-1: #130a23;
+            /* Dark surface */
+            --bg-0: #080410;
+            --bg-1: #0b0519;
             --bg-2: #1a0e2e;
+
+            /* Saturated accents — hero display type, kickers and links.
+               Buttons use the muted --btn-fill-* pair below. */
             --pink: #f2a7e3;
             --pink-bright: #ff9ee8;
             --magenta: #d84fc6;
             --purple: #7a2f9e;
             --cream: #f3e9d2;
+
             --text: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.72);
             --text-faint: rgba(255, 255, 255, 0.55);
             --border-soft: rgba(242, 167, 227, 0.18);
-            --glow-pink: rgba(216, 79, 198, 0.45);
+            --glow-pink: rgba(173, 63, 158, 0.30);
+
+            /* Desaturated accents — everything below the hero */
+            --pink-muted: #dfaed6;
+            --magenta-muted: rgba(173, 63, 158, 1);
+
+            /* Buttons */
+            --btn-fill-from: #eadde6;
+            --btn-fill-to: #bfa0b8;
+            --btn-outline: #ffd9f5;
+
+            /* Card glass — same mauve pair as the button fill, at glass alpha.
+               The filter does the real work: it desaturates the violet aurora
+               behind the card and rotates it toward the button's mauve, so the
+               card tints the light passing through rather than sitting on top. */
+            --card-glass: blur(18px) saturate(0.55) hue-rotate(25deg) brightness(1.15);
+            --card-tint-from: rgba(234, 221, 230, 0.075);
+            --card-tint-to: rgba(191, 160, 184, 0.14);
+            --card-border: rgba(210, 208, 216, 0.20);
+            --card-border-hov: rgba(220, 218, 226, 0.40);
+            --card-shadow-hov: 0 12px 40px rgba(52, 46, 66, 0.30);
+
+            /* Light band (#speakers, #venue) */
+            --light-1: #fbf8f1;
+            --light-2: #f4eee2;
+            --ink: #1a0e2e;
+            --ink-muted: rgba(26, 14, 46, 0.68);
+            --ink-accent: #a52f92;
+            --ink-heading: #5c2280;
+            --light-border: rgba(122, 47, 158, 0.16);
+
             --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
             --font-tech: 'Orbitron', sans-serif;
             --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -67,7 +102,7 @@
 
         html {
             scroll-behavior: smooth;
-            background: #0a0514;
+            background: var(--bg-0);
         }
 
         body {
@@ -85,9 +120,9 @@
             z-index: 0;
             pointer-events: none;
             background:
-                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(122, 47, 158, 0.28), transparent 65%),
-                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(216, 79, 198, 0.16), transparent 65%),
-                linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
+                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(98, 38, 126, 0.28), transparent 65%),
+                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(173, 63, 158, 0.16), transparent 65%),
+                linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 55%, var(--bg-0) 100%);
         }
 
         .backdrop::after {
@@ -124,6 +159,11 @@
             left: -35%;
             top: 56%;
             background-image: url('assets/wave-b.webp');
+            /* The source art is magenta; this recolours it to the cream of the
+               #speakers/#venue band and dials it back, so the lower wave reads
+               as a soft counterpoint to the saturated wave-1 above it.
+               opacity() here multiplies with the sweep keyframes' own opacity. */
+            filter: grayscale(1) sepia(1) saturate(0.55) brightness(1.18) opacity(0.62);
             animation: sweep-b 58s linear infinite;
             animation-delay: -30s;
         }
@@ -176,14 +216,15 @@
             border-radius: 4px;
         }
 
-        /* Navigation */
+        /* Navigation — a light bar in the same cream as the #speakers/#venue
+           band, barely translucent so the aurora only just reads through. */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 5, 20, 0.82);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(251, 248, 241, 0.74);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
             z-index: 1000;
             padding: 1rem 0;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -191,8 +232,8 @@
         }
 
         nav.scrolled {
-            border-bottom: 1px solid var(--border-soft);
-            box-shadow: 0 8px 30px rgba(216, 79, 198, 0.08);
+            border-bottom: 1px solid var(--light-border);
+            box-shadow: 0 8px 30px rgba(26, 14, 46, 0.10);
         }
 
         .nav-container {
@@ -212,7 +253,7 @@
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: var(--ink-muted);
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
@@ -221,8 +262,11 @@
             transition: color 0.3s ease;
         }
 
+        /* At 74% the bar lets enough dark through that --ink-accent falls to
+           3.2:1. The deeper purple holds 5.5:1, so light-on-glass surfaces
+           (nav, footer) use it for links; the opaque cream band keeps accent. */
         .nav-links a:hover {
-            color: var(--pink);
+            color: var(--ink-heading);
         }
 
         .register-btn {
@@ -231,19 +275,22 @@
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--bg-0);
-            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            /* Solid purple: the mauve fill used on the dark sections is
+               near-invisible against the cream bar. */
+            color: #ffffff;
+            background: var(--ink-heading);
             padding: 0.6rem 1.5rem;
             border-radius: 999px;
             text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 18px rgba(216, 79, 198, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 14px rgba(92, 34, 128, 0.22);
             white-space: nowrap;
         }
 
         .register-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(216, 79, 198, 0.6);
+            background: #6d2a96;
+            box-shadow: 0 8px 24px rgba(92, 34, 128, 0.32);
         }
 
         main {
@@ -354,27 +401,27 @@
         }
 
         .btn-primary {
-            background: linear-gradient(120deg, var(--pink), var(--magenta));
-            color: var(--bg-0);
-            box-shadow: 0 0 25px rgba(216, 79, 198, 0.4);
+            background: linear-gradient(120deg, var(--btn-fill-from), var(--btn-fill-to));
+            color: #0a0514;
+            box-shadow: 0 0 22px rgba(157, 123, 150, 0.30);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 45px rgba(216, 79, 198, 0.65);
+            box-shadow: 0 0 45px rgba(173, 63, 158, 0.45);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--pink);
-            border: 1px solid rgba(242, 167, 227, 0.55);
+            color: var(--btn-outline);
+            border: 1px solid rgba(255, 217, 245, 0.8);
         }
 
         .btn-secondary:hover {
             transform: translateY(-3px);
             color: var(--text);
-            border-color: var(--pink);
-            box-shadow: 0 0 30px rgba(216, 79, 198, 0.35);
+            border-color: var(--btn-outline);
+            box-shadow: 0 0 30px rgba(173, 63, 158, 0.35);
         }
 
         @keyframes fadeInUp {
@@ -420,8 +467,8 @@
             font-size: clamp(1.2rem, 2.6vw, 1.5rem);
             font-weight: 600;
             line-height: 1.5;
-            color: var(--pink);
-            text-shadow: 0 0 25px rgba(216, 79, 198, 0.35);
+            color: var(--pink-muted);
+            text-shadow: 0 0 20px rgba(173, 63, 158, 0.24);
         }
 
         .section-intro {
@@ -444,19 +491,19 @@
         .stat-card {
             text-align: center;
             padding: 2.2rem 1.5rem;
-            background: linear-gradient(165deg, rgba(242, 167, 227, 0.07), rgba(122, 47, 158, 0.1));
-            border: 1px solid var(--border-soft);
+            background: linear-gradient(165deg, var(--card-tint-from), var(--card-tint-to));
+            border: 1px solid var(--card-border);
             border-radius: 18px;
-            backdrop-filter: blur(18px) saturate(1.6);
-            -webkit-backdrop-filter: blur(18px) saturate(1.6);
+            backdrop-filter: var(--card-glass);
+            -webkit-backdrop-filter: var(--card-glass);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(242, 167, 227, 0.45);
-            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: var(--card-border-hov);
+            box-shadow: var(--card-shadow-hov), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .stat-number {
@@ -464,8 +511,8 @@
             font-size: clamp(2.1rem, 4vw, 2.8rem);
             font-weight: 700;
             margin-bottom: 0.6rem;
-            color: var(--pink);
-            text-shadow: 0 0 25px rgba(216, 79, 198, 0.45);
+            color: var(--pink-muted);
+            text-shadow: 0 0 20px rgba(173, 63, 158, 0.26);
         }
 
         .stat-label {
@@ -517,8 +564,8 @@
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: var(--pink);
-            text-shadow: 0 0 22px rgba(216, 79, 198, 0.55);
+            color: var(--pink-muted);
+            text-shadow: 0 0 20px rgba(173, 63, 158, 0.26);
         }
 
         .award-text .award-sub {
@@ -544,19 +591,28 @@
         .expect-item {
             text-align: center;
             padding: 2.5rem 1.8rem;
-            background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.08));
-            border: 1px solid var(--border-soft);
+            background: linear-gradient(165deg, rgba(234, 221, 230, 0.045), rgba(191, 160, 184, 0.12));
+            border: 1px solid var(--card-border);
             border-radius: 18px;
-            backdrop-filter: blur(18px) saturate(1.6);
-            -webkit-backdrop-filter: blur(18px) saturate(1.6);
+            backdrop-filter: var(--card-glass);
+            -webkit-backdrop-filter: var(--card-glass);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .expect-item:hover {
             transform: translateY(-4px);
-            border-color: rgba(242, 167, 227, 0.4);
-            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: var(--card-border-hov);
+            box-shadow: var(--card-shadow-hov), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* No backdrop-filter means no light to tint, and the glass alphas alone
+           are too faint to read — give those browsers a real fill instead. */
+        @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            .stat-card,
+            .expect-item {
+                background: linear-gradient(165deg, rgba(234, 221, 230, 0.10), rgba(191, 160, 184, 0.17));
+            }
         }
 
         .expect-icon-wrapper {
@@ -587,6 +643,95 @@
             line-height: 1.8;
         }
 
+        /* ── Light band ──────────────────────────────────────────────
+           #speakers and #venue break out of the dark aurora onto a
+           cream surface with dark ink. Everything scoped below is the
+           inverted counterpart of a rule defined for the dark canvas. */
+        #speakers,
+        #venue {
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(122, 47, 158, 0.14);
+            border-bottom: 1px solid rgba(122, 47, 158, 0.14);
+        }
+
+        #speakers {
+            background: linear-gradient(180deg, var(--light-1) 0%, var(--light-2) 100%);
+        }
+
+        #venue {
+            background: linear-gradient(180deg, var(--light-2) 0%, var(--light-1) 100%);
+            padding-bottom: 7rem;
+        }
+
+        /* Soft blobs, mirroring the radial-blob language of the dark sections */
+        .light-blobs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        #speakers .light-blobs {
+            background:
+                radial-gradient(46vw 40vh ellipse at 82% 8%, rgba(122, 47, 158, 0.10), transparent 62%),
+                radial-gradient(52vw 44vh ellipse at 6% 88%, rgba(198, 150, 108, 0.13), transparent 64%);
+        }
+
+        #venue .light-blobs {
+            background:
+                radial-gradient(50vw 42vh ellipse at 10% 12%, rgba(122, 47, 158, 0.09), transparent 62%),
+                radial-gradient(46vw 40vh ellipse at 90% 82%, rgba(198, 150, 108, 0.12), transparent 64%);
+        }
+
+        #speakers .container,
+        #venue .container {
+            position: relative;
+        }
+
+        /* Ink on light */
+        #speakers .kicker,
+        #venue .kicker {
+            color: var(--ink-accent);
+        }
+
+        #speakers .section-title,
+        #venue .section-title {
+            color: var(--ink);
+        }
+
+        #speakers .section-lead,
+        #speakers .section-intro,
+        #venue .section-intro,
+        #venue .venue-description {
+            color: var(--ink-muted);
+            text-shadow: none;
+        }
+
+        /* The pink focus ring is only 1.75:1 on cream — swap it for ink purple
+           on every light surface (nav, footer and the #speakers/#venue band). */
+        #speakers a:focus-visible,
+        #venue a:focus-visible,
+        nav a:focus-visible,
+        nav button:focus-visible,
+        footer a:focus-visible {
+            outline-color: var(--ink-heading);
+        }
+
+        /* The muted mauve button fill is near-invisible on cream (1.1–2.0:1 at
+           its edge), so the light band gets a solid purple fill instead. */
+        #speakers .section-cta .btn-primary,
+        #venue .section-cta .btn-primary {
+            background: var(--ink-heading);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(92, 34, 128, 0.25);
+        }
+
+        #speakers .section-cta .btn-primary:hover,
+        #venue .section-cta .btn-primary:hover {
+            background: #6d2a96;
+            box-shadow: 0 10px 30px rgba(92, 34, 128, 0.35);
+        }
+
         /* Speakers */
         .speakers-grid {
             display: grid;
@@ -605,19 +750,17 @@
             max-width: 720px;
             justify-self: center;
             padding: 2rem;
-            background: linear-gradient(165deg, rgba(242, 167, 227, 0.09), rgba(122, 47, 158, 0.12));
-            border: 1px solid var(--border-soft);
+            background: #ffffff;
+            border: 1px solid var(--light-border);
             border-radius: 20px;
-            backdrop-filter: blur(18px) saturate(1.6);
-            -webkit-backdrop-filter: blur(18px) saturate(1.6);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 14px rgba(26, 14, 46, 0.06);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .speaker-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(242, 167, 227, 0.45);
-            box-shadow: 0 12px 40px rgba(216, 79, 198, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(122, 47, 158, 0.32);
+            box-shadow: 0 16px 44px rgba(26, 14, 46, 0.12);
         }
 
         .speaker-photo {
@@ -626,8 +769,8 @@
             border-radius: 16px;
             object-fit: cover;
             object-position: center top;
-            border: 1px solid var(--border-soft);
-            box-shadow: 0 0 30px rgba(122, 47, 158, 0.35);
+            border: 1px solid var(--light-border);
+            box-shadow: 0 4px 18px rgba(26, 14, 46, 0.12);
         }
 
         .speaker-tag {
@@ -638,7 +781,7 @@
             letter-spacing: 0.22em;
             text-indent: 0.22em;
             text-transform: uppercase;
-            color: var(--cream);
+            color: var(--ink-accent);
             margin-bottom: 0.7rem;
         }
 
@@ -647,22 +790,21 @@
             font-size: clamp(1.35rem, 3vw, 1.7rem);
             font-weight: 700;
             letter-spacing: 0.02em;
-            color: var(--pink);
-            text-shadow: 0 0 22px rgba(216, 79, 198, 0.4);
+            color: var(--ink-heading);
             margin-bottom: 0.4rem;
         }
 
         .speaker-affil {
             font-size: 0.95rem;
             font-weight: 500;
-            color: var(--text);
+            color: var(--ink);
             margin-bottom: 0.9rem;
         }
 
         .speaker-bio {
             font-size: 0.98rem;
             line-height: 1.8;
-            color: var(--text-muted);
+            color: var(--ink-muted);
         }
 
         @media (max-width: 620px) {
@@ -693,14 +835,15 @@
             overflow: hidden;
             border-radius: 18px;
             height: 400px;
-            border: 1px solid var(--border-soft);
+            border: 1px solid var(--light-border);
+            box-shadow: 0 4px 18px rgba(26, 14, 46, 0.10);
         }
 
         .venue-image::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 55%, rgba(10, 5, 20, 0.55));
+            background: linear-gradient(180deg, transparent 55%, rgba(8, 4, 16, 0.55));
             pointer-events: none;
         }
 
@@ -721,7 +864,7 @@
             margin: 0 auto;
             font-size: 1.05rem;
             line-height: 1.9;
-            color: var(--text-muted);
+            color: var(--ink-muted);
         }
 
         /* Notify */
@@ -745,14 +888,14 @@
             padding: 1.1rem 2.6rem !important;
             border-radius: 999px !important;
             border: none !important;
-            background: linear-gradient(120deg, var(--pink), var(--magenta)) !important;
-            color: var(--bg-0) !important;
-            box-shadow: 0 0 25px rgba(216, 79, 198, 0.4);
+            background: linear-gradient(120deg, var(--btn-fill-from), var(--btn-fill-to)) !important;
+            color: #0a0514 !important;
+            box-shadow: 0 0 22px rgba(157, 123, 150, 0.30);
         }
 
         .notify-box .luma-checkout--button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 45px rgba(216, 79, 198, 0.65);
+            box-shadow: 0 0 45px rgba(173, 63, 158, 0.45);
         }
 
         .notify-fallback {
@@ -770,15 +913,17 @@
             text-decoration: underline;
         }
 
-        /* Footer */
+        /* Footer — matches the nav: cream, barely translucent */
         footer {
             position: relative;
             z-index: 1;
-            color: var(--text);
+            color: var(--ink);
             padding: 3.5rem 0;
             text-align: center;
-            border-top: 1px solid var(--border-soft);
-            background: rgba(10, 5, 20, 0.6);
+            border-top: 1px solid var(--light-border);
+            background: rgba(251, 248, 241, 0.74);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
         }
 
         .footer-content {
@@ -788,7 +933,7 @@
         }
 
         .footer-content > p {
-            color: var(--text-faint);
+            color: var(--ink-muted);
             font-size: 0.95rem;
         }
 
@@ -797,7 +942,7 @@
         }
 
         .footer-involve a {
-            color: var(--pink);
+            color: var(--ink-heading);
             text-decoration: none;
         }
 
@@ -814,7 +959,7 @@
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--ink-muted);
             text-decoration: none;
             font-size: 0.9rem;
             letter-spacing: 0.05em;
@@ -823,7 +968,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--pink);
+            color: var(--ink-heading);
         }
 
         /* Mobile menu */
@@ -842,7 +987,7 @@
             height: 2px;
             margin: 5px 0;
             border-radius: 2px;
-            background: var(--text);
+            background: var(--ink);
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
@@ -864,10 +1009,11 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: rgba(10, 5, 20, 0.97);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border-soft);
+            background: rgba(251, 248, 241, 0.98);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
+            border-bottom: 1px solid var(--light-border);
+            box-shadow: 0 12px 28px rgba(26, 14, 46, 0.12);
             padding: 0.5rem 2rem 1rem;
         }
 
@@ -878,13 +1024,13 @@
         .mobile-menu a {
             display: block;
             padding: 0.95rem 0;
-            color: var(--text-muted);
+            color: var(--ink-muted);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(26, 14, 46, 0.10);
         }
 
         .mobile-menu a:last-child {
@@ -893,13 +1039,18 @@
 
         .mobile-menu a:active,
         .mobile-menu a:hover {
-            color: var(--pink);
+            color: var(--ink-heading);
         }
 
         /* Mobile */
         @media (max-width: 768px) {
             section {
                 padding: 4.5rem 0;
+            }
+
+            /* #venue's extra breathing room is ID-specific, so scale it here too */
+            #venue {
+                padding-bottom: 5.5rem;
             }
 
             .nav-links {
@@ -928,11 +1079,14 @@
                 width: 44px;
                 height: 44px;
                 padding: 0;
-                border: 1px solid var(--border-soft);
+                /* The bar itself is transparent on mobile, so this floats over
+                   the dark hero — it carries the cream instead. */
+                border: 1px solid rgba(122, 47, 158, 0.20);
                 border-radius: 50%;
-                background: rgba(10, 5, 20, 0.55);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
+                background: rgba(251, 248, 241, 0.74);
+                backdrop-filter: blur(10px) saturate(1.2);
+                -webkit-backdrop-filter: blur(10px) saturate(1.2);
+                box-shadow: 0 4px 14px rgba(8, 4, 16, 0.35);
             }
 
             .nav-toggle span {
@@ -940,7 +1094,7 @@
             }
 
             .mobile-menu {
-                border-top: 1px solid var(--border-soft);
+                border-top: 1px solid var(--light-border);
             }
 
             .hero-cta {
@@ -1171,6 +1325,7 @@
 
         <!-- Confirmed Speakers -->
         <section id="speakers" role="region" aria-labelledby="speakers-title">
+            <div class="light-blobs" aria-hidden="true"></div>
             <div class="container">
                 <span class="kicker fade-in">Confirmed for 2026</span>
                 <h2 id="speakers-title" class="section-title fade-in">Who You'll Hear From</h2>
@@ -1224,6 +1379,7 @@
 
         <!-- Venue -->
         <section id="venue" class="fade-in" role="region" aria-labelledby="venue-title">
+            <div class="light-blobs" aria-hidden="true"></div>
             <div class="container">
                 <span class="kicker">Venue</span>
                 <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>

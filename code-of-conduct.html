@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0514">
+    <meta name="theme-color" content="#080410">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
@@ -22,7 +22,8 @@
         }
 
         :root {
-            --bg-0: #0a0514;
+            --bg-0: #080410;
+            --bg-1: #0b0519;
             --pink: #f2a7e3;
             --magenta: #d84fc6;
             --purple: #7a2f9e;
@@ -31,13 +32,23 @@
             --text-muted: rgba(255, 255, 255, 0.72);
             --text-faint: rgba(255, 255, 255, 0.55);
             --border-soft: rgba(242, 167, 227, 0.18);
+            --btn-fill-from: #eadde6;
+            --btn-fill-to: #bfa0b8;
+
+            /* Light surfaces (nav, footer) — shared with index.html */
+            --light-1: #fbf8f1;
+            --ink: #1a0e2e;
+            --ink-muted: rgba(26, 14, 46, 0.68);
+            --ink-accent: #a52f92;
+            --ink-heading: #5c2280;
+            --light-border: rgba(122, 47, 158, 0.16);
             --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
             --font-tech: 'Orbitron', sans-serif;
             --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         html {
-            background: #0a0514;
+            background: var(--bg-0);
         }
 
         body {
@@ -54,9 +65,9 @@
             z-index: 0;
             pointer-events: none;
             background:
-                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(122, 47, 158, 0.28), transparent 65%),
-                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(216, 79, 198, 0.16), transparent 65%),
-                linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
+                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(98, 38, 126, 0.28), transparent 65%),
+                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(173, 63, 158, 0.16), transparent 65%),
+                linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 55%, var(--bg-0) 100%);
         }
 
         .backdrop::after {
@@ -93,6 +104,8 @@
             left: -35%;
             top: 56%;
             background-image: url('assets/wave-b.webp');
+            /* Recoloured to the cream of the light surfaces — matches index.html */
+            filter: grayscale(1) sepia(1) saturate(0.55) brightness(1.18) opacity(0.62);
             animation: sweep-b 58s linear infinite;
             animation-delay: -30s;
         }
@@ -125,17 +138,23 @@
             border-radius: 4px;
         }
 
+        /* Pink is only ~1.75:1 on cream — darken the ring on light surfaces. */
+        nav a:focus-visible,
+        footer a:focus-visible {
+            outline-color: var(--ink-heading);
+        }
+
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 5, 20, 0.82);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(251, 248, 241, 0.74);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
             z-index: 1000;
             padding: 1rem 0;
-            border-bottom: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--light-border);
         }
 
         .nav-container {
@@ -149,7 +168,7 @@
         }
 
         .nav-back {
-            color: var(--text-muted);
+            color: var(--ink-muted);
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
@@ -158,8 +177,10 @@
             transition: color 0.3s ease;
         }
 
+        /* At 74% the bar lets enough dark through that --ink-accent falls to
+           3.2:1; the deeper purple holds 5.5:1. */
         .nav-back:hover {
-            color: var(--pink);
+            color: var(--ink-heading);
         }
 
         .register-btn {
@@ -168,19 +189,22 @@
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--bg-0);
-            background: linear-gradient(120deg, var(--pink), var(--magenta));
+            /* Solid purple: the mauve fill used on dark sections is
+               near-invisible against the cream bar. */
+            color: #ffffff;
+            background: var(--ink-heading);
             padding: 0.6rem 1.5rem;
             border-radius: 999px;
             text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 18px rgba(216, 79, 198, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 14px rgba(92, 34, 128, 0.22);
             white-space: nowrap;
         }
 
         .register-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(216, 79, 198, 0.6);
+            background: #6d2a96;
+            box-shadow: 0 8px 24px rgba(92, 34, 128, 0.32);
         }
 
         /* Main content */
@@ -294,15 +318,17 @@
             text-decoration: underline;
         }
 
-        /* Footer */
+        /* Footer — matches the nav: cream, barely translucent */
         footer {
             position: relative;
             z-index: 1;
-            color: var(--text);
+            color: var(--ink);
             padding: 3.5rem 0;
             text-align: center;
-            border-top: 1px solid var(--border-soft);
-            background: rgba(10, 5, 20, 0.6);
+            border-top: 1px solid var(--light-border);
+            background: rgba(251, 248, 241, 0.74);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
         }
 
         .footer-content {
@@ -312,7 +338,7 @@
         }
 
         .footer-content > p {
-            color: var(--text-faint);
+            color: var(--ink-muted);
             font-size: 0.95rem;
         }
 
@@ -325,7 +351,7 @@
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--ink-muted);
             text-decoration: none;
             font-size: 0.9rem;
             letter-spacing: 0.05em;
@@ -334,7 +360,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--pink);
+            color: var(--ink-heading);
         }
 
         @media (max-width: 768px) {
