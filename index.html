@@ -75,16 +75,19 @@
             --btn-fill-to: #bfa0b8;
             --btn-outline: #ffd9f5;
 
-            /* Card glass — same mauve pair as the button fill, at glass alpha.
-               The filter does the real work: it desaturates the violet aurora
-               behind the card and rotates it toward the button's mauve, so the
-               card tints the light passing through rather than sitting on top. */
-            --card-glass: blur(18px) saturate(0.55) hue-rotate(25deg) brightness(1.15);
-            --card-tint-from: rgba(234, 221, 230, 0.075);
-            --card-tint-to: rgba(191, 160, 184, 0.14);
-            --card-border: rgba(210, 208, 216, 0.20);
-            --card-border-hov: rgba(220, 218, 226, 0.40);
-            --card-shadow-hov: 0 12px 40px rgba(52, 46, 66, 0.30);
+            /* Card glass — the same cream as the #speakers/#venue band, so the
+               floating cards read as pieces of the light surface lifted onto
+               the dark sections. Light card, ink text.
+               At 78–84% a good amount of the aurora comes through and the
+               cream cools toward grey, which is intended. Going much below
+               this is a contrast decision, not just a look one: the label text
+               reaches the 4.5:1 AA floor at around 72%. */
+            --card-glass: blur(18px) saturate(0.5) brightness(1.1);
+            --card-tint-from: rgba(251, 248, 241, 0.78);
+            --card-tint-to: rgba(244, 238, 226, 0.84);
+            --card-border: var(--light-border);
+            --card-border-hov: rgba(122, 47, 158, 0.32);
+            --card-shadow-hov: 0 16px 44px rgba(26, 14, 46, 0.12);
 
             /* Light band (#speakers, #venue) */
             --light-1: #fbf8f1;
@@ -207,6 +210,20 @@
 
         .skip-link:focus {
             top: 0;
+        }
+
+        /* Available to screen readers, invisible on screen. */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+            border: 0;
         }
 
         a:focus-visible,
@@ -496,14 +513,14 @@
             border-radius: 18px;
             backdrop-filter: var(--card-glass);
             -webkit-backdrop-filter: var(--card-glass);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 14px rgba(26, 14, 46, 0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-4px);
             border-color: var(--card-border-hov);
-            box-shadow: var(--card-shadow-hov), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow-hov);
         }
 
         .stat-number {
@@ -511,13 +528,12 @@
             font-size: clamp(2.1rem, 4vw, 2.8rem);
             font-weight: 700;
             margin-bottom: 0.6rem;
-            color: var(--pink-muted);
-            text-shadow: 0 0 20px rgba(173, 63, 158, 0.26);
+            color: var(--ink-heading);
         }
 
         .stat-label {
             font-size: 0.95rem;
-            color: var(--text-muted);
+            color: var(--ink-muted);
         }
 
         /* Award laurel badge */
@@ -591,27 +607,27 @@
         .expect-item {
             text-align: center;
             padding: 2.5rem 1.8rem;
-            background: linear-gradient(165deg, rgba(234, 221, 230, 0.045), rgba(191, 160, 184, 0.12));
+            background: linear-gradient(165deg, rgba(251, 248, 241, 0.76), rgba(244, 238, 226, 0.83));
             border: 1px solid var(--card-border);
             border-radius: 18px;
             backdrop-filter: var(--card-glass);
             -webkit-backdrop-filter: var(--card-glass);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 14px rgba(26, 14, 46, 0.06);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .expect-item:hover {
             transform: translateY(-4px);
             border-color: var(--card-border-hov);
-            box-shadow: var(--card-shadow-hov), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow-hov);
         }
 
-        /* No backdrop-filter means no light to tint, and the glass alphas alone
-           are too faint to read — give those browsers a real fill instead. */
+        /* Without backdrop-filter there's no transmitted light to lift the
+           surface, so the tint has to carry the card on its own. */
         @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
             .stat-card,
             .expect-item {
-                background: linear-gradient(165deg, rgba(234, 221, 230, 0.10), rgba(191, 160, 184, 0.17));
+                background: linear-gradient(165deg, var(--light-1), var(--light-2));
             }
         }
 
@@ -634,11 +650,11 @@
             letter-spacing: 0.05em;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            color: var(--text);
+            color: var(--ink);
         }
 
         .expect-item p {
-            color: var(--text-muted);
+            color: var(--ink-muted);
             font-size: 0.98rem;
             line-height: 1.8;
         }
@@ -1342,7 +1358,7 @@
                     </article>
                 </div>
                 <div class="section-cta fade-in">
-                    <a href="mailto:conferences@aisafety.ch?subject=Speaker%20Recommendation%20for%20Swiss%20AI%20Safety%20Days%202026" class="btn-primary">Join as a Speaker or Recommend Someone</a>
+                    <a href="https://airtable.com/apptCjWNpishp7FTc/pagoT2Z66pnRNcwr9/form" class="btn-primary" target="_blank" rel="noopener">Join as a Speaker or Recommend Someone<span class="visually-hidden"> (opens in a new tab)</span></a>
                 </div>
             </div>
         </section>
