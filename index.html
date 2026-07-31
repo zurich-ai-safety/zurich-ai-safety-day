@@ -664,6 +664,7 @@
            cream surface with dark ink. Everything scoped below is the
            inverted counterpart of a rule defined for the dark canvas. */
         #speakers,
+        #orgs,
         #venue {
             position: relative;
             overflow: hidden;
@@ -671,8 +672,17 @@
             border-bottom: 1px solid rgba(122, 47, 158, 0.14);
         }
 
+        /* #speakers and #orgs are one continuous cream block, so the seam
+           between them is dropped and the gradient runs 1 → 2 → 1. */
         #speakers {
             background: linear-gradient(180deg, var(--light-1) 0%, var(--light-2) 100%);
+            border-bottom: none;
+        }
+
+        #orgs {
+            background: linear-gradient(180deg, var(--light-2) 0%, var(--light-1) 100%);
+            border-top: none;
+            padding-top: 2rem;
         }
 
         #venue {
@@ -693,6 +703,14 @@
                 radial-gradient(52vw 44vh ellipse at 6% 88%, rgba(198, 150, 108, 0.13), transparent 64%);
         }
 
+        /* Both blobs sit low, keeping the top of the band clear behind the
+           larger Org Fair heading. */
+        #orgs .light-blobs {
+            background:
+                radial-gradient(48vw 42vh ellipse at 12% 90%, rgba(122, 47, 158, 0.09), transparent 62%),
+                radial-gradient(44vw 38vh ellipse at 88% 86%, rgba(198, 150, 108, 0.12), transparent 64%);
+        }
+
         #venue .light-blobs {
             background:
                 radial-gradient(50vw 42vh ellipse at 10% 12%, rgba(122, 47, 158, 0.09), transparent 62%),
@@ -700,23 +718,36 @@
         }
 
         #speakers .container,
+        #orgs .container,
         #venue .container {
             position: relative;
         }
 
         /* Ink on light */
         #speakers .kicker,
+        #orgs .kicker,
         #venue .kicker {
             color: var(--ink-accent);
         }
 
+        /* The Org Fair label carries more weight than a typical kicker — it is
+           the name of the thing, not just a category — so it runs larger. */
+        #orgs .kicker {
+            font-size: clamp(0.98rem, 2.2vw, 1.2rem);
+            letter-spacing: 0.34em;
+            text-indent: 0.34em;
+            margin-bottom: 1.3rem;
+        }
+
         #speakers .section-title,
+        #orgs .section-title,
         #venue .section-title {
             color: var(--ink);
         }
 
         #speakers .section-lead,
         #speakers .section-intro,
+        #orgs .section-intro,
         #venue .section-intro,
         #venue .venue-description {
             color: var(--ink-muted);
@@ -726,6 +757,7 @@
         /* The pink focus ring is only 1.75:1 on cream — swap it for ink purple
            on every light surface (nav, footer and the #speakers/#venue band). */
         #speakers a:focus-visible,
+        #orgs a:focus-visible,
         #venue a:focus-visible,
         nav a:focus-visible,
         nav button:focus-visible,
@@ -736,6 +768,7 @@
         /* The muted mauve button fill is near-invisible on cream (1.1–2.0:1 at
            its edge), so the light band gets a solid purple fill instead. */
         #speakers .section-cta .btn-primary,
+        #orgs .section-cta .btn-primary,
         #venue .section-cta .btn-primary {
             background: var(--ink-heading);
             color: #ffffff;
@@ -743,6 +776,7 @@
         }
 
         #speakers .section-cta .btn-primary:hover,
+        #orgs .section-cta .btn-primary:hover,
         #venue .section-cta .btn-primary:hover {
             background: #6d2a96;
             box-shadow: 0 10px 30px rgba(92, 34, 128, 0.35);
@@ -834,6 +868,226 @@
             .speaker-photo {
                 width: 168px;
                 height: 200px;
+            }
+        }
+
+        /* Org Fair — white logo tiles on the cream band */
+        /* Flex, not grid: as orgs are added week by week the count won't divide
+           evenly, and a wrapped flex row centres the leftovers instead of
+           stranding them against the left edge. Basis 300px gives 3 per row at
+           full width. */
+        .org-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .org-logo {
+            flex: 1 1 300px;
+            min-width: 0;
+            max-width: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            padding: 1.4rem 2rem;
+            background: #ffffff;
+            border: 1px solid var(--light-border);
+            border-radius: 16px;
+            box-shadow: 0 2px 14px rgba(26, 14, 46, 0.06);
+            text-decoration: none;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        a.org-logo:hover {
+            transform: translateY(-4px);
+            border-color: rgba(122, 47, 158, 0.32);
+            box-shadow: 0 16px 44px rgba(26, 14, 46, 0.12);
+        }
+
+        /* <img> rather than <object>: several of these SVGs carry intrinsic
+           width/height attributes, which an <object> viewport would clip
+           instead of scaling. object-fit: contain scales all of them. */
+        .org-logo img {
+            width: 100%;
+            height: 62px;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+        }
+
+        /* Pivotal's SVG is a full-bleed blue block rather than a transparent
+           wordmark, so it gets its own treatment: sized by height with
+           width:auto, the <img> box is exactly the blue rectangle, which is
+           what lets border-radius actually round the visible corners. (With
+           the shared width:100% + object-fit rule the artwork is letterboxed
+           inside a wider box and the radius clips transparent air instead.)
+           Being a solid block it also carries more visual weight per pixel,
+           so it sits closer to the tile edge than the wordmarks do. */
+        /* Several of these SVGs bake whitespace into their canvas, and ZAIS is
+           a stacked two-line lockup, so at the shared 62px they all read much
+           smaller than the others. This runs them taller with tighter tile
+           padding to even out the optical sizes. MATS is the one exclusion: at
+           5:1 it is already limited by tile width, not height, so a taller box
+           would change nothing. */
+        .org-logo--large {
+            padding: 0.8rem 1.1rem;
+        }
+
+        .org-logo--large img {
+            height: 88px;
+        }
+
+        /* Icon-plus-typeset-wordmark lockup, for orgs who only supply a mark.
+           The navy is sampled straight from EuroSafeAI's own icon (#022583) so
+           the two halves of the lockup agree. If they send a full logo file,
+           replace the whole tile with a plain .org-logo + <img>. */
+        .org-logo--lockup {
+            gap: 0.85rem;
+        }
+
+        .org-logo--lockup img {
+            width: auto;
+            height: 76px;
+            flex-shrink: 0;
+        }
+
+        .org-logo--lockup span {
+            font-family: var(--font-body);
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            color: #022583;
+            white-space: nowrap;
+        }
+
+        .org-logo--block {
+            padding: 0.9rem 1rem;
+        }
+
+        .org-logo--block img {
+            width: auto;
+            max-width: 100%;
+            height: 80px;
+            border-radius: 12px;
+        }
+
+        /* "Updated weekly" line under the intro */
+        .update-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            margin: 0 auto;
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink-accent);
+        }
+
+        .update-note .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ink-accent);
+            box-shadow: 0 0 0 0 rgba(165, 47, 146, 0.55);
+            animation: notePulse 2.4s ease-out infinite;
+        }
+
+        @keyframes notePulse {
+            0%   { box-shadow: 0 0 0 0 rgba(165, 47, 146, 0.5); }
+            70%  { box-shadow: 0 0 0 9px rgba(165, 47, 146, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(165, 47, 146, 0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .update-note .pulse-dot {
+                animation: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .org-logo {
+                flex-basis: 200px;
+                height: 100px;
+                padding: 1rem 1.25rem;
+            }
+
+            .org-logo--large {
+                padding: 0.6rem 0.8rem;
+            }
+
+            .org-logo--large img {
+                height: 76px;
+            }
+
+            .org-logo--block {
+                padding: 0.7rem 0.8rem;
+            }
+
+            .org-logo--block img {
+                height: 68px;
+                border-radius: 10px;
+            }
+
+            .org-logo--lockup img {
+                height: 60px;
+            }
+
+            .org-logo--lockup span {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .org-logos {
+                gap: 1rem;
+            }
+
+            .org-logo {
+                flex-basis: 130px;
+                height: 80px;
+                padding: 0.85rem 1rem;
+            }
+
+            .org-logo img {
+                height: 50px;
+            }
+
+            .org-logo--large {
+                padding: 0.5rem 0.6rem;
+            }
+
+            .org-logo--large img {
+                height: 62px;
+            }
+
+            .org-logo--block {
+                padding: 0.6rem 0.7rem;
+            }
+
+            .org-logo--block img {
+                height: 58px;
+                border-radius: 8px;
+            }
+
+            /* Too narrow for a side-by-side lockup: stack the mark over the name. */
+            .org-logo--lockup {
+                flex-direction: column;
+                gap: 0.35rem;
+            }
+
+            .org-logo--lockup img {
+                height: 38px;
+            }
+
+            .org-logo--lockup span {
+                font-size: 1rem;
             }
         }
 
@@ -1180,6 +1434,7 @@
             <ul class="nav-links">
                 <li><a href="#expect">What to Expect</a></li>
                 <li><a href="#speakers">Speakers</a></li>
+                <li><a href="#orgs">Org Fair</a></li>
                 <li><a href="#why">Why Zurich</a></li>
                 <li><a href="#venue">Venue</a></li>
                 <li><a href="/2025/">2025 Edition</a></li>
@@ -1192,6 +1447,7 @@
         <div class="mobile-menu" id="mobile-menu">
                 <a href="#expect">What to Expect</a>
                 <a href="#speakers">Speakers</a>
+                <a href="#orgs">Org Fair</a>
                 <a href="#why">Why Zurich</a>
                 <a href="#venue">Venue</a>
                 <a href="/2025/">2025 Edition</a>
@@ -1359,6 +1615,49 @@
                 </div>
                 <div class="section-cta fade-in">
                     <a href="https://airtable.com/appsZqpkshG3D89Ij/pagam5uuV4zDMvMWm/form" class="btn-primary" target="_blank" rel="noopener">Join as a Speaker or Recommend Someone<span class="visually-hidden"> (opens in a new tab)</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Org Fair -->
+        <section id="orgs" role="region" aria-labelledby="orgs-title">
+            <div class="light-blobs" aria-hidden="true"></div>
+            <div class="container">
+                <span class="kicker fade-in">Org Fair</span>
+                <h2 id="orgs-title" class="section-title fade-in">Who You'll Meet</h2>
+                <p class="update-note fade-in"><span class="pulse-dot" aria-hidden="true"></span>Updated every week</p>
+                <div class="org-logos fade-in">
+                    <a href="https://far.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/FARAI.svg" alt="FAR.AI" loading="lazy">
+                    </a>
+                    <a href="https://goodfire.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/goodfire.svg" alt="Goodfire" loading="lazy">
+                    </a>
+                    <a href="https://www.matsprogram.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/MATS.svg" alt="MATS Research" loading="lazy">
+                    </a>
+                    <a href="https://www.pivotal-research.org/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/pivotal.svg" alt="Pivotal Research" loading="lazy">
+                    </a>
+                    <a href="https://peaks-office.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/peaks.svg" alt="PEAKS" loading="lazy">
+                    </a>
+                    <a href="https://bluedot.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/BlueDot.svg" alt="BlueDot Impact" loading="lazy">
+                    </a>
+                    <a href="https://zurich.aisafety.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/ZAIS.svg" alt="Zurich AI Safety" loading="lazy">
+                    </a>
+                    <!-- EuroSafeAI supply an icon only, so the wordmark is set in
+                         type beside it. The img is decorative; the <span> carries
+                         the accessible name. -->
+                    <a href="https://safe.eu/" class="org-logo org-logo--lockup" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
+                        <span>EuroSafeAI</span>
+                    </a>
+                </div>
+                <div class="section-cta fade-in">
+                    <a href="mailto:conferences@aisafety.ch?subject=Org%20Fair%202026" class="btn-primary">Bring Your Organisation to the Fair</a>
                 </div>
             </div>
         </section>
