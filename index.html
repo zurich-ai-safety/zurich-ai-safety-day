@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080410">
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/Site/saisd-favicon.svg">
+    <link rel="apple-touch-icon" href="/assets/Site/saisd-apple-touch-icon.png">
 
     <title>Swiss AI Safety Days 2026 - Save the Date - 7-8 November</title>
     <meta name="description" content="Save the date: Swiss AI Safety Days 2026, 7-8 November at ETH Zurich. Two days of talks, workshops, an org fair, and high-density networking across AI safety research, governance, and careers.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Rubik+Glitch&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400&family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Rubik+Glitch&display=swap" rel="stylesheet">
 
     <script type="application/ld+json">
     {
@@ -153,7 +153,7 @@
         .wave-1 {
             left: -35%;
             top: 32%;
-            background-image: url('assets/wave-a.webp');
+            background-image: url('assets/Site/wave-a.webp');
             animation: sweep-a 44s linear infinite;
             animation-delay: -16s;
         }
@@ -161,7 +161,7 @@
         .wave-2 {
             left: -35%;
             top: 56%;
-            background-image: url('assets/wave-b.webp');
+            background-image: url('assets/Site/wave-b.webp');
             /* The source art is magenta; this recolours it to the cream of the
                #speakers/#venue band and dials it back, so the lower wave reads
                as a soft counterpoint to the saturated wave-1 above it.
@@ -699,8 +699,7 @@
 
         #speakers .light-blobs {
             background:
-                radial-gradient(46vw 40vh ellipse at 82% 8%, rgba(122, 47, 158, 0.10), transparent 62%),
-                radial-gradient(52vw 44vh ellipse at 6% 88%, rgba(198, 150, 108, 0.13), transparent 64%);
+                radial-gradient(46vw 40vh ellipse at 82% 8%, rgba(122, 47, 158, 0.10), transparent 62%);
         }
 
         /* Both blobs sit low, keeping the top of the band clear behind the
@@ -857,17 +856,151 @@
             color: var(--ink-muted);
         }
 
+        /* Supporting speakers below the keynote. Collapsed they show only the
+           portrait, name and primary title; the second title and the bio are
+           behind a click. Built on <details> rather than a JS toggle, so the
+           keyboard and screen-reader behaviour is the browser's own and the
+           cards still open with scripting disabled.
+           align-items: start keeps an opened card from stretching its
+           neighbour to match. */
+        .speakers-grid--pair {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            align-items: start;
+            margin-top: 2rem;
+        }
+
+        .speaker-card--compact {
+            display: block;
+            padding: 0;
+            overflow: hidden;
+            /* .speaker-card centres itself with justify-self, which makes a grid
+               item shrink to its content instead of filling the column. That is
+               right for the lone keynote card, but here it meant each card was
+               only as wide as its own text — so opening one widened it, and the
+               two cards never matched. Filling the column instead pins every
+               card in this grid to the same width, open or closed.
+               min-width: 0 stops a long title overriding that. */
+            justify-self: stretch;
+            width: 100%;
+            max-width: none;
+            min-width: 0;
+        }
+
+        /* The whole collapsed face is the summary, so a click anywhere on the
+           card toggles it. */
+        .speaker-summary {
+            display: grid;
+            grid-template-columns: 110px 1fr auto;
+            gap: 1.25rem;
+            align-items: center;
+            padding: 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .speaker-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .speaker-summary:focus-visible {
+            outline: 2px solid var(--ink-heading);
+            outline-offset: -3px;
+            border-radius: 20px;
+        }
+
+        .speaker-card--compact .speaker-photo {
+            width: 110px;
+            height: 132px;
+            box-shadow: 0 2px 10px rgba(26, 14, 46, 0.1);
+        }
+
+        .speaker-card--compact .speaker-tag {
+            margin-bottom: 0.4rem;
+        }
+
+        .speaker-card--compact .speaker-name {
+            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+            margin-bottom: 0.3rem;
+        }
+
+        .speaker-card--compact .speaker-affil {
+            font-size: 0.86rem;
+            margin-bottom: 0;
+        }
+
+        .speaker-chevron {
+            color: var(--ink-accent);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .speaker-card--compact[open] .speaker-chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Grid cells do not shrink below their content by default, which lets a
+           long unbroken title push the card wider than its column. */
+        .speaker-head {
+            min-width: 0;
+        }
+
+        .speaker-detail {
+            padding: 1.1rem 0 1.4rem;
+            margin: 0 1.25rem;
+            border-top: 1px solid var(--light-border);
+            animation: speakerReveal 0.28s ease both;
+        }
+
+        .speaker-affil-alt {
+            font-size: 0.86rem;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 0.7rem;
+        }
+
+        .speaker-card--compact .speaker-bio {
+            font-size: 0.92rem;
+            line-height: 1.75;
+        }
+
+        @keyframes speakerReveal {
+            from { opacity: 0; transform: translateY(-6px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .speaker-detail { animation: none; }
+            .speaker-chevron { transition: none; }
+        }
+
         @media (max-width: 620px) {
-            .speaker-card {
+            .speaker-card:not(.speaker-card--compact) {
                 grid-template-columns: 1fr;
                 justify-items: center;
                 text-align: center;
                 padding: 2rem 1.5rem;
             }
 
-            .speaker-photo {
+            .speaker-card:not(.speaker-card--compact) .speaker-photo {
                 width: 168px;
                 height: 200px;
+            }
+
+            /* The compact cards stay side-on: shrinking the portrait keeps the
+               collapsed row short, which is the point of them. */
+            .speaker-summary {
+                grid-template-columns: 84px 1fr auto;
+                gap: 0.9rem;
+                padding: 1rem;
+            }
+
+            .speaker-card--compact .speaker-photo {
+                width: 84px;
+                height: 100px;
+            }
+
+            .speaker-detail {
+                margin: 0 1rem;
+                padding: 1rem 0 1.2rem;
             }
         }
 
@@ -964,6 +1097,34 @@
             white-space: nowrap;
         }
 
+        /* SAIGE set in their own face and colour, both read off their site:
+           Bona Nova 400 at rgb(116, 148, 123). The fallback chain is the one
+           Framer generates for them, so a failed webfont still lands on a
+           serif rather than dropping to Poppins. The green is 3.35:1 on
+           white, which only clears AA as large text — fine here because a
+           brand name rendered as a logo is exempt from 1.4.3 anyway, but the
+           reason not to reuse this colour for real copy. */
+        /* Narrower side padding than the other tiles, bought back as width for
+           the wordmark: at this size even the widest fallback serif fits on
+           one line. */
+        .org-logo--lockup-long {
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+        }
+
+        .org-logo--lockup-long span {
+            font-family: 'Bona Nova', 'Ibarra Real Nova', 'Inria Serif', 'PT Serif', serif;
+            font-weight: 400;
+            font-size: 1.85rem;
+            letter-spacing: 0;
+            color: #74947B;
+            /* Bona Nova is narrow enough to hold one line at this size, but the
+               fallback serifs are not. Allowing a wrap means a failed webfont
+               breaks the name over two lines instead of overflowing the tile. */
+            white-space: normal;
+            text-align: left;
+        }
+
         .org-logo--block {
             padding: 0.9rem 1rem;
         }
@@ -1042,6 +1203,10 @@
             .org-logo--lockup span {
                 font-size: 1.3rem;
             }
+
+            .org-logo--lockup-long span {
+                font-size: 1.4rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1088,6 +1253,10 @@
 
             .org-logo--lockup span {
                 font-size: 1rem;
+            }
+
+            .org-logo--lockup-long span {
+                font-size: 1.1rem;
             }
         }
 
@@ -1601,10 +1770,10 @@
             <div class="container">
                 <span class="kicker fade-in">Confirmed for 2026</span>
                 <h2 id="speakers-title" class="section-title fade-in">Who You'll Hear From</h2>
-                <p class="section-intro fade-in">Speaker highlights:</p>
+                <p class="update-note fade-in"><span class="pulse-dot" aria-hidden="true"></span>Updated every week</p>
                 <div class="speakers-grid fade-in">
                     <article class="speaker-card">
-                        <img class="speaker-photo" src="assets/russell.jpg" alt="Portrait of Stuart Russell, Professor of Computer Science at UC Berkeley" loading="lazy" width="200" height="240">
+                        <img class="speaker-photo" src="assets/Speakers/russell.jpg" alt="Portrait of Stuart Russell, Professor of Computer Science at UC Berkeley" loading="lazy" width="200" height="240">
                         <div class="speaker-info">
                             <span class="speaker-tag">Keynote</span>
                             <h3 class="speaker-name">Stuart Russell</h3>
@@ -1612,6 +1781,42 @@
                             <p class="speaker-bio">Co-author of <em>Artificial Intelligence: A Modern Approach</em>, the standard AI textbook used in over 1,500 universities across 135 countries, and a Fellow of the Royal Society. One of the field's leading voices on keeping advanced AI under human control, a case he makes in his book <em>Human Compatible</em> and his 2021 BBC Reith Lectures.</p>
                         </div>
                     </article>
+                </div>
+                <div class="speakers-grid speakers-grid--pair fade-in">
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/christian_witt.jpg" alt="Portrait of Christian Schroeder de Witt, Principal Investigator at the Oxford Witt Lab" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Christian Schroeder de Witt</h3>
+                                <p class="speaker-affil">Principal Investigator, Oxford Witt Lab, University of Oxford</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-affil-alt">Royal Academy of Engineering Research Fellow</p>
+                            <p class="speaker-bio">Defined the field of multi-agent security. His work on perfectly secure steganography solved a 25-year-old problem and was named one of 2023's biggest discoveries in computer science by <em>Quanta Magazine</em>.</p>
+                        </div>
+                    </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/nora_ammann.webp" alt="Portrait of Nora Ammann, Programme Director at ARIA" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Nora Ammann</h3>
+                                <p class="speaker-affil">Programme Director, ARIA</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-affil-alt">Co-founder, Principles of Intelligence</p>
+                            <p class="speaker-bio">Runs ARIA's &pound;60M Safeguarded AI programme on formally verified AI. Co-author of <em>Gradual Disempowerment</em>.</p>
+                        </div>
+                    </details>
                 </div>
                 <div class="section-cta fade-in">
                     <a href="https://airtable.com/appsZqpkshG3D89Ij/pagam5uuV4zDMvMWm/form" class="btn-primary" target="_blank" rel="noopener">Join as a Speaker or Recommend Someone<span class="visually-hidden"> (opens in a new tab)</span></a>
@@ -1628,34 +1833,38 @@
                 <p class="update-note fade-in"><span class="pulse-dot" aria-hidden="true"></span>Updated every week</p>
                 <div class="org-logos fade-in">
                     <a href="https://far.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/FARAI.svg" alt="FAR.AI" loading="lazy">
+                        <img src="assets/Orgs/FARAI.svg" alt="FAR.AI" loading="lazy">
                     </a>
                     <a href="https://goodfire.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/goodfire.svg" alt="Goodfire" loading="lazy">
+                        <img src="assets/Orgs/goodfire.svg" alt="Goodfire" loading="lazy">
                     </a>
                     <a href="https://www.matsprogram.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/MATS.svg" alt="MATS Research" loading="lazy">
+                        <img src="assets/Orgs/MATS.svg" alt="MATS Research" loading="lazy">
                     </a>
                     <a href="https://www.pivotal-research.org/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/pivotal.svg" alt="Pivotal Research" loading="lazy">
-                    </a>
-                    <a href="https://peaks-office.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/peaks.svg" alt="PEAKS" loading="lazy">
+                        <img src="assets/Orgs/pivotal.svg" alt="Pivotal Research" loading="lazy">
                     </a>
                     <a href="https://bluedot.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/BlueDot.svg" alt="BlueDot Impact" loading="lazy">
+                        <img src="assets/Orgs/BlueDot.svg" alt="BlueDot Impact" loading="lazy">
+                    </a>
+                    <a href="https://safeaigermany.org/" class="org-logo org-logo--lockup org-logo--lockup-long" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/saige-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="87">
+                        <span>Safe AI Germany</span>
                     </a>
                     <a href="https://zurich.aisafety.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/ZAIS.svg" alt="Zurich AI Safety" loading="lazy">
+                        <img src="assets/Orgs/ZAIS.svg" alt="Zurich AI Safety" loading="lazy">
                     </a>
                     <!-- EuroSafeAI supply an icon only, so the wordmark is set in
                          type beside it. The img is decorative; the <span> carries
                          the accessible name. -->
                     <a href="https://safe.eu/" class="org-logo org-logo--lockup" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
+                        <img src="assets/Orgs/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
                         <span>EuroSafeAI</span>
                     </a>
-                </div>
+                    <a href="https://peaks-office.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/peaks.svg" alt="PEAKS" loading="lazy">
+                    </a>
+</div>
                 <div class="section-cta fade-in">
                     <a href="mailto:conferences@aisafety.ch?subject=Org%20Fair%202026" class="btn-primary">Bring Your Organisation to the Fair</a>
                 </div>
@@ -1700,13 +1909,13 @@
                 <h2 id="venue-title" class="section-title">The Venue: ETH Zurich</h2>
                 <div class="venue-grid">
                     <div class="venue-image">
-                        <img src="assets/eth-interior-classic.jpg" alt="Historic ETH interior atrium with three-story classical arches, ornate balustrades, and natural light flooding the white marble space" loading="lazy">
+                        <img src="assets/Site/eth-interior-classic.jpg" alt="Historic ETH interior atrium with three-story classical arches, ornate balustrades, and natural light flooding the white marble space" loading="lazy">
                     </div>
                     <div class="venue-image">
-                        <img src="assets/eth-exterior.jpg" alt="Aerial view of ETH Zurich main building with its iconic dome and symmetrical architecture overlooking the Limmat river and Zurich cityscape" loading="lazy">
+                        <img src="assets/Site/eth-exterior.jpg" alt="Aerial view of ETH Zurich main building with its iconic dome and symmetrical architecture overlooking the Limmat river and Zurich cityscape" loading="lazy">
                     </div>
                     <div class="venue-image">
-                        <img src="assets/eth-interior-modern.jpg" alt="Modern ETH interior featuring bold concrete architecture, geometric staircases, and contemporary art installation" loading="lazy">
+                        <img src="assets/Site/eth-interior-modern.jpg" alt="Modern ETH interior featuring bold concrete architecture, geometric staircases, and contemporary art installation" loading="lazy">
                     </div>
                 </div>
                 <p class="venue-description">
