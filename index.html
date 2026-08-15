@@ -48,32 +48,32 @@
 
         :root {
             /* Dark surface */
-            --bg-0: #080410;
-            --bg-1: #0b0519;
-            --bg-2: #1a0e2e;
+            --bg-0: #0a0a0c;
+            --bg-1: #101012;
+            --bg-2: #111114;
 
             /* Saturated accents — hero display type, kickers and links.
                Buttons use the muted --btn-fill-* pair below. */
             --pink: #f2a7e3;
             --pink-bright: #ff9ee8;
             --magenta: #d84fc6;
-            --purple: #7a2f9e;
-            --cream: #f3e9d2;
+            --purple: #1e1e22;
+            --cream: rgba(255, 255, 255, 0.78);
 
             --text: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.72);
             --text-faint: rgba(255, 255, 255, 0.55);
             --border-soft: rgba(242, 167, 227, 0.18);
-            --glow-pink: rgba(173, 63, 158, 0.30);
+            --glow-pink: rgba(0, 0, 0, 0.40);
 
             /* Desaturated accents — everything below the hero */
-            --pink-muted: #dfaed6;
-            --magenta-muted: rgba(173, 63, 158, 1);
+            --pink-muted: rgba(255, 255, 255, 0.92);
+            --magenta-muted: #c01f8f;
 
             /* Buttons */
-            --btn-fill-from: #eadde6;
-            --btn-fill-to: #bfa0b8;
-            --btn-outline: #ffd9f5;
+            --btn-fill-from: #f7f7f8;
+            --btn-fill-to: #dcdce0;
+            --btn-outline: rgba(255, 255, 255, 0.92);
 
             /* Card glass — the same cream as the #speakers/#venue band, so the
                floating cards read as pieces of the light surface lifted onto
@@ -86,17 +86,17 @@
             --card-tint-from: rgba(251, 248, 241, 0.78);
             --card-tint-to: rgba(244, 238, 226, 0.84);
             --card-border: var(--light-border);
-            --card-border-hov: rgba(122, 47, 158, 0.32);
-            --card-shadow-hov: 0 16px 44px rgba(26, 14, 46, 0.12);
+            --card-border-hov: rgba(17, 17, 20, 0.24);
+            --card-shadow-hov: 0 10px 28px rgba(17, 17, 20, 0.09);
 
             /* Light band (#speakers, #venue) */
-            --light-1: #fbf8f1;
-            --light-2: #f4eee2;
-            --ink: #1a0e2e;
-            --ink-muted: rgba(26, 14, 46, 0.68);
-            --ink-accent: #a52f92;
-            --ink-heading: #5c2280;
-            --light-border: rgba(122, 47, 158, 0.16);
+            --light-1: #ffffff;
+            --light-2: #ffffff;
+            --ink: #111114;
+            --ink-muted: rgba(17, 17, 20, 0.64);
+            --ink-accent: #c01f8f;
+            --ink-heading: #111114;
+            --light-border: rgba(17, 17, 20, 0.10);
 
             --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
             --font-tech: 'Orbitron', sans-serif;
@@ -118,7 +118,7 @@
 
         /* Page-wide aurora backdrop, echoing the 2025 flyer's flowing waves */
         .backdrop {
-            position: fixed;
+            position: absolute;
             inset: 0;
             z-index: 0;
             pointer-events: none;
@@ -458,22 +458,22 @@
             font-family: var(--font-tech);
             font-size: 0.8rem;
             font-weight: 600;
-            letter-spacing: 0.45em;
-            text-indent: 0.45em;
+            letter-spacing: 0.26em;
+            text-indent: 0.26em;
             text-transform: uppercase;
-            color: var(--magenta);
+            color: var(--pink);
             text-align: center;
             margin-bottom: 1rem;
         }
 
         .section-title {
             font-family: var(--font-tech);
-            font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+            font-size: clamp(1.75rem, 3.6vw, 2.6rem);
             font-weight: 700;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.015em;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             color: var(--text);
         }
 
@@ -492,8 +492,8 @@
             text-align: center;
             max-width: 780px;
             margin: 0 auto 2rem;
-            font-size: 1.05rem;
-            line-height: 1.9;
+            font-size: 1.06rem;
+            line-height: 1.72;
             color: var(--text-muted);
         }
 
@@ -566,8 +566,8 @@
             font-family: var(--font-tech);
             font-size: 0.72rem;
             font-weight: 600;
-            letter-spacing: 0.28em;
-            text-indent: 0.28em;
+            letter-spacing: 0.2em;
+            text-indent: 0.2em;
             text-transform: uppercase;
             color: var(--cream);
             margin-bottom: 0.35rem;
@@ -1585,17 +1585,409 @@
             opacity: 1;
             transform: none;
         }
+
+        /* ── 2026 refinement pass ─────────────────────────────────────
+           Monochrome shell with pink as the single accent; the aurora is
+           scoped to the hero and every other band is flat black or white. */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-0);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-shader {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Keeps the shader legible under the headline without flattening it. */
+        .hero-scrim {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(78vw 66vh ellipse at 50% 48%,
+                rgba(10, 10, 12, 0.10) 0%,
+                rgba(10, 10, 12, 0.06) 42%,
+                rgba(10, 10, 12, 0.55) 80%,
+                var(--bg-0) 100%);
+        }
+
+        /* Flat bands — no gradients, no seams, no soft blobs. */
+        #highlights,
+        #expect,
+        #why,
+        #notify {
+            background: var(--bg-0);
+        }
+
+        #speakers,
+        #orgs,
+        #venue,
+        #highlights {
+            background: #ffffff;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .light-blobs {
+            display: none;
+        }
+
+        /* Footer joins the dark shell. #notify above it is already --bg-0, so
+           with no border the two read as one continuous black block. */
+        footer {
+            background: var(--bg-0);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            color: rgba(255, 255, 255, 0.82);
+            border-top: none;
+        }
+
+        .footer-content > p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-involve a {
+            color: #ffffff;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-links a:hover,
+        .footer-involve a:hover {
+            color: #ffffff;
+        }
+
+        footer a:focus-visible {
+            outline-color: #ffffff;
+        }
+
+        /* ── Top bar: rough glass over the hero ───────────────────────
+           Tinted with --bg-0 so it reads as the hero surface rather than a
+           separate object, then blurred and grained. The tint has to stay
+           translucent for the blur to be visible at all — an opaque bar
+           would have nothing to refract. */
+        nav {
+            /* Thin tint over the hero. The tint is --bg-0, the hero's own
+               colour, so at rest this costs nothing in legibility however far
+               it drops — it only changes how much of the shader reads through.
+               More blur compensates for the thinner tint, so the bar still
+               refracts rather than turning into a plain scrim. */
+            background: rgba(10, 10, 12, 0.34);
+            backdrop-filter: blur(26px) saturate(1.3);
+            -webkit-backdrop-filter: blur(26px) saturate(1.3);
+            /* Transparent at rest so the bar has no visible edge against the
+               hero; .scrolled brings the line in. */
+            border-bottom: 1px solid transparent;
+            /* The thin bright line along the top edge reads as the thickness
+               of the pane — the cheapest cue that a surface is glass. */
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            isolation: isolate;
+        }
+
+
+        /* The "rough" half: the same fractal-noise tile the hero backdrop
+           uses, so the graining matches. Sits above the blur, below content. */
+        nav::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.055;
+            mix-blend-mode: overlay;
+        }
+
+        /* Once scrolled the bar passes over the white bands, and there the
+           tint is the only thing keeping white links readable. 0.72 is the
+           floor: it holds 6.2:1 against the links below, where 0.66 would
+           drop them to 4.3:1 and fail AA. Thinner than this needs a different
+           idea, not a smaller number. */
+        nav.scrolled {
+            background: rgba(10, 10, 12, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Everything in the bar was coloured for the white version. Raised
+           from 0.72 to buy contrast headroom for the thinner scrolled tint. */
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        nav .register-btn {
+            background: #ffffff;
+            color: var(--bg-0);
+            box-shadow: none;
+        }
+
+        nav .register-btn:hover {
+            background: #ffffff;
+            box-shadow: 0 6px 22px rgba(255, 255, 255, 0.22);
+        }
+
+        nav a:focus-visible,
+        nav button:focus-visible {
+            outline-color: #ffffff;
+        }
+
+        /* Restores the mobile bar, which the refinement pass had overridden:
+           its transparent rule lives in an earlier media query, so the
+           unconditional nav rules above would otherwise win at every width.
+           The burger keeps its dark bars — it sits on its own pale disc, not
+           on the bar. */
+        @media (max-width: 768px) {
+            nav,
+            nav.scrolled {
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                border-bottom: none;
+                box-shadow: none;
+            }
+
+            nav::after {
+                display: none;
+            }
+
+            /* Burger and menu panel, repainted for the monochrome shell: both
+               were cream with a purple-tinted edge from the old palette. */
+            .nav-toggle {
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                background: rgba(10, 10, 12, 0.62);
+                backdrop-filter: blur(14px) saturate(1.25);
+                -webkit-backdrop-filter: blur(14px) saturate(1.25);
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+            }
+
+            .nav-toggle span {
+                background: #ffffff;
+            }
+
+            .mobile-menu {
+                background: rgba(10, 10, 12, 0.94);
+                backdrop-filter: blur(20px) saturate(1.25);
+                -webkit-backdrop-filter: blur(20px) saturate(1.25);
+                border-top: 1px solid rgba(255, 255, 255, 0.10);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+            }
+
+            .mobile-menu a {
+                color: rgba(255, 255, 255, 0.72);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            }
+
+            .mobile-menu a:last-child {
+                border-bottom: none;
+            }
+
+            .mobile-menu a:active,
+            .mobile-menu a:hover {
+                color: #ffffff;
+            }
+        }
+
+        /* #highlights joins the light band. */
+        #highlights .kicker { color: var(--ink-accent); }
+        #highlights .section-title { color: var(--ink); }
+        #highlights .section-intro { color: var(--ink-muted); }
+        #highlights .award-badge .laurel {
+            color: rgba(192, 31, 143, 0.75);
+            filter: none;
+        }
+        #highlights .award-text .award-context { color: rgba(17, 17, 20, 0.6); }
+        #highlights .award-text .award-title {
+            color: var(--ink);
+            text-shadow: none;
+        }
+        #highlights .award-text .award-sub { color: rgba(17, 17, 20, 0.55); }
+        #highlights .section-cta .btn-secondary {
+            color: var(--ink);
+            border-color: rgba(17, 17, 20, 0.28);
+        }
+        #highlights .section-cta .btn-secondary:hover {
+            color: #ffffff;
+            background: var(--ink);
+            border-color: var(--ink);
+        }
+
+        /* ── Cards ────────────────────────────────────────────────────
+           Dark faces on both bands, lit by a highlight that tracks the
+           pointer: a bright rim just outside the edge and a soft wash
+           inside. --mx/--my/--glow-on are written by script. */
+        .stat-card,
+        .expect-item {
+            position: relative;
+            background: #0e0e11;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .stat-card::before,
+        .expect-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(circle 300px at var(--mx, 50%) var(--my, 50%),
+                rgba(242, 167, 227, 0.16), rgba(216, 79, 198, 0.06) 40%, transparent 66%);
+            opacity: var(--glow-on, 0);
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-card::after,
+        .expect-item::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle 200px at var(--mx, 50%) var(--my, 50%),
+                rgba(255, 255, 255, 0.98), rgba(242, 167, 227, 0.85) 22%,
+                rgba(216, 79, 198, 0.45) 42%, transparent 68%);
+            filter: blur(7px);
+            opacity: var(--glow-on, 0);
+            transition: opacity 0.4s ease;
+        }
+
+        /* No transform on hover: it would open a stacking context and trap
+           the ::after bloom behind the card. */
+        .stat-card:hover,
+        .expect-item:hover {
+            transform: none;
+            background: #15151a;
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: none;
+        }
+
+        .stat-number { color: #ffffff; }
+        .stat-label { color: rgba(255, 255, 255, 0.6); }
+        .expect-item h3 { color: #ffffff; }
+        .expect-item p { color: rgba(255, 255, 255, 0.66); }
+
+        .expect-icon-wrapper {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: none;
+        }
+
+        /* ── Hero CTA ─────────────────────────────────────────────────
+           Dark pill inside a rotating monochrome rim; on hover the rim
+           blooms outward to ring the whole button. */
+        @property --btn-angle {
+            syntax: "<angle>";
+            inherits: true;
+            initial-value: 0deg;
+        }
+
+        @keyframes btnSpin {
+            to { --btn-angle: 360deg; }
+        }
+
+        .glow-btn {
+            position: relative;
+            display: inline-flex;
+            padding: 1.5px;
+            border-radius: 999px;
+            background: conic-gradient(from var(--btn-angle),
+                rgba(255, 255, 255, 0.10) 0deg,
+                rgba(255, 255, 255, 0.75) 55deg,
+                #ffffff 90deg,
+                rgba(255, 255, 255, 0.55) 135deg,
+                rgba(255, 255, 255, 0.10) 215deg,
+                rgba(255, 255, 255, 0.10) 360deg);
+            animation: btnSpin 4.5s linear infinite;
+        }
+
+        .glow-btn-bloom {
+            position: absolute;
+            inset: -1px;
+            border-radius: 999px;
+            background: inherit;
+            filter: blur(var(--bloom-blur, 5px));
+            opacity: var(--bloom-op, 0.35);
+            transform: scale(var(--bloom-scale, 1));
+            transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Hover fills the whole rim. The resting state is a conic gradient
+           with one bright arc, and gradient colour stops cannot be
+           transitioned, so the full ring is a separate uniform layer that
+           fades in over the top. It sits above the conic background but
+           below the <a>, which is positioned and therefore painted later. */
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: #ffffff;
+            opacity: 0;
+            /* 0.42s = the previous 0.35s, 20% slower. */
+            transition: opacity 0.42s ease;
+            pointer-events: none;
+        }
+
+        .glow-btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Hover is the rim alone: the bloom fades out rather than blooming,
+           so the button reads as a crisp lit outline with no halo. */
+        .glow-btn:hover {
+            --bloom-op: 0;
+        }
+
+        .glow-btn > a {
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 1rem 2.2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            background: #0e0e11;
+            color: #ffffff;
+            transition: color 0.35s ease, background 0.35s ease;
+        }
+
+        .glow-btn > a:hover {
+            background: #131318;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .glow-btn { animation: none; }
+        }
     </style>
 </head>
 <body>
-    <div class="backdrop" aria-hidden="true">
-        <div class="wave-scroll" data-depth="0.07">
-            <div class="wave-img wave-1"></div>
-        </div>
-        <div class="wave-scroll" data-depth="-0.1">
-            <div class="wave-img wave-2"></div>
-        </div>
-    </div>
     <a href="#main" class="skip-link">Skip to main content</a>
 
     <nav id="navbar" role="navigation" aria-label="Main navigation">
@@ -1625,14 +2017,17 @@
 
     <main id="main">
         <section id="top" class="hero" role="banner">
+        <div class="backdrop" aria-hidden="true">
+            <canvas class="hero-shader"></canvas>
+            <div class="hero-scrim"></div>
+        </div>
             <div class="hero-content">
                 <span class="eyebrow">Save the date</span>
                 <h1>Swiss AI Safety Days</h1>
                 <p class="date">7&ndash;8 November 2026 <span class="sep">&bull;</span> ETH Zurich</p>
                 <p class="tagline">Two days. One venue. Europe's AI safety community in one place: leading researchers, policymakers, builders, and the people about to join them.<br>Spots are limited. In 2025, applications outnumbered them.</p>
                 <div class="hero-cta">
-                    <a href="#notify" class="btn-primary">Get notified</a>
-                    <a href="#highlights" class="btn-secondary">2025 highlights</a>
+                    <span class="glow-btn"><span class="glow-btn-bloom" aria-hidden="true"></span><a href="#notify">Get notified</a></span>
                 </div>
             </div>
         </section>
@@ -1906,8 +2301,8 @@
                         <div class="stat-label">Top Global AI Companies Here</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">#3</div>
-                        <div class="stat-label">AI Intensity Globally</div>
+                        <div class="stat-number">#8</div>
+                        <div class="stat-label">Best University in the World: ETH Zurich</div>
                     </div>
                 </div>
             </div>
@@ -2037,21 +2432,167 @@
         }
     </script>
     <script>
-        // Waves trail the scroll with a smoothed parallax
+        // Hero background: SDF metaballs, greyscale rim with a drifting pink accent.
         (function () {
+            var canvas = document.querySelector('.hero-shader');
+            if (!canvas) return;
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            var waves = document.querySelectorAll('.wave-scroll');
-            if (!waves.length) return;
-            var target = window.scrollY, current = target;
-            window.addEventListener('scroll', function () { target = window.scrollY; }, { passive: true });
-            (function tick() {
-                current += (target - current) * 0.06;
-                waves.forEach(function (w) {
-                    var d = parseFloat(w.dataset.depth || 0);
-                    w.style.transform = 'translateY(' + (current * d).toFixed(2) + 'px) rotate(' + (current * d * 0.012).toFixed(3) + 'deg)';
-                });
-                requestAnimationFrame(tick);
-            })();
+
+            var gl = canvas.getContext('webgl2', { antialias: false, alpha: true });
+            if (!gl) return;
+
+            var SPEED = 0.1;
+            var BRIGHTNESS = 1.0;
+            var ACCENT_AMOUNT = 0.55;
+            var ACCENT = [0.851, 0.310, 0.776];
+
+            var VS = '#version 300 es\n' +
+                'in vec2 position;\n' +
+                'void main() { gl_Position = vec4(position, 0.0, 1.0); }';
+
+            var FS = '#version 300 es\n' +
+                'precision highp float;\n' +
+                'uniform float u_time;\n' +
+                'uniform vec2 u_resolution;\n' +
+                'uniform vec3 u_radii;\n' +
+                'uniform vec2 u_smoothK;\n' +
+                'uniform vec3 u_accent;\n' +
+                'uniform float u_accentAmt;\n' +
+                'uniform float u_brightness;\n' +
+                'out vec4 fragColor;\n' +
+                'float sdCircle(vec2 p, float r) { return length(p) - r; }\n' +
+                'float opSmoothUnion(float d1, float d2, float k) {\n' +
+                '  float h = clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);\n' +
+                '  return mix(d2, d1, h) - k * h * (1.0 - h);\n' +
+                '}\n' +
+                'float mapScene(vec2 uv) {\n' +
+                '  float t = u_time;\n' +
+                '  vec2 p1 = vec2(cos(t * 0.5), sin(t * 0.5)) * 0.3;\n' +
+                '  vec2 p2 = vec2(cos(t * 0.7 + 2.1), sin(t * 0.6 + 2.1)) * 0.4;\n' +
+                '  vec2 p3 = vec2(cos(t * 0.4 + 4.2), sin(t * 0.8 + 4.2)) * 0.35;\n' +
+                '  float u12 = opSmoothUnion(sdCircle(uv - p1, u_radii.x), sdCircle(uv - p2, u_radii.y), u_smoothK.x);\n' +
+                '  return opSmoothUnion(u12, sdCircle(uv - p3, u_radii.z), u_smoothK.y);\n' +
+                '}\n' +
+                'void main() {\n' +
+                '  vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;\n' +
+                '  float g = 0.0055 / abs(mapScene(uv));\n' +
+                '  vec3 grey = vec3(0.78, 0.78, 0.81);\n' +
+                '  float wave = 0.5 + 0.5 * sin(u_time * 0.22 + uv.x * 2.4 + uv.y * 1.7);\n' +
+                '  vec3 tint = mix(grey, u_accent, wave * u_accentAmt);\n' +
+                '  vec3 col = tint * clamp(g, 0.0, 1.0);\n' +
+                '  col = mix(col, vec3(0.97, 0.97, 0.98), smoothstep(1.1, 2.6, g) * 0.85);\n' +
+                '  fragColor = vec4(col * u_brightness, 1.0);\n' +
+                '}';
+
+            function compile(type, src) {
+                var sh = gl.createShader(type);
+                gl.shaderSource(sh, src);
+                gl.compileShader(sh);
+                if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+                    console.error(gl.getShaderInfoLog(sh));
+                    gl.deleteShader(sh);
+                    return null;
+                }
+                return sh;
+            }
+
+            var vs = compile(gl.VERTEX_SHADER, VS);
+            var fs = compile(gl.FRAGMENT_SHADER, FS);
+            if (!vs || !fs) return;
+
+            var prog = gl.createProgram();
+            gl.attachShader(prog, vs);
+            gl.attachShader(prog, fs);
+            gl.linkProgram(prog);
+            if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+                console.error(gl.getProgramInfoLog(prog));
+                return;
+            }
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]), gl.STATIC_DRAW);
+            var posLoc = gl.getAttribLocation(prog, 'position');
+            gl.enableVertexAttribArray(posLoc);
+            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+            function u(n) { return gl.getUniformLocation(prog, n); }
+            var uRes = u('u_resolution'), uTime = u('u_time'), uRadii = u('u_radii');
+            var uK = u('u_smoothK'), uAccent = u('u_accent');
+            var uAccentAmt = u('u_accentAmt'), uBrightness = u('u_brightness');
+
+            function resize() {
+                var dpr = Math.min(window.devicePixelRatio || 1, 2);
+                var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
+                var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
+                if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Idle while the hero is off screen.
+            var visible = true;
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
+            }
+
+            var clock = 0, last = null;
+            function render(tMs) {
+                requestAnimationFrame(render);
+                if (!visible) { last = tMs; return; }
+                var dt = last === null ? 0 : Math.min((tMs - last) * 0.001, 0.05);
+                last = tMs;
+                clock += dt * SPEED;
+
+                resize();
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.useProgram(prog);
+                gl.uniform2f(uRes, canvas.width, canvas.height);
+                gl.uniform1f(uTime, clock);
+                gl.uniform3fv(uRadii, [0.25, 0.18, 0.3]);
+                gl.uniform2fv(uK, [0.2, 0.3]);
+                gl.uniform3fv(uAccent, ACCENT);
+                gl.uniform1f(uAccentAmt, ACCENT_AMOUNT);
+                gl.uniform1f(uBrightness, BRIGHTNESS);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            }
+            requestAnimationFrame(render);
+        })();
+
+        // Cards light up as the pointer approaches.
+        (function () {
+            var REACH = 130;
+            var px = -9999, py = -9999, rafId = 0;
+
+            function paint() {
+                rafId = 0;
+                var cards = document.querySelectorAll('.stat-card, .expect-item');
+                for (var i = 0; i < cards.length; i++) {
+                    var card = cards[i];
+                    var r = card.getBoundingClientRect();
+                    if (r.bottom < -REACH || r.top > window.innerHeight + REACH) {
+                        if (card.style.getPropertyValue('--glow-on') !== '0') card.style.setProperty('--glow-on', '0');
+                        continue;
+                    }
+                    var dx = Math.max(r.left - px, 0, px - r.right);
+                    var dy = Math.max(r.top - py, 0, py - r.bottom);
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+                    var on = dist >= REACH ? 0 : Math.pow(1 - dist / REACH, 1.5);
+                    card.style.setProperty('--glow-on', on.toFixed(3));
+                    if (on > 0) {
+                        card.style.setProperty('--mx', (px - r.left).toFixed(1) + 'px');
+                        card.style.setProperty('--my', (py - r.top).toFixed(1) + 'px');
+                    }
+                }
+            }
+
+            function schedule() {
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(paint);
+            }
+
+            window.addEventListener('pointermove', function (e) { px = e.clientX; py = e.clientY; schedule(); }, { passive: true });
+            window.addEventListener('scroll', schedule, { passive: true });
+            document.addEventListener('pointerleave', function () { px = -9999; py = -9999; schedule(); });
         })();
     </script>
 </body>
