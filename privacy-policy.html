@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080410">
+    <meta name="theme-color" content="#0a0a0c">
     <link rel="icon" type="image/svg+xml" href="/assets/Site/saisd-favicon.svg">
     <link rel="apple-touch-icon" href="/assets/Site/saisd-apple-touch-icon.png">
 
@@ -12,149 +12,100 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&family=Rubik+Glitch&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg-0: #080410;
-            --bg-1: #0b0519;
-            --pink: #f2a7e3;
-            --magenta: #d84fc6;
-            --purple: #7a2f9e;
-            --cream: #f3e9d2;
-            --text: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.72);
-            --text-faint: rgba(255, 255, 255, 0.55);
-            --border-soft: rgba(242, 167, 227, 0.18);
-            --btn-fill-from: #eadde6;
-            --btn-fill-to: #bfa0b8;
-
-            /* Light surfaces (nav, footer) — shared with index.html */
-            --light-1: #fbf8f1;
-            --ink: #1a0e2e;
-            --ink-muted: rgba(26, 14, 46, 0.68);
-            --ink-accent: #a52f92;
-            --ink-heading: #5c2280;
-            --light-border: rgba(122, 47, 158, 0.16);
-            --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
+            --bg-0: #0a0a0c;
+            --ink-accent: #c01f8f;
             --font-tech: 'Orbitron', sans-serif;
             --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
-        html {
-            background: var(--bg-0);
-        }
+        html { background: var(--bg-0); }
 
         body {
             font-family: var(--font-body);
             line-height: 1.6;
-            color: var(--text);
+            color: rgba(255, 255, 255, 0.82);
             background: var(--bg-0);
             overflow-x: hidden;
         }
 
+        /* ── Backdrop ─────────────────────────────────────────────────
+           The hero's metaball shader, fixed to the viewport so the page
+           text floats over it as it scrolls. On index.html this is scoped
+           to the hero; here it is the whole page. */
         .backdrop {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background:
-                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(98, 38, 126, 0.28), transparent 65%),
-                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(173, 63, 158, 0.16), transparent 65%),
-                linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 55%, var(--bg-0) 100%);
+            background: var(--bg-0);
         }
 
-        .backdrop::after {
-            content: '';
+        .page-shader {
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.06;
+            width: 100%;
+            height: 100%;
+            display: block;
         }
 
-        .wave-scroll {
+        /* The shader renders up to near-white, which white body copy cannot
+           survive. This scrim holds the brightest output far enough down that
+           the text clears AA anywhere on the page; it deepens toward the
+           bottom, where the prose is densest. */
+        .page-scrim {
             position: absolute;
             inset: 0;
-        }
-
-        .wave-img {
-            position: absolute;
-            width: 170%;
-            height: 78%;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            will-change: transform, opacity;
-        }
-
-        .wave-1 {
-            left: -35%;
-            top: 32%;
-            background-image: url('assets/Site/wave-a.webp');
-            animation: sweep-a 44s linear infinite;
-            animation-delay: -16s;
-        }
-
-        .wave-2 {
-            left: -35%;
-            top: 56%;
-            background-image: url('assets/Site/wave-b.webp');
-            /* Recoloured to the cream of the light surfaces — matches index.html */
-            filter: grayscale(1) sepia(1) saturate(0.55) brightness(1.18) opacity(0.62);
-            animation: sweep-b 58s linear infinite;
-            animation-delay: -30s;
-        }
-
-        @keyframes sweep-a {
-            0%   { transform: translate3d(-12%, 3%, 0) rotate(-5deg); opacity: 0; }
-            7%   { opacity: 0.95; }
-            50%  { transform: translate3d(0, -1%, 0) rotate(1deg); opacity: 1; }
-            93%  { opacity: 0.9; }
-            100% { transform: translate3d(12%, -4%, 0) rotate(5deg); opacity: 0; }
-        }
-
-        @keyframes sweep-b {
-            0%   { transform: translate3d(12%, 2%, 0) rotate(4deg); opacity: 0; }
-            7%   { opacity: 0.85; }
-            55%  { transform: translate3d(-2%, -1%, 0) rotate(-1deg); opacity: 0.95; }
-            93%  { opacity: 0.8; }
-            100% { transform: translate3d(-12%, -3%, 0) rotate(-6deg); opacity: 0; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .wave-img {
-                animation: none !important;
-            }
+            background: linear-gradient(180deg,
+                rgba(10, 10, 12, 0.70) 0%,
+                rgba(10, 10, 12, 0.80) 45%,
+                rgba(10, 10, 12, 0.90) 100%);
         }
 
         a:focus-visible {
-            outline: 2px solid var(--pink);
+            outline: 2px solid #ffffff;
             outline-offset: 3px;
             border-radius: 4px;
         }
 
-        /* Pink is only ~1.75:1 on cream — darken the ring on light surfaces. */
-        nav a:focus-visible,
-        footer a:focus-visible {
-            outline-color: var(--ink-heading);
-        }
-
-        /* Navigation */
+        /* ── Top bar ──────────────────────────────────────────────────
+           Same rough glass as index.html: a thin tint of --bg-0, blurred,
+           with the fractal-noise tile over it. */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(251, 248, 241, 0.74);
-            backdrop-filter: blur(14px) saturate(1.2);
-            -webkit-backdrop-filter: blur(14px) saturate(1.2);
             z-index: 1000;
             padding: 1rem 0;
-            border-bottom: 1px solid var(--light-border);
+            background: rgba(10, 10, 12, 0.34);
+            backdrop-filter: blur(26px) saturate(1.3);
+            -webkit-backdrop-filter: blur(26px) saturate(1.3);
+            border-bottom: 1px solid transparent;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            isolation: isolate;
+        }
+
+        nav::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.055;
+            mix-blend-mode: overlay;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 12, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
         }
 
         .nav-container {
@@ -168,7 +119,7 @@
         }
 
         .nav-back {
-            color: var(--ink-muted);
+            color: rgba(255, 255, 255, 0.82);
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
@@ -177,11 +128,7 @@
             transition: color 0.3s ease;
         }
 
-        /* At 74% the bar lets enough dark through that --ink-accent falls to
-           3.2:1; the deeper purple holds 5.5:1. */
-        .nav-back:hover {
-            color: var(--ink-heading);
-        }
+        .nav-back:hover { color: #ffffff; }
 
         .register-btn {
             font-family: var(--font-tech);
@@ -189,25 +136,21 @@
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            /* Solid purple: the mauve fill used on dark sections is
-               near-invisible against the cream bar. */
-            color: #ffffff;
-            background: var(--ink-heading);
+            color: var(--bg-0);
+            background: #ffffff;
             padding: 0.6rem 1.5rem;
             border-radius: 999px;
             text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-            box-shadow: 0 4px 14px rgba(92, 34, 128, 0.22);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             white-space: nowrap;
         }
 
         .register-btn:hover {
             transform: translateY(-2px);
-            background: #6d2a96;
-            box-shadow: 0 8px 24px rgba(92, 34, 128, 0.32);
+            box-shadow: 0 6px 22px rgba(255, 255, 255, 0.22);
         }
 
-        /* Main content */
+        /* ── Content floating over the backdrop ───────────────────────── */
         main {
             position: relative;
             z-index: 1;
@@ -221,114 +164,99 @@
             font-family: var(--font-tech);
             font-size: 0.8rem;
             font-weight: 600;
-            letter-spacing: 0.45em;
-            text-indent: 0.45em;
+            letter-spacing: 0.26em;
+            text-indent: 0.26em;
             text-transform: uppercase;
-            color: var(--magenta);
+            color: var(--ink-accent);
             margin-bottom: 1rem;
         }
 
         h1 {
             font-family: var(--font-tech);
-            font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+            font-size: clamp(1.9rem, 4.5vw, 2.6rem);
             font-weight: 700;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.015em;
             text-transform: uppercase;
-            color: var(--text);
-            margin-bottom: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
         }
 
         .intro {
             font-size: 1.1rem;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.82);
             margin-bottom: 2.5rem;
-            line-height: 1.9;
+            line-height: 1.8;
         }
+
+        .intro a { color: #ffffff; }
 
         h2 {
             font-family: var(--font-tech);
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
-            color: var(--pink);
+            color: #ffffff;
             margin-top: 2.8rem;
             margin-bottom: 1rem;
         }
 
         p {
             margin-bottom: 1rem;
-            line-height: 1.9;
-            color: var(--text-muted);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.82);
         }
 
-        ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
+        ul { margin-left: 1.5rem; margin-bottom: 1rem; }
 
         li {
             margin-bottom: 0.5rem;
-            line-height: 1.9;
-            color: var(--text-muted);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.82);
         }
 
-        li::marker {
-            color: var(--magenta);
-        }
+        li::marker { color: var(--ink-accent); }
 
+        /* Dark glass panels, matching the card faces on index.html. */
         .highlight-box {
-            background: linear-gradient(135deg, rgba(122, 47, 158, 0.35), rgba(216, 79, 198, 0.12));
-            border: 1px solid rgba(242, 167, 227, 0.35);
-            border-radius: 14px;
-            backdrop-filter: blur(18px) saturate(1.6);
-            -webkit-backdrop-filter: blur(18px) saturate(1.6);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: rgba(14, 14, 17, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 1.5rem;
             margin: 2rem 0;
         }
 
-        .highlight-box p {
-            margin: 0;
-            color: var(--text);
-        }
+        .highlight-box p { margin: 0; color: #ffffff; }
 
         .contact-section {
-            background: linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(122, 47, 158, 0.12));
-            border: 1px solid var(--border-soft);
+            background: rgba(14, 14, 17, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 18px;
-            backdrop-filter: blur(18px) saturate(1.6);
-            -webkit-backdrop-filter: blur(18px) saturate(1.6);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 2rem;
             margin-top: 3rem;
         }
 
-        .contact-section h2 {
-            margin-top: 0;
-        }
+        .contact-section h2 { margin-top: 0; }
 
         .contact-section a {
-            color: var(--pink);
+            color: #ffffff;
             font-weight: 600;
             text-decoration: none;
         }
 
-        .contact-section a:hover {
-            text-decoration: underline;
-        }
+        .contact-section a:hover { text-decoration: underline; }
 
-        /* Footer — matches the nav: cream, barely translucent */
+        /* ── Footer ───────────────────────────────────────────────────── */
         footer {
             position: relative;
             z-index: 1;
-            color: var(--ink);
             padding: 3.5rem 0;
             text-align: center;
-            border-top: 1px solid var(--light-border);
-            background: rgba(251, 248, 241, 0.74);
-            backdrop-filter: blur(14px) saturate(1.2);
-            -webkit-backdrop-filter: blur(14px) saturate(1.2);
+            background: var(--bg-0);
         }
 
         .footer-content {
@@ -338,49 +266,43 @@
         }
 
         .footer-content > p {
-            color: var(--ink-muted);
             font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.2rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: var(--ink-muted);
-            text-decoration: none;
             font-size: 0.9rem;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
             transition: color 0.3s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--ink-heading);
-        }
+        .footer-links a:hover { color: #ffffff; }
 
         @media (max-width: 768px) {
-            main {
-                padding-top: 8rem;
-            }
+            main { padding: 8rem 1.5rem 4rem; }
+            .nav-container { padding: 0 1.5rem; }
+            .footer-links { gap: 1.2rem; }
         }
     </style>
 </head>
 <body>
     <div class="backdrop" aria-hidden="true">
-        <div class="wave-scroll" data-depth="0.07">
-            <div class="wave-img wave-1"></div>
-        </div>
-        <div class="wave-scroll" data-depth="-0.1">
-            <div class="wave-img wave-2"></div>
-        </div>
+        <canvas class="page-shader"></canvas>
+        <div class="page-scrim"></div>
     </div>
 
-    <nav role="navigation" aria-label="Main navigation">
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="/" class="nav-back">&larr; Swiss AI Safety Days</a>
             <a href="/#notify" class="register-btn">Get notified</a>
@@ -432,7 +354,6 @@
         </div>
     </main>
 
-    <!-- Site footer -->
     <footer role="contentinfo">
         <div class="footer-content">
             <p>&copy; 2026 Swiss AI Safety Days. Building a safer AI future together.</p>
@@ -444,21 +365,146 @@
         </div>
     </footer>
     <script>
-        // Waves trail the scroll with a smoothed parallax
+        // Bar gains its edge only once the page has moved.
         (function () {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            var waves = document.querySelectorAll('.wave-scroll');
-            if (!waves.length) return;
-            var target = window.scrollY, current = target;
-            window.addEventListener('scroll', function () { target = window.scrollY; }, { passive: true });
-            (function tick() {
-                current += (target - current) * 0.06;
-                waves.forEach(function (w) {
-                    var d = parseFloat(w.dataset.depth || 0);
-                    w.style.transform = 'translateY(' + (current * d).toFixed(2) + 'px) rotate(' + (current * d * 0.012).toFixed(3) + 'deg)';
+            var navbar = document.getElementById('navbar');
+            if (!navbar) return;
+            var ticking = false;
+            window.addEventListener('scroll', function () {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    navbar.classList.toggle('scrolled', window.scrollY > 50);
+                    ticking = false;
                 });
-                requestAnimationFrame(tick);
-            })();
+            }, { passive: true });
+        })();
+    </script>
+    <script>
+        // Page background: SDF metaballs, greyscale rim with a drifting pink accent.
+        (function () {
+            var canvas = document.querySelector('.page-shader');
+            if (!canvas) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var gl = canvas.getContext('webgl2', { antialias: false, alpha: true });
+            if (!gl) return;
+
+            var SPEED = 0.1;
+            var BRIGHTNESS = 1.0;
+            var ACCENT_AMOUNT = 0.55;
+            var ACCENT = [0.851, 0.310, 0.776];
+
+            var VS = '#version 300 es\n' +
+                'in vec2 position;\n' +
+                'void main() { gl_Position = vec4(position, 0.0, 1.0); }';
+
+            var FS = '#version 300 es\n' +
+                'precision highp float;\n' +
+                'uniform float u_time;\n' +
+                'uniform vec2 u_resolution;\n' +
+                'uniform vec3 u_radii;\n' +
+                'uniform vec2 u_smoothK;\n' +
+                'uniform vec3 u_accent;\n' +
+                'uniform float u_accentAmt;\n' +
+                'uniform float u_brightness;\n' +
+                'out vec4 fragColor;\n' +
+                'float sdCircle(vec2 p, float r) { return length(p) - r; }\n' +
+                'float opSmoothUnion(float d1, float d2, float k) {\n' +
+                '  float h = clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);\n' +
+                '  return mix(d2, d1, h) - k * h * (1.0 - h);\n' +
+                '}\n' +
+                'float mapScene(vec2 uv) {\n' +
+                '  float t = u_time;\n' +
+                '  vec2 p1 = vec2(cos(t * 0.5), sin(t * 0.5)) * 0.3;\n' +
+                '  vec2 p2 = vec2(cos(t * 0.7 + 2.1), sin(t * 0.6 + 2.1)) * 0.4;\n' +
+                '  vec2 p3 = vec2(cos(t * 0.4 + 4.2), sin(t * 0.8 + 4.2)) * 0.35;\n' +
+                '  float u12 = opSmoothUnion(sdCircle(uv - p1, u_radii.x), sdCircle(uv - p2, u_radii.y), u_smoothK.x);\n' +
+                '  return opSmoothUnion(u12, sdCircle(uv - p3, u_radii.z), u_smoothK.y);\n' +
+                '}\n' +
+                'void main() {\n' +
+                '  vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;\n' +
+                '  float g = 0.0055 / abs(mapScene(uv));\n' +
+                '  vec3 grey = vec3(0.78, 0.78, 0.81);\n' +
+                '  float wave = 0.5 + 0.5 * sin(u_time * 0.22 + uv.x * 2.4 + uv.y * 1.7);\n' +
+                '  vec3 tint = mix(grey, u_accent, wave * u_accentAmt);\n' +
+                '  vec3 col = tint * clamp(g, 0.0, 1.0);\n' +
+                '  col = mix(col, vec3(0.97, 0.97, 0.98), smoothstep(1.1, 2.6, g) * 0.85);\n' +
+                '  fragColor = vec4(col * u_brightness, 1.0);\n' +
+                '}';
+
+            function compile(type, src) {
+                var sh = gl.createShader(type);
+                gl.shaderSource(sh, src);
+                gl.compileShader(sh);
+                if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+                    console.error(gl.getShaderInfoLog(sh));
+                    gl.deleteShader(sh);
+                    return null;
+                }
+                return sh;
+            }
+
+            var vs = compile(gl.VERTEX_SHADER, VS);
+            var fs = compile(gl.FRAGMENT_SHADER, FS);
+            if (!vs || !fs) return;
+
+            var prog = gl.createProgram();
+            gl.attachShader(prog, vs);
+            gl.attachShader(prog, fs);
+            gl.linkProgram(prog);
+            if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+                console.error(gl.getProgramInfoLog(prog));
+                return;
+            }
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]), gl.STATIC_DRAW);
+            var posLoc = gl.getAttribLocation(prog, 'position');
+            gl.enableVertexAttribArray(posLoc);
+            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+            function u(n) { return gl.getUniformLocation(prog, n); }
+            var uRes = u('u_resolution'), uTime = u('u_time'), uRadii = u('u_radii');
+            var uK = u('u_smoothK'), uAccent = u('u_accent');
+            var uAccentAmt = u('u_accentAmt'), uBrightness = u('u_brightness');
+
+            function resize() {
+                var dpr = Math.min(window.devicePixelRatio || 1, 2);
+                var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
+                var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
+                if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Idle while the hero is off screen.
+            var visible = true;
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
+            }
+
+            var clock = 0, last = null;
+            function render(tMs) {
+                requestAnimationFrame(render);
+                if (!visible) { last = tMs; return; }
+                var dt = last === null ? 0 : Math.min((tMs - last) * 0.001, 0.05);
+                last = tMs;
+                clock += dt * SPEED;
+
+                resize();
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.useProgram(prog);
+                gl.uniform2f(uRes, canvas.width, canvas.height);
+                gl.uniform1f(uTime, clock);
+                gl.uniform3fv(uRadii, [0.25, 0.18, 0.3]);
+                gl.uniform2fv(uK, [0.2, 0.3]);
+                gl.uniform3fv(uAccent, ACCENT);
+                gl.uniform1f(uAccentAmt, ACCENT_AMOUNT);
+                gl.uniform1f(uBrightness, BRIGHTNESS);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            }
+            requestAnimationFrame(render);
         })();
     </script>
 </body>

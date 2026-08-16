@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080410">
+    <meta name="theme-color" content="#0a0a0c">
     <link rel="icon" type="image/svg+xml" href="/assets/Site/saisd-favicon.svg">
     <link rel="apple-touch-icon" href="/assets/Site/saisd-apple-touch-icon.png">
 
@@ -1660,11 +1660,17 @@
             color: #ffffff;
         }
 
+        /* --pink, the same accent the kickers use on the dark bands. Not
+           --ink-accent: that is 3.6:1 on black and fails AA at this size,
+           where --pink holds 10.8:1. */
         .footer-links a {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--pink);
         }
 
-        .footer-links a:hover,
+        .footer-links a:hover {
+            color: var(--pink-bright);
+        }
+
         .footer-involve a:hover {
             color: #ffffff;
         }
@@ -2025,7 +2031,7 @@
                 <span class="eyebrow">Save the date</span>
                 <h1>Swiss AI Safety Days</h1>
                 <p class="date">7&ndash;8 November 2026 <span class="sep">&bull;</span> ETH Zurich</p>
-                <p class="tagline">Two days. One venue. Europe's AI safety community in one place: leading researchers, policymakers, builders, and the people about to join them.<br>Spots are limited. In 2025, applications outnumbered them.</p>
+                <p class="tagline">Whether it's your first or your fifth, the next step in your AI safety career is here.</p>
                 <div class="hero-cta">
                     <span class="glow-btn"><span class="glow-btn-bloom" aria-hidden="true"></span><a href="#notify">Get notified</a></span>
                 </div>
@@ -2108,7 +2114,7 @@
                             </svg>
                         </div>
                         <h3>Talks &amp; Workshops</h3>
-                        <p>Learn from the people shaping the field. Talks and hands-on workshops across technical AI safety, governance, and careers, whether it's your first step or your life's work.</p>
+                        <p>Learn from the people shaping the field. Talks and hands-on workshops across technical AI safety, governance, entrepreneurship and careers.</p>
                     </article>
                     <article class="expect-item">
                         <div class="expect-icon-wrapper" aria-hidden="true">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0514">
+    <meta name="theme-color" content="#0a0a0c">
     <link rel="icon" type="image/svg+xml" href="/assets/Site/saisd-favicon.svg">
     <link rel="apple-touch-icon" href="/assets/Site/saisd-apple-touch-icon.png">
 
@@ -22,18 +22,57 @@
         }
 
         :root {
-            --bg-0: #0a0514;
-            --bg-1: #130a23;
-            --bg-2: #1a0e2e;
+            /* Dark surface */
+            --bg-0: #0a0a0c;
+            --bg-1: #101012;
+            --bg-2: #111114;
+
+            /* Saturated accents — hero display type, kickers and links.
+               Buttons use the muted --btn-fill-* pair below. */
             --pink: #f2a7e3;
             --pink-bright: #ff9ee8;
             --magenta: #d84fc6;
-            --purple: #7a2f9e;
-            --cream: #f3e9d2;
+            --purple: #1e1e22;
+            --cream: rgba(255, 255, 255, 0.78);
+
             --text: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.72);
             --text-faint: rgba(255, 255, 255, 0.55);
             --border-soft: rgba(242, 167, 227, 0.18);
+            --glow-pink: rgba(0, 0, 0, 0.40);
+
+            /* Desaturated accents — everything below the hero */
+            --pink-muted: rgba(255, 255, 255, 0.92);
+            --magenta-muted: #c01f8f;
+
+            /* Buttons */
+            --btn-fill-from: #f7f7f8;
+            --btn-fill-to: #dcdce0;
+            --btn-outline: rgba(255, 255, 255, 0.92);
+
+            /* Card glass — the same cream as the #speakers/#venue band, so the
+               floating cards read as pieces of the light surface lifted onto
+               the dark sections. Light card, ink text.
+               At 78–84% a good amount of the aurora comes through and the
+               cream cools toward grey, which is intended. Going much below
+               this is a contrast decision, not just a look one: the label text
+               reaches the 4.5:1 AA floor at around 72%. */
+            --card-glass: blur(18px) saturate(0.5) brightness(1.1);
+            --card-tint-from: rgba(251, 248, 241, 0.78);
+            --card-tint-to: rgba(244, 238, 226, 0.84);
+            --card-border: var(--light-border);
+            --card-border-hov: rgba(17, 17, 20, 0.24);
+            --card-shadow-hov: 0 10px 28px rgba(17, 17, 20, 0.09);
+
+            /* Light band (#speakers, #venue) */
+            --light-1: #ffffff;
+            --light-2: #ffffff;
+            --ink: #111114;
+            --ink-muted: rgba(17, 17, 20, 0.64);
+            --ink-accent: #c01f8f;
+            --ink-heading: #111114;
+            --light-border: rgba(17, 17, 20, 0.10);
+
             --font-display: 'Rubik Glitch', 'Orbitron', sans-serif;
             --font-tech: 'Orbitron', sans-serif;
             --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -41,7 +80,7 @@
 
         html {
             scroll-behavior: smooth;
-            background: #0a0514;
+            background: var(--bg-0);
         }
 
         body {
@@ -57,10 +96,7 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background:
-                radial-gradient(60vw 45vh ellipse at 85% 12%, rgba(122, 47, 158, 0.28), transparent 65%),
-                radial-gradient(70vw 50vh ellipse at 8% 85%, rgba(216, 79, 198, 0.16), transparent 65%),
-                linear-gradient(160deg, #0a0514 0%, #120827 55%, #0a0514 100%);
+            background: var(--bg-0);
         }
 
         .backdrop::after {
@@ -71,55 +107,14 @@
             opacity: 0.06;
         }
 
-        .wave-scroll {
-            position: absolute;
-            inset: 0;
-        }
 
-        .wave-img {
-            position: absolute;
-            width: 170%;
-            height: 78%;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            will-change: transform, opacity;
-        }
 
-        .wave-1 {
-            left: -35%;
-            top: 32%;
-            background-image: url('../assets/Site/wave-a.webp');
-            animation: sweep-a 44s linear infinite;
-            animation-delay: -16s;
-        }
 
-        .wave-2 {
-            left: -35%;
-            top: 56%;
-            background-image: url('../assets/Site/wave-b.webp');
-            animation: sweep-b 58s linear infinite;
-            animation-delay: -30s;
-        }
 
-        @keyframes sweep-a {
-            0%   { transform: translate3d(-12%, 3%, 0) rotate(-5deg); opacity: 0; }
-            7%   { opacity: 0.95; }
-            50%  { transform: translate3d(0, -1%, 0) rotate(1deg); opacity: 1; }
-            93%  { opacity: 0.9; }
-            100% { transform: translate3d(12%, -4%, 0) rotate(5deg); opacity: 0; }
-        }
 
-        @keyframes sweep-b {
-            0%   { transform: translate3d(12%, 2%, 0) rotate(4deg); opacity: 0; }
-            7%   { opacity: 0.85; }
-            55%  { transform: translate3d(-2%, -1%, 0) rotate(-1deg); opacity: 0.95; }
-            93%  { opacity: 0.8; }
-            100% { transform: translate3d(-12%, -3%, 0) rotate(-6deg); opacity: 0; }
-        }
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .wave-img,
             .fade-in {
                 animation: none !important;
                 transition: none !important;
@@ -808,16 +803,225 @@
             opacity: 1;
             transform: none;
         }
+
+        /* ── 2026 theme ───────────────────────────────────────────────
+           Brings the recap page onto the same monochrome shell as the home
+           page: the hero's metaball shader behind everything, dark card
+           faces that light up under the pointer, and the rough-glass bar.
+           Appended as overrides rather than edited in place, which is how
+           index.html's own refinement pass was applied. */
+
+        .page-shader {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* The shader mixes toward vec3(0.97) at the metaball rim, which white
+           body copy cannot survive. This holds it down; it deepens toward the
+           foot of the page where the prose is densest. */
+        .page-scrim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg,
+                rgba(10, 10, 12, 0.70) 0%,
+                rgba(10, 10, 12, 0.82) 45%,
+                rgba(10, 10, 12, 0.90) 100%);
+        }
+
+        /* Top bar */
+        nav {
+            background: rgba(10, 10, 12, 0.34);
+            backdrop-filter: blur(26px) saturate(1.3);
+            -webkit-backdrop-filter: blur(26px) saturate(1.3);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            isolation: isolate;
+        }
+
+        nav::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.055;
+            mix-blend-mode: overlay;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 12, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Cards: dark faces lit by a highlight that tracks the pointer, a
+           bright rim just outside the edge and a soft wash inside.
+           --mx/--my/--glow-on are written by script. */
+        .stat-card,
+        .track-card,
+        .resource-list li {
+            position: relative;
+            background: #0e0e11;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .stat-card::before,
+        .track-card::before,
+        .resource-list li::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(circle 300px at var(--mx, 50%) var(--my, 50%),
+                rgba(242, 167, 227, 0.16), rgba(216, 79, 198, 0.06) 40%, transparent 66%);
+            opacity: var(--glow-on, 0);
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-card::after,
+        .track-card::after,
+        .resource-list li::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle 200px at var(--mx, 50%) var(--my, 50%),
+                rgba(255, 255, 255, 0.98), rgba(242, 167, 227, 0.85) 22%,
+                rgba(216, 79, 198, 0.45) 42%, transparent 68%);
+            filter: blur(7px);
+            opacity: var(--glow-on, 0);
+            transition: opacity 0.4s ease;
+        }
+
+        /* No transform on hover: it opens a stacking context and traps the
+           ::after bloom behind the card. */
+        .stat-card:hover,
+        .track-card:hover,
+        .resource-list li:hover {
+            transform: none;
+            background: #15151a;
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: none;
+        }
+
+        .stat-number { color: #ffffff; }
+        .stat-label { color: rgba(255, 255, 255, 0.6); }
+        .track-card h3 { color: #ffffff; }
+        .track-card p { color: rgba(255, 255, 255, 0.66); }
+        .resource-list a { color: var(--pink); }
+        .resource-list span { color: rgba(255, 255, 255, 0.55); }
+
+        /* Buttons: the pink glow pill becomes the monochrome pair used on
+           the home page. */
+        .btn-primary {
+            background: linear-gradient(120deg, var(--btn-fill-from), var(--btn-fill-to));
+            color: var(--bg-0);
+            box-shadow: none;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 26px rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-secondary {
+            color: var(--btn-outline);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+        }
+
+        .btn-secondary:hover {
+            color: var(--bg-0);
+            background: #ffffff;
+            border-color: #ffffff;
+            box-shadow: none;
+        }
+
+        .page-header h1 { color: var(--pink); }
+        .kicker { color: var(--pink); }
+        .award-badge .laurel {
+            color: rgba(242, 167, 227, 0.75);
+            filter: none;
+        }
+        .award-text .award-title { color: #ffffff; text-shadow: none; }
+
+        /* Footer, matching the home page: flat black, pink links. */
+        footer {
+            background: var(--bg-0);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            color: rgba(255, 255, 255, 0.82);
+            border-top: none;
+        }
+
+        .footer-content > p { color: rgba(255, 255, 255, 0.6); }
+        .footer-links a { color: var(--pink); }
+        .footer-links a:hover { color: var(--pink-bright); }
+        footer a:focus-visible { outline-color: #ffffff; }
+
+        /* Nav pill and mobile chrome: the old pink glow pill and the
+           purple-tinted borders had no override yet. */
+        .register-btn {
+            background: #ffffff;
+            color: var(--bg-0);
+            box-shadow: none;
+        }
+
+        .register-btn:hover {
+            background: #ffffff;
+            box-shadow: 0 6px 22px rgba(255, 255, 255, 0.22);
+        }
+
+        .nav-links a { color: rgba(255, 255, 255, 0.82); }
+        .nav-links a:hover { color: #ffffff; }
+
+        .mobile-menu {
+            background: rgba(10, 10, 12, 0.94);
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .mobile-menu a { color: rgba(255, 255, 255, 0.72); }
+        .mobile-menu a:hover { color: #ffffff; }
+
+        .nav-toggle {
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(10, 10, 12, 0.62);
+        }
+
+        /* Org tiles: neutral edge instead of the pink-tinted one, matching
+           the Org Fair tiles on the home page. */
+        .participant-logo {
+            border: 1px solid rgba(17, 17, 20, 0.10);
+        }
+
+        a.participant-logo:hover {
+            border-color: rgba(17, 17, 20, 0.32);
+            box-shadow: 0 16px 44px rgba(0, 0, 0, 0.35);
+        }
+
+        /* The logo rule sizes to a fixed 60px box. That was written for
+           <object>, which scales its SVG document to fit; a plain <img> would
+           stretch instead, so it needs object-fit. */
+        .participant-logo img {
+            object-fit: contain;
+            object-position: center;
+        }
     </style>
 </head>
 <body>
     <div class="backdrop" aria-hidden="true">
-        <div class="wave-scroll" data-depth="0.07">
-            <div class="wave-img wave-1"></div>
-        </div>
-        <div class="wave-scroll" data-depth="-0.1">
-            <div class="wave-img wave-2"></div>
-        </div>
+        <canvas class="page-shader"></canvas>
+        <div class="page-scrim"></div>
     </div>
     <a href="#main" class="skip-link">Skip to main content</a>
 
@@ -948,77 +1152,77 @@
                 <h2 id="organizations-title" class="section-title">Participating Organizations</h2>
                 <div class="participant-logos">
                     <a href="https://www.aisi.gov.uk/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/UK-AISI.svg" type="image/svg+xml">UK AISI</object>
+                        <img src="../assets/Orgs/UK-AISI.svg" alt="UK AISI" loading="lazy">
                     </a>
                     <a href="https://far.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/FARAI.svg" type="image/svg+xml">FAR.AI</object>
+                        <img src="../assets/Orgs/FARAI.svg" alt="FAR.AI" loading="lazy">
                     </a>
                     <a href="https://apolloresearch.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/Apollo.svg" type="image/svg+xml">Apollo Research</object>
+                        <img src="../assets/Orgs/Apollo.svg" alt="Apollo Research" loading="lazy">
                     </a>
                     <a href="https://www.anthropic.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/anthropic.svg" type="image/svg+xml">Anthropic</object>
+                        <img src="../assets/Orgs/anthropic.svg" alt="Anthropic" loading="lazy">
                     </a>
                     <a href="https://goodfire.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/goodfire.svg" type="image/svg+xml">Goodfire</object>
+                        <img src="../assets/Orgs/goodfire.svg" alt="Goodfire" loading="lazy">
                     </a>
                     <a href="https://palisaderesearch.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/Palisade.svg" type="image/svg+xml">Palisade Research</object>
+                        <img src="../assets/Orgs/Palisade.svg" alt="Palisade Research" loading="lazy">
                     </a>
                     <a href="https://simoninstitute.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/SI.svg" type="image/svg+xml">Simon Institute</object>
+                        <img src="../assets/Orgs/SI.svg" alt="Simon Institute" loading="lazy">
                     </a>
                     <a href="https://arcadiaimpact.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/arcadia.svg" type="image/svg+xml">Arcadia Impact</object>
+                        <img src="../assets/Orgs/arcadia.svg" alt="Arcadia Impact" loading="lazy">
                     </a>
                     <a href="https://futureoflife.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/fli.svg" type="image/svg+xml">Future of Life Institute</object>
+                        <img src="../assets/Orgs/fli.svg" alt="Future of Life Institute" loading="lazy">
                     </a>
                     <a href="https://cfg.eu/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/cfg.svg" type="image/svg+xml">Center for Future Generations</object>
+                        <img src="../assets/Orgs/cfg.svg" alt="Center for Future Generations" loading="lazy">
                     </a>
                     <a href="https://peaks-office.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/peaks.svg" type="image/svg+xml">Peaks</object>
+                        <img src="../assets/Orgs/peaks.svg" alt="Peaks" loading="lazy">
                     </a>
                     <a href="https://www.matsprogram.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/MATS.svg" type="image/svg+xml">MATS</object>
+                        <img src="../assets/Orgs/MATS.svg" alt="MATS" loading="lazy">
                     </a>
                     <a href="https://impactacademy.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/impact-academy.svg" type="image/svg+xml">Impact Academy</object>
+                        <img src="../assets/Orgs/impact-academy.svg" alt="Impact Academy" loading="lazy">
                     </a>
                     <a href="https://highimpactprofessionals.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/HIP.svg" type="image/svg+xml">HIP</object>
+                        <img src="../assets/Orgs/HIP.svg" alt="HIP" loading="lazy">
                     </a>
                     <a href="https://successif.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/Successif.svg" type="image/svg+xml">Successif</object>
+                        <img src="../assets/Orgs/Successif.svg" alt="Successif" loading="lazy">
                     </a>
                     <a href="https://erafellowship.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/era.svg" type="image/svg+xml">ERA Fellowship</object>
+                        <img src="../assets/Orgs/era.svg" alt="ERA Fellowship" loading="lazy">
                     </a>
                     <a href="https://www.pivotal-research.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/pivotal.svg" type="image/svg+xml">Pivotal Research</object>
+                        <img src="../assets/Orgs/pivotal.svg" alt="Pivotal Research" loading="lazy">
                     </a>
                     <a href="https://pibbss.ai/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/pibbs.svg" type="image/svg+xml">PIBBSS</object>
+                        <img src="../assets/Orgs/pibbs.svg" alt="PIBBSS" loading="lazy">
                     </a>
                     <a href="https://zhijing-jin.com/home/" class="participant-logo" target="_blank" rel="noopener noreferrer">
                         Jinesis Lab
                     </a>
                     <a href="https://apartresearch.com/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/apart_logo_black.svg" type="image/svg+xml">Apart Research</object>
+                        <img src="../assets/Orgs/apart_logo_black.svg" alt="Apart Research" loading="lazy">
                     </a>
                     <a href="https://www.arena.education/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                        <object data="/assets/Orgs/Arena.svg" type="image/svg+xml">Arena</object>
+                        <img src="../assets/Orgs/Arena.svg" alt="Arena" loading="lazy">
                     </a>
                 </div>
                 <div style="text-align: center; margin-top: 3.5rem;">
                     <p class="hosted-label">Hosted by</p>
                     <div class="participant-logos hosted-section">
                         <a href="https://bluedot.org/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                            <object data="/assets/Orgs/BlueDot.svg" type="image/svg+xml">BlueDot Impact</object>
+                            <img src="../assets/Orgs/BlueDot.svg" alt="BlueDot Impact" loading="lazy">
                         </a>
                         <a href="https://zurich.aisafety.ch/" class="participant-logo" target="_blank" rel="noopener noreferrer">
-                            <object data="/assets/Orgs/ZAIS.svg" type="image/svg+xml">Zurich AI Safety (ZAIS)</object>
+                            <img src="../assets/Orgs/ZAIS.svg" alt="Zurich AI Safety (ZAIS)" loading="lazy">
                         </a>
                     </div>
                 </div>
@@ -1137,21 +1341,167 @@
         }
     </script>
     <script>
-        // Waves trail the scroll with a smoothed parallax
+        // Page background: SDF metaballs, greyscale rim with a drifting pink accent.
         (function () {
+            var canvas = document.querySelector('.page-shader');
+            if (!canvas) return;
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            var waves = document.querySelectorAll('.wave-scroll');
-            if (!waves.length) return;
-            var target = window.scrollY, current = target;
-            window.addEventListener('scroll', function () { target = window.scrollY; }, { passive: true });
-            (function tick() {
-                current += (target - current) * 0.06;
-                waves.forEach(function (w) {
-                    var d = parseFloat(w.dataset.depth || 0);
-                    w.style.transform = 'translateY(' + (current * d).toFixed(2) + 'px) rotate(' + (current * d * 0.012).toFixed(3) + 'deg)';
-                });
-                requestAnimationFrame(tick);
-            })();
+
+            var gl = canvas.getContext('webgl2', { antialias: false, alpha: true });
+            if (!gl) return;
+
+            var SPEED = 0.1;
+            var BRIGHTNESS = 1.0;
+            var ACCENT_AMOUNT = 0.55;
+            var ACCENT = [0.851, 0.310, 0.776];
+
+            var VS = '#version 300 es\n' +
+                'in vec2 position;\n' +
+                'void main() { gl_Position = vec4(position, 0.0, 1.0); }';
+
+            var FS = '#version 300 es\n' +
+                'precision highp float;\n' +
+                'uniform float u_time;\n' +
+                'uniform vec2 u_resolution;\n' +
+                'uniform vec3 u_radii;\n' +
+                'uniform vec2 u_smoothK;\n' +
+                'uniform vec3 u_accent;\n' +
+                'uniform float u_accentAmt;\n' +
+                'uniform float u_brightness;\n' +
+                'out vec4 fragColor;\n' +
+                'float sdCircle(vec2 p, float r) { return length(p) - r; }\n' +
+                'float opSmoothUnion(float d1, float d2, float k) {\n' +
+                '  float h = clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);\n' +
+                '  return mix(d2, d1, h) - k * h * (1.0 - h);\n' +
+                '}\n' +
+                'float mapScene(vec2 uv) {\n' +
+                '  float t = u_time;\n' +
+                '  vec2 p1 = vec2(cos(t * 0.5), sin(t * 0.5)) * 0.3;\n' +
+                '  vec2 p2 = vec2(cos(t * 0.7 + 2.1), sin(t * 0.6 + 2.1)) * 0.4;\n' +
+                '  vec2 p3 = vec2(cos(t * 0.4 + 4.2), sin(t * 0.8 + 4.2)) * 0.35;\n' +
+                '  float u12 = opSmoothUnion(sdCircle(uv - p1, u_radii.x), sdCircle(uv - p2, u_radii.y), u_smoothK.x);\n' +
+                '  return opSmoothUnion(u12, sdCircle(uv - p3, u_radii.z), u_smoothK.y);\n' +
+                '}\n' +
+                'void main() {\n' +
+                '  vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;\n' +
+                '  float g = 0.0055 / abs(mapScene(uv));\n' +
+                '  vec3 grey = vec3(0.78, 0.78, 0.81);\n' +
+                '  float wave = 0.5 + 0.5 * sin(u_time * 0.22 + uv.x * 2.4 + uv.y * 1.7);\n' +
+                '  vec3 tint = mix(grey, u_accent, wave * u_accentAmt);\n' +
+                '  vec3 col = tint * clamp(g, 0.0, 1.0);\n' +
+                '  col = mix(col, vec3(0.97, 0.97, 0.98), smoothstep(1.1, 2.6, g) * 0.85);\n' +
+                '  fragColor = vec4(col * u_brightness, 1.0);\n' +
+                '}';
+
+            function compile(type, src) {
+                var sh = gl.createShader(type);
+                gl.shaderSource(sh, src);
+                gl.compileShader(sh);
+                if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+                    console.error(gl.getShaderInfoLog(sh));
+                    gl.deleteShader(sh);
+                    return null;
+                }
+                return sh;
+            }
+
+            var vs = compile(gl.VERTEX_SHADER, VS);
+            var fs = compile(gl.FRAGMENT_SHADER, FS);
+            if (!vs || !fs) return;
+
+            var prog = gl.createProgram();
+            gl.attachShader(prog, vs);
+            gl.attachShader(prog, fs);
+            gl.linkProgram(prog);
+            if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+                console.error(gl.getProgramInfoLog(prog));
+                return;
+            }
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]), gl.STATIC_DRAW);
+            var posLoc = gl.getAttribLocation(prog, 'position');
+            gl.enableVertexAttribArray(posLoc);
+            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+            function u(n) { return gl.getUniformLocation(prog, n); }
+            var uRes = u('u_resolution'), uTime = u('u_time'), uRadii = u('u_radii');
+            var uK = u('u_smoothK'), uAccent = u('u_accent');
+            var uAccentAmt = u('u_accentAmt'), uBrightness = u('u_brightness');
+
+            function resize() {
+                var dpr = Math.min(window.devicePixelRatio || 1, 2);
+                var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
+                var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
+                if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Idle while the hero is off screen.
+            var visible = true;
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
+            }
+
+            var clock = 0, last = null;
+            function render(tMs) {
+                requestAnimationFrame(render);
+                if (!visible) { last = tMs; return; }
+                var dt = last === null ? 0 : Math.min((tMs - last) * 0.001, 0.05);
+                last = tMs;
+                clock += dt * SPEED;
+
+                resize();
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.useProgram(prog);
+                gl.uniform2f(uRes, canvas.width, canvas.height);
+                gl.uniform1f(uTime, clock);
+                gl.uniform3fv(uRadii, [0.25, 0.18, 0.3]);
+                gl.uniform2fv(uK, [0.2, 0.3]);
+                gl.uniform3fv(uAccent, ACCENT);
+                gl.uniform1f(uAccentAmt, ACCENT_AMOUNT);
+                gl.uniform1f(uBrightness, BRIGHTNESS);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            }
+            requestAnimationFrame(render);
+        })();
+
+        // Cards light up as the pointer approaches.
+        (function () {
+            var REACH = 130;
+            var px = -9999, py = -9999, rafId = 0;
+
+            function paint() {
+                rafId = 0;
+                var cards = document.querySelectorAll('.stat-card, .track-card, .resource-list li');
+                for (var i = 0; i < cards.length; i++) {
+                    var card = cards[i];
+                    var r = card.getBoundingClientRect();
+                    if (r.bottom < -REACH || r.top > window.innerHeight + REACH) {
+                        if (card.style.getPropertyValue('--glow-on') !== '0') card.style.setProperty('--glow-on', '0');
+                        continue;
+                    }
+                    var dx = Math.max(r.left - px, 0, px - r.right);
+                    var dy = Math.max(r.top - py, 0, py - r.bottom);
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+                    var on = dist >= REACH ? 0 : Math.pow(1 - dist / REACH, 1.5);
+                    card.style.setProperty('--glow-on', on.toFixed(3));
+                    if (on > 0) {
+                        card.style.setProperty('--mx', (px - r.left).toFixed(1) + 'px');
+                        card.style.setProperty('--my', (py - r.top).toFixed(1) + 'px');
+                    }
+                }
+            }
+
+            function schedule() {
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(paint);
+            }
+
+            window.addEventListener('pointermove', function (e) { px = e.clientX; py = e.clientY; schedule(); }, { passive: true });
+            window.addEventListener('scroll', schedule, { passive: true });
+            document.addEventListener('pointerleave', function () { px = -9999; py = -9999; schedule(); });
         })();
     </script>
 </body>
