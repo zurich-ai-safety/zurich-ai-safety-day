@@ -329,7 +329,11 @@
 
         /* Hero */
         .hero {
-            min-height: 100vh;
+            /* Was 100vh. Most of the dead space under the button was the
+               leftover of centring a ~22rem block in a full viewport, so the
+               fix is a shorter band rather than less padding — trimming the
+               padding alone would just push the headline back down. */
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -337,22 +341,12 @@
             text-align: center;
         }
 
+        /* The hero centres its content in 100vh, so the visible block sits
+           halfway between the two paddings: heavier at the bottom lifts the
+           headline above centre. Was 6rem/2rem, which pushed it 2rem below. */
         .hero-content {
             max-width: 900px;
-            padding: 6rem 2rem 2rem;
-        }
-
-        .hero .eyebrow {
-            display: inline-block;
-            font-family: var(--font-tech);
-            color: var(--cream);
-            font-size: clamp(0.75rem, 1.4vw, 0.95rem);
-            font-weight: 500;
-            letter-spacing: 0.5em;
-            text-indent: 0.5em;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease;
+            padding: 3rem 2rem 4rem;
         }
 
         .hero h1 {
@@ -362,10 +356,15 @@
             line-height: 1.12;
             text-transform: uppercase;
             color: var(--pink);
+            /* Black rather than pink: the headline sits over a shader that
+               brightens to near-white, so a dark halo separates the type from
+               it instead of blooming into it. Same three radii as the pink
+               version, held a little stronger since dark on dark reads softer
+               than light on dark. */
             text-shadow:
-                0 0 12px rgba(242, 167, 227, 0.55),
-                0 0 45px rgba(216, 79, 198, 0.45),
-                0 0 90px rgba(216, 79, 198, 0.25);
+                0 0 12px rgba(0, 0, 0, 0.70),
+                0 0 45px rgba(0, 0, 0, 0.55),
+                0 0 90px rgba(0, 0, 0, 0.40);
             margin-bottom: 1.8rem;
             animation: fadeInUp 1s ease;
         }
@@ -1306,50 +1305,90 @@
             color: var(--ink-muted);
         }
 
-        /* Notify */
-        .notify-box {
-            max-width: 700px;
+        /* Application process */
+        .apply-box {
+            max-width: 760px;
             margin: 0 auto;
             text-align: center;
         }
 
-        .notify-cta {
-            margin-top: 2.2rem;
+        .apply-cta {
+            margin-top: 2.4rem;
         }
 
-        /* keep our pill styling against Luma's embed stylesheet */
-        .notify-box .luma-checkout--button {
-            font-family: var(--font-tech) !important;
-            font-size: 1rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 1.1rem 2.6rem !important;
-            border-radius: 999px !important;
-            border: none !important;
-            background: linear-gradient(120deg, var(--btn-fill-from), var(--btn-fill-to)) !important;
-            color: #0a0514 !important;
-            box-shadow: 0 0 22px rgba(157, 123, 150, 0.30);
-        }
-
-        .notify-box .luma-checkout--button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 45px rgba(173, 63, 158, 0.45);
-        }
-
-        .notify-fallback {
-            margin-top: 1.5rem;
+        .apply-note {
+            margin: 1.6rem auto 0;
+            max-width: 620px;
             color: var(--text-faint);
             font-size: 0.95rem;
+            line-height: 1.8;
         }
 
-        .notify-fallback a {
+        /* Ticket tiers. A list rather than a table: five rows of three short
+           fields reflow far more gracefully, and the grid can collapse to two
+           lines on a phone without the usual responsive-table contortions. */
+        .tier-heading {
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
             color: var(--pink);
-            text-decoration: none;
+            margin: 3rem 0 1.2rem;
         }
 
-        .notify-fallback a:hover {
-            text-decoration: underline;
+        .tier-list {
+            list-style: none;
+            text-align: left;
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .tier {
+            display: grid;
+            grid-template-columns: 9.5rem 6rem 1fr;
+            align-items: baseline;
+            gap: 0.4rem 1.2rem;
+            padding: 1rem 1.3rem;
+            background: #0e0e11;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+        }
+
+        .tier-name {
+            font-family: var(--font-tech);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .tier-price {
+            font-family: var(--font-tech);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--pink);
+            white-space: nowrap;
+        }
+
+        .tier-who {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.66);
+        }
+
+        @media (max-width: 600px) {
+            /* Name and price share the first line, the qualifier takes the
+               second: at this width three columns leave the qualifier a
+               ~90px ribbon. */
+            .tier {
+                grid-template-columns: auto 1fr;
+            }
+
+            .tier-who {
+                grid-column: 1 / -1;
+            }
         }
 
         /* Footer — matches the nav: cream, barely translucent */
@@ -1562,11 +1601,6 @@
             .venue-image {
                 height: 240px;
             }
-
-            .hero .eyebrow {
-                letter-spacing: 0.32em;
-                text-indent: 0.32em;
-            }
         }
 
         /* Scroll animations */
@@ -1625,7 +1659,7 @@
         #highlights,
         #expect,
         #why,
-        #notify {
+        #apply {
             background: var(--bg-0);
         }
 
@@ -1642,7 +1676,7 @@
             display: none;
         }
 
-        /* Footer joins the dark shell. #notify above it is already --bg-0, so
+        /* Footer joins the dark shell. #apply above it is already --bg-0, so
            with no border the two read as one continuous black block. */
         footer {
             background: var(--bg-0);
@@ -2006,7 +2040,7 @@
                 <li><a href="#venue">Venue</a></li>
                 <li><a href="/2025/">2025 Edition</a></li>
             </ul>
-            <a href="#notify" class="register-btn">Get notified</a>
+            <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="register-btn" target="_blank" rel="noopener">Apply now<span class="visually-hidden"> (opens in a new tab)</span></a>
             <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                 <span></span><span></span><span></span>
             </button>
@@ -2028,12 +2062,11 @@
             <div class="hero-scrim"></div>
         </div>
             <div class="hero-content">
-                <span class="eyebrow">Save the date</span>
                 <h1>Swiss AI Safety Days</h1>
                 <p class="date">7&ndash;8 November 2026 <span class="sep">&bull;</span> ETH Zurich</p>
                 <p class="tagline">Whether it's your first or your fifth, the next step in your AI safety career is here.</p>
                 <div class="hero-cta">
-                    <span class="glow-btn"><span class="glow-btn-bloom" aria-hidden="true"></span><a href="#notify">Get notified</a></span>
+                    <span class="glow-btn"><span class="glow-btn-bloom" aria-hidden="true"></span><a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" target="_blank" rel="noopener">Apply now<span class="visually-hidden"> (opens in a new tab)</span></a></span>
                 </div>
             </div>
         </section>
@@ -2159,9 +2192,6 @@
                         <p>Skip the small talk. Structured 1-1s, speed networking, and roundtables built to get you the connections that matter.</p>
                     </article>
                 </div>
-                <div class="section-cta fade-in">
-                    <a href="#notify" class="btn-primary">Get notified when applications open</a>
-                </div>
             </div>
         </section>
 
@@ -2198,7 +2228,7 @@
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-affil-alt">Royal Academy of Engineering Research Fellow</p>
-                            <p class="speaker-bio">Defined the field of multi-agent security. His work on perfectly secure steganography solved a 25-year-old problem and was named one of 2023's biggest discoveries in computer science by <em>Quanta Magazine</em>.</p>
+                            <p class="speaker-bio">Defined the field of multi-agent security, addressing worst-case guarantees in agentic systems. His earlier work with Sam Sokota solved a 25-year-old problem in information security, perfectly secure steganography, named a 2023 Biggest Discovery in Computer Science by <em>Quanta Magazine</em>. He also helped pioneer deep multi-agent reinforcement learning.</p>
                         </div>
                     </details>
                     <details class="speaker-card speaker-card--compact">
@@ -2215,7 +2245,7 @@
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-affil-alt">Co-founder, Principles of Intelligence</p>
-                            <p class="speaker-bio">Runs ARIA's &pound;60M Safeguarded AI programme on formally verified AI. Co-author of <em>Gradual Disempowerment</em>.</p>
+                            <p class="speaker-bio">Runs Safeguarded AI, a roughly &pound;60M ARIA programme building a mathematical assurance toolkit that lets fleets of AI agents produce formally verified artefacts at speed and scale, from software to microelectronics to cyber-physical control systems. Co-author of <em>Gradual Disempowerment</em>, and previously a Research Manager at Oxford's Future of Humanity Institute.</p>
                         </div>
                     </details>
                 </div>
@@ -2337,18 +2367,45 @@
             </div>
         </section>
 
-        <!-- Get notified -->
-        <section id="notify" class="fade-in" role="region" aria-labelledby="notify-title">
+        <!-- Application process -->
+        <section id="apply" class="fade-in" role="region" aria-labelledby="apply-title">
             <div class="container">
-                <div class="notify-box">
-                    <span class="kicker">Updates</span>
-                    <h2 id="notify-title" class="section-title">Be First in Line</h2>
-                    <p class="section-intro">One click: get the dates in your calendar and a heads-up when applications, speakers, and the program go live.<br>Nothing else, no spam.</p>
-                    <div class="notify-cta">
-                        <a href="https://luma.com/ia5l2d9q" class="btn-primary luma-checkout--button" data-luma-action="checkout" data-luma-event-id="evt-kr64fZ9dNGCDtr7">Save the date on Luma</a>
+                <div class="apply-box">
+                    <h2 id="apply-title" class="section-title">Application Process</h2>
+                    <p class="section-intro">Places are limited, so attendance is by application. We review applications on a rolling basis and send decisions throughout, so applying early gives you the best chance of a place.</p>
+                    <div class="apply-cta">
+                        <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="btn-primary" target="_blank" rel="noopener">Apply now<span class="visually-hidden"> (opens in a new tab)</span></a>
                     </div>
-                    <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
-                    <p class="notify-fallback">This is a save-the-date, not the conference application. Applications open later this year.</p>
+                    <p class="apply-note">If you are accepted, we will invite you to pay for your ticket to secure your spot.</p>
+
+                    <h3 class="tier-heading">Ticket prices</h3>
+                    <ul class="tier-list">
+                        <li class="tier">
+                            <span class="tier-name">Free</span>
+                            <span class="tier-price">0 CHF</span>
+                            <span class="tier-who">If paying for a ticket would cause you financial distress</span>
+                        </li>
+                        <li class="tier">
+                            <span class="tier-name">Reduced</span>
+                            <span class="tier-price">40 CHF</span>
+                            <span class="tier-who">Students, or not currently employed</span>
+                        </li>
+                        <li class="tier">
+                            <span class="tier-name">Standard</span>
+                            <span class="tier-price">100 CHF</span>
+                            <span class="tier-who">Net income under 50,000 CHF a year</span>
+                        </li>
+                        <li class="tier">
+                            <span class="tier-name">Support</span>
+                            <span class="tier-price">180 CHF</span>
+                            <span class="tier-who">Net income between 50,000 and 100,000 CHF a year</span>
+                        </li>
+                        <li class="tier">
+                            <span class="tier-name">Extended support</span>
+                            <span class="tier-price">320 CHF</span>
+                            <span class="tier-who">Net income above 100,000 CHF a year</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
