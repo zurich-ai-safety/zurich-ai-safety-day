@@ -862,9 +862,14 @@
            cards still open with scripting disabled.
            align-items: start keeps an opened card from stretching its
            neighbour to match. */
+        /* Flex, not grid: with an odd number of cards a wrapped flex row
+           centres the leftover instead of stranding it in the first column.
+           align-items keeps an opened card from stretching its neighbours. */
         .speakers-grid--pair {
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            align-items: start;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
             margin-top: 2rem;
         }
 
@@ -879,9 +884,12 @@
                two cards never matched. Filling the column instead pins every
                card in this grid to the same width, open or closed.
                min-width: 0 stops a long title overriding that. */
-            justify-self: stretch;
-            width: 100%;
-            max-width: none;
+            /* Basis 400px gives two to a row at full width. The max-width is
+               what stops a lone third card stretching the whole way across:
+               it matches the width the paired cards settle at, so all three
+               look like one set. */
+            flex: 1 1 400px;
+            max-width: 552px;
             min-width: 0;
         }
 
@@ -2246,6 +2254,22 @@
                         <div class="speaker-detail">
                             <p class="speaker-affil-alt">Co-founder, Principles of Intelligence</p>
                             <p class="speaker-bio">Runs Safeguarded AI, a roughly &pound;60M ARIA programme building a mathematical assurance toolkit that lets fleets of AI agents produce formally verified artefacts at speed and scale, from software to microelectronics to cyber-physical control systems. Co-author of <em>Gradual Disempowerment</em>, and previously a Research Manager at Oxford's Future of Humanity Institute.</p>
+                        </div>
+                    </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/adrian_hutter.jpg" alt="Portrait of Adrian Hutter, who leads the Gemini safety post-training team at Google DeepMind" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Adrian Hutter</h3>
+                                <p class="speaker-affil">Lead, Gemini Safety Post-Training, Google DeepMind</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-bio">Dr. Adrian Hutter leads the Gemini safety post-training team at Google DeepMind. His current research centers on instilling robust values in AI models across diverse environments. He has a background in theoretical quantum physics and has been interested in how to ensure the development of AGI is broadly beneficial for over a decade.</p>
                         </div>
                     </details>
                 </div>
