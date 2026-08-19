@@ -50,6 +50,9 @@
     }
     </script>
 
+    <!-- Set before the stylesheet so clamped bios never flash unclamped. -->
+    <script>document.documentElement.classList.add('js');</script>
+
     <style>
         * {
             margin: 0;
@@ -873,6 +876,114 @@
            cards still open with scripting disabled.
            align-items: start keeps an opened card from stretching its
            neighbour to match. */
+        /* Two featured cards side by side, both at the original card
+           proportions. The 480px floor forces exactly two columns: the shared
+           320px would fit three at full width and crush the text column. */
+        .speakers-grid--lead {
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            /* Each card keeps its own height. Without this, expanding one bio
+               stretches the other card to match and pads its interior. */
+            align-items: start;
+        }
+
+        /* Portrait and name occupy the top row; the bio spans the full card
+           beneath them. Beside the photo the bio only had 256px to work with,
+           where full width gives it 488px, which is a far better measure for a
+           paragraph this long. */
+        .speakers-grid--lead .speaker-card {
+            row-gap: 1.5rem;
+        }
+
+        .speakers-grid--lead .speaker-body {
+            grid-column: 1 / -1;
+        }
+
+        /* The gap below the affiliation belonged to the bio that used to
+           follow it inside this block. */
+        .speakers-grid--lead .speaker-info .speaker-affil {
+            margin-bottom: 0;
+        }
+
+        /* "Read more" toggle inside a bio. Native <details> again, so the
+           keyboard and screen-reader behaviour is the browser's own; the first
+           sentence stays visible and the rest is one click away, which keeps a
+           long bio from setting the height of the whole row. */
+        /* Truncated bio. One paragraph, clamped, so the hidden remainder
+           continues inline from the visible text rather than starting a new
+           block. That rules out <details>, whose content must be a separate
+           element, so this needs a button and a class.
+
+           The clamp and the button are applied only when scripting is on: with
+           JS off an inert button beside permanently hidden text would be worse
+           than simply showing the whole bio. */
+        .bio-toggle {
+            display: none;
+        }
+
+        .js .bio-clamp .speaker-bio {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 5;
+            line-clamp: 5;
+            overflow: hidden;
+            /* -webkit-line-clamp supplies the ellipsis; the mask softens the
+               final line so the cut reads as text running out rather than
+               being sliced. It stops at 30% rather than 0 so the ellipsis
+               stays legible inside the fade. */
+            -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 1.7em), rgba(0, 0, 0, 0.3) 100%);
+            mask-image: linear-gradient(180deg, #000 calc(100% - 1.7em), rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        .js .bio-clamp.is-open .speaker-bio {
+            display: block;
+            -webkit-line-clamp: none;
+            line-clamp: none;
+            overflow: visible;
+            -webkit-mask-image: none;
+            mask-image: none;
+        }
+
+        .js .bio-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.9rem;
+            padding: 0;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: var(--font-tech);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-accent);
+        }
+
+        .bio-toggle:focus-visible {
+            outline: 2px solid var(--ink-heading);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .bio-toggle .speaker-chevron {
+            width: 15px;
+            height: 15px;
+        }
+
+        .bio-clamp.is-open .speaker-chevron {
+            transform: rotate(180deg);
+        }
+
+        .bio-clamp .bio-less,
+        .bio-clamp.is-open .bio-open {
+            display: none;
+        }
+
+        .bio-clamp.is-open .bio-less {
+            display: inline;
+        }
+
         /* Flex, not grid: with an odd number of cards a wrapped flex row
            centres the leftover instead of stranding it in the first column.
            align-items keeps an opened card from stretching its neighbours. */
@@ -1001,6 +1112,12 @@
             .speaker-card:not(.speaker-card--compact) .speaker-photo {
                 width: 168px;
                 height: 200px;
+            }
+
+            /* The card centres its text when stacked, which suits the name and
+               title but not a paragraph this long. */
+            .speaker-body {
+                text-align: left;
             }
 
             /* The compact cards stay side-on: shrinking the portrait keeps the
@@ -2221,34 +2338,39 @@
                 <span class="kicker fade-in">Confirmed for 2026</span>
                 <h2 id="speakers-title" class="section-title fade-in">Who You'll Hear From</h2>
                 <p class="update-note fade-in"><span class="pulse-dot" aria-hidden="true"></span>Updated every week</p>
-                <div class="speakers-grid fade-in">
+                <div class="speakers-grid speakers-grid--lead fade-in">
                     <article class="speaker-card">
                         <img class="speaker-photo" src="assets/Speakers/russell.jpg" alt="Portrait of Stuart Russell, Professor of Computer Science at UC Berkeley" loading="lazy" width="200" height="240">
                         <div class="speaker-info">
                             <span class="speaker-tag">Keynote</span>
                             <h3 class="speaker-name">Stuart Russell</h3>
                             <p class="speaker-affil">Distinguished Professor of Computer Science, UC Berkeley &middot; Director, Center for Human-Compatible AI</p>
+                        </div>
+                        <div class="speaker-body">
                             <p class="speaker-bio">Co-author of <em>Artificial Intelligence: A Modern Approach</em>, the standard AI textbook used in over 1,500 universities across 135 countries, and a Fellow of the Royal Society. One of the field's leading voices on keeping advanced AI under human control, a case he makes in his book <em>Human Compatible</em> and his 2021 BBC Reith Lectures.</p>
+                        </div>
+                    </article>
+                    <article class="speaker-card">
+                        <img class="speaker-photo" src="assets/Speakers/susan_nesbitt.jpg" alt="Portrait of Susan Nesbitt, Managing Director at Cantellus Group" loading="lazy" width="200" height="240">
+                        <div class="speaker-info">
+                            <span class="speaker-tag">Speaker</span>
+                            <h3 class="speaker-name">Susan Nesbitt</h3>
+                            <p class="speaker-affil">Managing Director, Cantellus Group</p>
+                        </div>
+                        <div class="speaker-body">
+                            <div class="bio-clamp">
+                                <p class="speaker-bio" id="bio-nesbitt">Susan Nesbitt is Managing Director at Cantellus Group, where she advises governments, technology companies, and organizations on the strategy, governance, and responsible deployment of agentic AI systems, helping leaders move from experimentation to enterprise adoption. She serves on IASEAI's Policy Committee, is a member of OpenAI's External Red Teaming Network, advises AI Safety Connect, and contributes to international initiatives with UNESCO on AI governance and the ethical use of AI. Previously, Susan led Global Social Impact Products &amp; Partnerships at WhatsApp and held leadership roles at the World Economic Forum.</p>
+                                <button class="bio-toggle" type="button" aria-expanded="false" aria-controls="bio-nesbitt">
+                                    <span class="bio-open">Read more</span><span class="bio-less">Show less</span>
+                                    <svg class="speaker-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </article>
                 </div>
                 <div class="speakers-grid speakers-grid--pair fade-in">
-                    <details class="speaker-card speaker-card--compact">
-                        <summary class="speaker-summary">
-                            <img class="speaker-photo" src="assets/Speakers/susan_nesbitt.jpg" alt="Portrait of Susan Nesbitt, Managing Director at Cantellus Group" loading="lazy" width="110" height="132">
-                            <div class="speaker-head">
-                                <span class="speaker-tag">Speaker</span>
-                                <h3 class="speaker-name">Susan Nesbitt</h3>
-                                <p class="speaker-affil">Managing Director, Cantellus Group</p>
-                            </div>
-                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </summary>
-                        <div class="speaker-detail">
-                            <p class="speaker-bio">Susan Nesbitt is Managing Director at Cantellus Group, where she advises governments, technology companies, and organizations on the strategy, governance, and responsible deployment of agentic AI systems, helping leaders move from experimentation to enterprise adoption. She serves on IASEAI's Policy Committee, is a member of OpenAI's External Red Teaming Network, advises AI Safety Connect, and contributes to international initiatives with UNESCO on AI governance and the ethical use of AI. Previously, Susan led Global Social Impact Products &amp; Partnerships at WhatsApp and held leadership roles at the World Economic Forum.</p>
-                        </div>
-                    </details>
                     <details class="speaker-card speaker-card--compact">
                         <summary class="speaker-summary">
                             <img class="speaker-photo" src="assets/Speakers/christian_witt.jpg" alt="Portrait of Christian Schroeder de Witt, Principal Investigator at the Oxford Witt Lab" loading="lazy" width="110" height="132">
@@ -2357,6 +2479,9 @@
                     <!-- EuroSafeAI supply an icon only, so the wordmark is set in
                          type beside it. The img is decorative; the <span> carries
                          the accessible name. -->
+                    <a href="https://steadrise.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/steadrise.svg" alt="SteadRise" loading="lazy">
+                    </a>
                     <a href="https://safe.eu/" class="org-logo org-logo--lockup" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
                         <span>EuroSafeAI</span>
@@ -2673,6 +2798,19 @@
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
             }
             requestAnimationFrame(render);
+        })();
+
+        // Truncated bios. The button carries aria-expanded so the state is
+        // announced; the clamp itself is CSS.
+        (function () {
+            document.querySelectorAll('.bio-toggle').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var wrap = btn.closest('.bio-clamp');
+                    if (!wrap) return;
+                    var open = wrap.classList.toggle('is-open');
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                });
+            });
         })();
 
         // Cards light up as the pointer approaches.
