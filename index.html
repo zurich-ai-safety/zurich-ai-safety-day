@@ -797,7 +797,7 @@
         /* Speakers */
         .speakers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
             gap: 2rem;
             margin-top: 3rem;
             /* one card: keep it centered and headline-sized, not stretched full width */
@@ -880,7 +880,10 @@
            proportions. The 480px floor forces exactly two columns: the shared
            320px would fit three at full width and crush the text column. */
         .speakers-grid--lead {
-            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            /* min() is load-bearing: a bare minmax(480px, 1fr) cannot shrink
+               below its floor, so on any viewport under ~544px the column stays
+               480px wide and the card runs off the screen. */
+            grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
             /* Each card keeps its own height. Without this, expanding one bio
                stretches the other card to match and pads its interior. */
             align-items: start;
