@@ -1476,6 +1476,17 @@
             margin: 3rem 0 1.2rem;
         }
 
+        /* Centred, matching the section intro above it. .apply-box sets
+           text-align: center, so this only needs the measure constrained and
+           the block centred within it. */
+        .tier-intro {
+            max-width: 62ch;
+            margin: 0 auto 1.4rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
         .tier-list {
             list-style: none;
             text-align: left;
@@ -2564,6 +2575,7 @@
                     <p class="apply-note">If you are accepted, we will invite you to pay for your ticket to secure your spot.</p>
 
                     <h3 class="tier-heading">Ticket prices</h3>
+                    <p class="tier-intro">The conference runs on a trust-based ticket price system where you choose how much you pay, but we include income-based guidelines.</p>
                     <ul class="tier-list">
                         <li class="tier">
                             <span class="tier-name">Free</span>
