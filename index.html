@@ -1211,6 +1211,20 @@
             height: 88px;
         }
 
+        /* Near-square, stacked lockups. Height is the binding constraint for
+           every other tile, but a mark that is only ~1.3 times as wide as it is
+           tall spends that height on three lines of type, so at 88px its
+           lettering is a third the size of a single-line wordmark beside it.
+           These get the full tile height instead, with the padding trimmed to
+           pay for it. */
+        .org-logo--tall {
+            padding: 0.5rem 1rem;
+        }
+
+        .org-logo--tall img {
+            height: 102px;
+        }
+
         /* Icon-plus-typeset-wordmark lockup, for orgs who only supply a mark.
            The navy is sampled straight from EuroSafeAI's own icon (#022583) so
            the two halves of the lockup agree. If they send a full logo file,
@@ -1325,6 +1339,14 @@
                 height: 76px;
             }
 
+            .org-logo--tall {
+                padding: 0.4rem 0.7rem;
+            }
+
+            .org-logo--tall img {
+                height: 84px;
+            }
+
             .org-logo--block {
                 padding: 0.7rem 0.8rem;
             }
@@ -1368,6 +1390,14 @@
 
             .org-logo--large img {
                 height: 62px;
+            }
+
+            .org-logo--tall {
+                padding: 0.35rem 0.5rem;
+            }
+
+            .org-logo--tall img {
+                height: 68px;
             }
 
             .org-logo--block {
@@ -2498,6 +2528,9 @@
                     </a>
                     <a href="https://www.talosnetwork.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/Talos.svg" alt="Talos Network" loading="lazy">
+                    </a>
+                    <a href="https://thefuturesociety.org/" class="org-logo org-logo--tall" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/the-future-society.webp" alt="The Future Society" loading="lazy">
                     </a>
                     <a href="https://safe.eu/" class="org-logo org-logo--lockup" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
