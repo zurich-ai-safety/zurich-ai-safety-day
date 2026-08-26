@@ -1890,6 +1890,39 @@
             color: var(--ink-heading);
         }
 
+        /* ── Mobile wordmark ─────────────────────────────────────────
+           Below the nav breakpoint the one-line wordmark is squeezed to
+           ~23px on a phone, which is smaller than the body copy. Stacked
+           over three lines the binding constraint becomes the longest
+           line rather than all twenty characters, so the same width
+           carries roughly 2.3x the size.
+           "AI SAFETY" is 6.031em in Tachyon (5.059em in the Montserrat
+           fallback), so dividing by 6.15 leaves ~2% of slack and holds if
+           the webfont fails. The 44px covers the effective 1.25rem gutter
+           either side — the negative inline margin below borrows 0.75rem
+           back from .hero-content's 2rem, so the wordmark gets the extra
+           width without narrowing the gutter for the text beneath it.
+           5rem caps it at ~536px and up, where filling the full width
+           would start to crowd the date line. */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: min(calc((100vw - 44px) / 6.15), 5rem);
+                /* Tighter than the 1.4 used for text: three stacked lines
+                   of display type read as one mark only if the leading is
+                   close. */
+                line-height: 1.1;
+                margin-inline: -0.75rem;
+                margin-bottom: 0.9rem;
+            }
+
+            /* One line per word group. white-space: nowrap stays on the
+               h1, so "AI SAFETY" still cannot break internally. */
+            .hero h1 .wm-w,
+            .hero h1 .wm-p {
+                display: block;
+            }
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             section {
@@ -2722,23 +2755,6 @@
                 <div class="speakers-grid speakers-grid--pair fade-in">
                     <details class="speaker-card speaker-card--compact">
                         <summary class="speaker-summary">
-                            <img class="speaker-photo" src="assets/Speakers/christian_witt.jpg" alt="Portrait of Christian Schroeder de Witt, Principal Investigator at the Oxford Witt Lab" loading="lazy" width="110" height="132">
-                            <div class="speaker-head">
-                                <span class="speaker-tag">Speaker</span>
-                                <h3 class="speaker-name">Christian Schroeder de Witt</h3>
-                                <p class="speaker-affil">Principal Investigator, Oxford Witt Lab, University of Oxford</p>
-                            </div>
-                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </summary>
-                        <div class="speaker-detail">
-                            <p class="speaker-affil-alt">Royal Academy of Engineering Research Fellow</p>
-                            <p class="speaker-bio">Defined the field of multi-agent security, addressing worst-case guarantees in agentic systems. His earlier work with Sam Sokota solved a 25-year-old problem in information security, perfectly secure steganography, named a 2023 Biggest Discovery in Computer Science by <em>Quanta Magazine</em>. He also helped pioneer deep multi-agent reinforcement learning.</p>
-                        </div>
-                    </details>
-                    <details class="speaker-card speaker-card--compact">
-                        <summary class="speaker-summary">
                             <img class="speaker-photo" src="assets/Speakers/nora_ammann.webp" alt="Portrait of Nora Ammann, Programme Director at ARIA" loading="lazy" width="110" height="132">
                             <div class="speaker-head">
                                 <span class="speaker-tag">Speaker</span>
@@ -2756,6 +2772,39 @@
                     </details>
                     <details class="speaker-card speaker-card--compact">
                         <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/adrian_hutter.jpg" alt="Portrait of Adrian Hutter, who leads the Gemini safety post-training team at Google DeepMind" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Adrian Hutter</h3>
+                                <p class="speaker-affil">Lead, Gemini Safety Post-Training, Google DeepMind</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-bio">Dr. Adrian Hutter leads the Gemini safety post-training team at Google DeepMind. His current research centers on instilling robust values in AI models across diverse environments. He has a background in theoretical quantum physics and has been interested in how to ensure the development of AGI is broadly beneficial for over a decade.</p>
+                        </div>
+                    </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/christian_witt.jpg" alt="Portrait of Christian Schroeder de Witt, Principal Investigator at the Oxford Witt Lab" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Christian Schroeder de Witt</h3>
+                                <p class="speaker-affil">Principal Investigator, Oxford Witt Lab, University of Oxford</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-affil-alt">Royal Academy of Engineering Research Fellow</p>
+                            <p class="speaker-bio">Defined the field of multi-agent security, addressing worst-case guarantees in agentic systems. His earlier work with Sam Sokota solved a 25-year-old problem in information security, perfectly secure steganography, named a 2023 Biggest Discovery in Computer Science by <em>Quanta Magazine</em>. He also helped pioneer deep multi-agent reinforcement learning.</p>
+                        </div>
+                    </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
                             <img class="speaker-photo" src="assets/Speakers/robert_west.jpg" alt="Portrait of Robert West, Associate Professor at EPFL" loading="lazy" width="110" height="132">
                             <div class="speaker-head">
                                 <span class="speaker-tag">Speaker</span>
@@ -2769,22 +2818,6 @@
                         <div class="speaker-detail">
                             <p class="speaker-affil-alt">Head of the Data Science and AI Lab (dlab)</p>
                             <p class="speaker-bio">Works at the intersection of AI, natural language processing and computational social science, with a focus on building AI that is safe for humanity. Previously a Visiting Researcher with the AI Frontiers group at Microsoft Research, and a recipient of the ICWSM Adamic-Glance Distinguished Young Researcher Award and an SNSF Starting Grant.</p>
-                        </div>
-                    </details>
-                    <details class="speaker-card speaker-card--compact">
-                        <summary class="speaker-summary">
-                            <img class="speaker-photo" src="assets/Speakers/adrian_hutter.jpg" alt="Portrait of Adrian Hutter, who leads the Gemini safety post-training team at Google DeepMind" loading="lazy" width="110" height="132">
-                            <div class="speaker-head">
-                                <span class="speaker-tag">Speaker</span>
-                                <h3 class="speaker-name">Adrian Hutter</h3>
-                                <p class="speaker-affil">Lead, Gemini Safety Post-Training, Google DeepMind</p>
-                            </div>
-                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </summary>
-                        <div class="speaker-detail">
-                            <p class="speaker-bio">Dr. Adrian Hutter leads the Gemini safety post-training team at Google DeepMind. His current research centers on instilling robust values in AI models across diverse environments. He has a background in theoretical quantum physics and has been interested in how to ensure the development of AGI is broadly beneficial for over a decade.</p>
                         </div>
                     </details>
                 </div>
