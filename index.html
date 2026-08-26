@@ -385,11 +385,19 @@
 
         /* Hero */
         .hero {
-            /* Was 100vh. Most of the dead space under the button was the
-               leftover of centring a ~22rem block in a full viewport, so the
-               fix is a shorter band rather than less padding — trimming the
-               padding alone would just push the headline back down. */
-            min-height: 85vh;
+            /* Fills the screen on load, so no part of the next (white) section
+               shows through the first paint.
+               85vh left a sliver of #highlights visible on taller screens, and
+               a flat 100vh overshoots on mobile: vh there is the *large*
+               viewport, measured with the browser chrome retracted, so the
+               address bar covers the bottom ~10% and the button can fall out
+               of view. svh is the small viewport — chrome shown, which is how
+               the page loads — so the band matches what is actually visible.
+               dvh would track the chrome as it hides and resize the hero
+               mid-scroll; svh stays put. The vh line is the fallback for
+               engines without the newer units (pre-2022 Safari/Chrome). */
+            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -397,16 +405,19 @@
             text-align: center;
         }
 
-        /* The hero centres its content in 100vh, so the visible block sits
-           halfway between the two paddings: heavier at the bottom lifts the
-           headline above centre. Was 6rem/2rem, which pushed it 2rem below. */
+        /* The hero centres its content in the full viewport, so the visible
+           block sits halfway between the two paddings: heavier at the bottom
+           lifts the headline above centre. The lift is not decorative — the
+           fixed nav covers the top ~76px, so geometric centre reads as low.
+           Half of that, 2.5rem, is the correction, hence 3 / 5.5 rather than
+           the earlier 3 / 4 that went with the 85vh band. */
         .hero-content {
             /* 1100 rather than 900 purely to give the wordmark room: it is one
                unbroken line, so the box width is what caps its size. The
                tagline keeps its own 640px measure, so only the wordmark and the
                date line get the extra width. */
             max-width: 1100px;
-            padding: 3rem 2rem 4rem;
+            padding: 3rem 2rem 5.5rem;
         }
 
         .hero h1 {
