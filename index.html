@@ -23,7 +23,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400&family=Geist:wght@500&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400&family=Geist:wght@500&family=DM+Sans:wght@400&family=IBM+Plex+Sans:wght@700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Generality Labs set their mark in Geist Mono and the name in Geist.
          U+2200 FOR ALL sits outside the subsets Google serves by default, so
          the glyph is requested explicitly with &text= — a single-glyph file. -->
@@ -1547,6 +1547,41 @@
             text-align: left;
         }
 
+        /* AI Standards Lab supply a shield mark only, so the name is typeset
+           beside it. IBM Plex Sans 700 at #111111 with -0.0278em of tracking is
+           read straight off their own site header (18px, letter-spacing
+           -0.5px). Their padding is trimmed like --lockup-long's: "AI Standards
+           Lab" is sixteen characters, which does not clear the 2rem gutters the
+           base tile uses. */
+        .org-logo--lockup-aisl {
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+        }
+
+        .org-logo--lockup-aisl span {
+            font-family: 'IBM Plex Sans', var(--font-body);
+            font-weight: 700;
+            font-size: 1.85rem;
+            letter-spacing: -0.0278em;
+            color: #111111;
+            white-space: nowrap;
+        }
+
+        /* SecureBio supply a monochrome mark only, so the name is typeset
+           beside it. Their header sets it in DM Sans 400, white on a #070720
+           navbar; on our white tile both halves take that navy instead, which
+           keeps the pairing theirs rather than substituting our own ink. The
+           mark is 48/25 the size of the type in their header, and that ratio is
+           what the sizes below preserve. */
+        .org-logo--lockup-sbio span {
+            font-family: 'DM Sans', var(--font-body);
+            font-weight: 400;
+            font-size: 2.475rem;
+            letter-spacing: normal;
+            color: #070720;
+            white-space: nowrap;
+        }
+
         .org-logo--block {
             padding: 0.9rem 1rem;
         }
@@ -1556,6 +1591,36 @@
             max-width: 100%;
             height: 80px;
             border-radius: 12px;
+        }
+
+        /* Subfield labels inside the Org Fair. Same face and accent as the
+           kickers, a step smaller, with the rule dropped — six of these down
+           the section would fight the one under the section title. The first
+           sits tighter to the "updated weekly" note than the ones that follow
+           a grid above them. */
+        /* "and" is spelled out rather than set as "&": Tachyon carries no
+           ampersand, so the glyph would be borrowed from Montserrat and sit
+           visibly apart from the rest of the label. */
+        .org-group {
+            font-family: var(--font-detail);
+            font-size: clamp(0.92rem, 2vw, 1.08rem);
+            font-weight: 400;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--ink-accent);
+            line-height: 1.4;
+            margin: 3.2rem 0 0;
+        }
+
+        .org-group:first-of-type {
+            margin-top: 2.2rem;
+        }
+
+        /* The grid's own 2.5rem top margin is spacing from the intro copy; under
+           a label of its own it only needs to clear the label. */
+        .org-group + .org-logos {
+            margin-top: 1.1rem;
         }
 
         /* "Updated weekly" line under the intro */
@@ -1635,6 +1700,30 @@
                 font-size: 1.3rem;
             }
 
+            /* The shared 1.3rem overflows a 219px tile at sixteen characters,
+               and 1.1rem still lands 2px over once the mark is counted. */
+            .org-logo--lockup-aisl {
+                padding: 0.7rem 0.4rem;
+            }
+
+            .org-logo--lockup-aisl img {
+                height: 56px;
+            }
+
+            .org-logo--lockup-aisl span {
+                font-size: 1.05rem;
+            }
+
+            /* Holding the 48/25 ratio, the mark has to come down to 46px for
+               the pair to clear a 219px tile. */
+            .org-logo--lockup-sbio img {
+                height: 46px;
+            }
+
+            .org-logo--lockup-sbio span {
+                font-size: 1.5rem;
+            }
+
             .org-logo--lockup-long span {
                 font-size: 1.4rem;
             }
@@ -1643,6 +1732,10 @@
         @media (max-width: 480px) {
             .org-logos {
                 gap: 1rem;
+            }
+
+            .org-group {
+                margin-top: 2.4rem;
             }
 
             .org-logo {
@@ -1692,6 +1785,10 @@
 
             .org-logo--lockup span {
                 font-size: 1rem;
+            }
+
+            .org-logo--lockup-aisl {
+                padding: 0.6rem 0.4rem;
             }
 
             .org-logo--lockup-long span {
@@ -3004,6 +3101,23 @@
                             <p class="speaker-bio">A member of the EU AI Scientific Panel and a chapter lead for the International AI Safety Report 2026, chaired by Yoshua Bengio, and a founding advisor at Exponential Security Labs. Has taken part in red-teaming efforts for OpenAI and Anthropic models, and co-authored benchmarks used by OpenAI, DeepMind, Meta, xAI and Anthropic. PhD in machine learning from EPFL.</p>
                         </div>
                     </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/zhijing_jin.jpg" alt="Portrait of Zhijing Jin, Assistant Professor of Computer Science at the University of Toronto" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Zhijing Jin</h3>
+                                <p class="speaker-affil">Assistant Professor of Computer Science, University of Toronto</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-affil-alt">Founder, EuroSafeAI</p>
+                            <p class="speaker-bio">Also a Research Scientist at the Max Planck Institute in Germany, a member of the EU AI Scientific Panel, a CIFAR AI Chair and faculty at the Vector Institute. Her research focuses on Causal Reasoning with LLMs, and AI Safety in Multi-Agent LLMs. Author of over 100 papers, and a recipient of the ELLIS PhD Award and three Rising Star awards.</p>
+                        </div>
+                    </details>
                 </div>
                 <div class="section-cta fade-in">
                     <a href="https://airtable.com/appsZqpkshG3D89Ij/pagam5uuV4zDMvMWm/form" class="btn-primary" target="_blank" rel="noopener">Join as a Speaker or Recommend Someone<span class="visually-hidden"> (opens in a new tab)</span></a>
@@ -3020,68 +3134,25 @@
                     <h2 id="orgs-title" class="section-title fade-in">Who You'll Meet</h2>
                 </div>
                 <p class="update-note fade-in"><span class="pulse-dot" aria-hidden="true"></span>Updated every week</p>
-                <div class="org-logos fade-in">
-                    <a href="https://www.matsprogram.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/MATS.svg" alt="MATS Research" loading="lazy">
+                <h3 class="org-group fade-in" id="orgs-research">Research</h3>
+                <div class="org-logos fade-in" aria-labelledby="orgs-research">
+                    <a href="https://far.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/FARAI.svg" alt="FAR.AI" loading="lazy">
                     </a>
                     <a href="https://apolloresearch.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/Apollo.svg" alt="Apollo Research" loading="lazy">
                     </a>
-                    <a href="https://bluedot.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/BlueDot.svg" alt="BlueDot Impact" loading="lazy">
-                    </a>
-                    <a href="https://www.arena.education/" class="org-logo org-logo--tall" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/arena.webp" alt="ARENA" loading="lazy">
-                    </a>
-                    <a href="https://www.successif.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/Successif.svg" alt="Successif" loading="lazy">
-                    </a>
-                    <a href="https://epoch.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/epoch_ai.svg" alt="Epoch AI" loading="lazy">
-                    </a>
-                    <a href="https://far.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/FARAI.svg" alt="FAR.AI" loading="lazy">
+                    <a href="https://goodfire.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/goodfire.svg" alt="Goodfire" loading="lazy">
                     </a>
                     <a href="https://apartresearch.com/" class="org-logo" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/apart_logo_black.svg" alt="Apart Research" loading="lazy">
                     </a>
-                    <a href="https://www.pivotal-research.org/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/pivotal.svg" alt="Pivotal Research" loading="lazy">
-                    </a>
-                    <a href="https://80000hours.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/80000_Hours.webp" alt="80,000 Hours" loading="lazy">
-                    </a>
-                    <a href="https://erafellowship.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/era.svg" alt="ERA Fellowship" loading="lazy">
-                    </a>
-                    <a href="https://goodfire.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/goodfire.svg" alt="Goodfire" loading="lazy">
-                    </a>
                     <a href="https://coairesearch.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/coai.png" alt="COAI Research, Human-Compatible AI" loading="lazy">
                     </a>
-                    <a href="https://www.talosnetwork.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/Talos.svg" alt="Talos Network" loading="lazy">
-                    </a>
-                    <a href="https://thefuturesociety.org/" class="org-logo org-logo--tall" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/the-future-society.webp" alt="The Future Society" loading="lazy">
-                    </a>
-                    <a href="https://steadrise.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/steadrise.svg" alt="SteadRise" loading="lazy">
-                    </a>
-                    <a href="https://www.safer-ai.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/saferai.svg" alt="SaferAI" loading="lazy">
-                    </a>
-                    <a href="https://cesia.org/en/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/cesia.svg" alt="CeSIA, Centre pour la S&eacute;curit&eacute; de l'IA" loading="lazy">
-                    </a>
-                    <a href="https://safeaigermany.org/" class="org-logo org-logo--lockup org-logo--lockup-long" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/saige-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="87">
-                        <span>Safe AI Germany</span>
-                    </a>
-                    <a href="https://safe.eu/" class="org-logo org-logo--lockup" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
-                        <span>EuroSafeAI</span>
+                    <a href="https://intelligence.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/miri-ink.svg" alt="MIRI" loading="lazy">
                     </a>
                     <a href="https://generality.org/" class="org-logo org-logo--lockup-mono" target="_blank" rel="noopener noreferrer">
                         <span class="lockup-inner">
@@ -3089,28 +3160,85 @@
                             <span class="lockup-name">Generality Labs</span>
                         </span>
                     </a>
-                    <a href="https://rethinkpriorities.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/rethink-priorities-ink.svg" alt="Rethink Priorities" loading="lazy">
-                    </a>
-                    <a href="https://intelligence.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/miri-ink.svg" alt="MIRI" loading="lazy">
-                    </a>
                     <a href="https://expsec.ai/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/exponential-security-labs.png" alt="Exponential Security Labs" loading="lazy">
                     </a>
-                    <a href="https://peaks-office.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/Orgs/peaks.svg" alt="PEAKS" loading="lazy">
+                    <a href="https://epoch.ai/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/epoch_ai.svg" alt="Epoch AI" loading="lazy">
+                    </a>
+                    <a href="https://rethinkpriorities.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/rethink-priorities-ink.svg" alt="Rethink Priorities" loading="lazy">
+                    </a>
+                    <a href="https://securebio.org/" class="org-logo org-logo--lockup org-logo--lockup-sbio" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/securebio-ink.svg" alt="" aria-hidden="true" loading="lazy" width="65" height="76">
+                        <span>SecureBio</span>
                     </a>
                     <a href="https://zurichbiosecurity.ch/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/zurich-biosecurity-hub.webp" alt="Zurich Biosecurity Hub" loading="lazy">
+                    </a>                    <a href="https://safe.eu/" class="org-logo org-logo--lockup" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
+                        <span>EuroSafeAI</span>
+                    </a>
+                </div>
+                <h3 class="org-group fade-in" id="orgs-governance-and-policy">Governance and Policy</h3>
+                <div class="org-logos fade-in" aria-labelledby="orgs-governance-and-policy">
+                    <a href="https://thefuturesociety.org/" class="org-logo org-logo--tall" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/the-future-society.webp" alt="The Future Society" loading="lazy">
+                    </a>
+                    <a href="https://www.safer-ai.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/saferai.svg" alt="SaferAI" loading="lazy">
+                    </a>
+                    <a href="https://aistandardslab.org/" class="org-logo org-logo--lockup org-logo--lockup-aisl" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/ai-standards-lab.png" alt="" aria-hidden="true" loading="lazy" width="65" height="76">
+                        <span>AI Standards Lab</span>
+                    </a>
+                    <a href="https://safeaigermany.org/" class="org-logo org-logo--lockup org-logo--lockup-long" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/saige-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="87">
+                        <span>Safe AI Germany</span>
+                    </a>
+                    <a href="https://cesia.org/en/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/cesia.svg" alt="CeSIA, Centre pour la S&eacute;curit&eacute; de l'IA" loading="lazy">
+                    </a>
+                </div>
+                <h3 class="org-group fade-in" id="orgs-talent-and-community">Talent and Community</h3>
+                <div class="org-logos fade-in" aria-labelledby="orgs-talent-and-community">
+                    <a href="https://www.matsprogram.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/MATS.svg" alt="MATS Research" loading="lazy">
+                    </a>
+                    <a href="https://www.arena.education/" class="org-logo org-logo--tall" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/arena.webp" alt="ARENA" loading="lazy">
                     </a>
                     <a href="https://www.ml4good.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/ml4good.svg" alt="ML4Good" loading="lazy">
                     </a>
+                    <a href="https://www.pivotal-research.org/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/pivotal.svg" alt="Pivotal Research" loading="lazy">
+                    </a>
+                    <a href="https://erafellowship.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/era.svg" alt="ERA Fellowship" loading="lazy">
+                    </a>
+                    <a href="https://www.talosnetwork.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/Talos.svg" alt="Talos Network" loading="lazy">
+                    </a>
+                    <a href="https://bluedot.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/BlueDot.svg" alt="BlueDot Impact" loading="lazy">
+                    </a>
+                    <a href="https://80000hours.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/80000_Hours.webp" alt="80,000 Hours" loading="lazy">
+                    </a>
+                    <a href="https://www.successif.org/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/Successif.svg" alt="Successif" loading="lazy">
+                    </a>
+                    <a href="https://steadrise.org/" class="org-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/steadrise.svg" alt="SteadRise" loading="lazy">
+                    </a>
                     <a href="https://zurich.aisafety.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/ZAIS.svg" alt="Zurich AI Safety" loading="lazy">
                     </a>
-</div>
+                    <a href="https://peaks-office.ch/" class="org-logo org-logo--large" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/peaks.svg" alt="PEAKS" loading="lazy">
+                    </a>
+                </div>
                 <div class="section-cta fade-in">
                     <a href="mailto:conferences@aisafety.ch?subject=Org%20Fair%202026" class="btn-primary">Bring Your Organisation to the Fair</a>
                 </div>
