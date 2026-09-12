@@ -816,6 +816,97 @@
             margin-top: 2.8rem;
         }
 
+        /* Horizontal photo strip. Small thumbnails that run off the right edge
+           and scroll, rather than a grid — seven photos as a grid would rival
+           the stats block for height, and the point here is a glance, not a
+           gallery.
+           The negative margin lets the strip bleed to the container's edge so
+           the cut-off tile reads as "there is more this way"; the track's
+           matching padding keeps the first and last photos aligned with the
+           text above. tabindex is not decoration — it is what makes the strip
+           reachable by keyboard at all.
+           Both ends darken under a shadow. The gradients live on this wrapper
+           rather than on the strip itself: inside the clipped box they would
+           travel with the photos instead of holding the edge.
+           pointer-events: none keeps them out of the way of the hover steering
+           underneath. */
+        .photo-strip-wrap {
+            position: relative;
+            margin: 2.5rem -2rem 0;
+        }
+
+        .photo-strip-wrap::before,
+        .photo-strip-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 10%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .photo-strip-wrap::before {
+            left: 0;
+            background: linear-gradient(90deg, rgba(17, 17, 20, 0.55), rgba(17, 17, 20, 0));
+        }
+
+        .photo-strip-wrap::after {
+            right: 0;
+            background: linear-gradient(270deg, rgba(17, 17, 20, 0.55), rgba(17, 17, 20, 0));
+        }
+
+        /* The drift moves a transform, not scrollLeft. Scroll offsets are
+           snapped to whole pixels, and at 14px a second a frame advances about
+           a quarter of one — so the run only actually moved every fourth frame,
+           which is what the stutter was. It never showed at the hover speed
+           because 2px a frame swamps the rounding. A composited transform is
+           positioned sub-pixel, so slow motion stays smooth.
+           Losing the scroll container costs the native swipe and arrow keys,
+           so the script puts both back. */
+        .photo-strip {
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+
+        .photo-strip-track {
+            display: flex;
+            width: max-content;
+            gap: 0.9rem;
+            padding: 0 2rem;
+            will-change: transform;
+        }
+
+        .photo-strip img {
+            flex: 0 0 auto;
+            width: 248px;
+            height: 165px;
+            object-fit: cover;
+            /* Without this a press-and-move starts the browser's own image
+               drag instead of ours. */
+            -webkit-user-drag: none;
+            user-select: none;
+            border: 1px solid var(--light-border);
+            box-shadow: 0 2px 14px rgba(26, 14, 46, 0.08);
+            /* Holds the slot while the photo decodes, so the strip does not
+               jump as images stream in. */
+            background: rgba(17, 17, 20, 0.05);
+        }
+
+        /* At 4px of offset the ring sits outside the wrapper, so the shadow
+           gradients do not wash it out. */
+        .photo-strip:focus-visible {
+            outline: 2px solid var(--ink-accent);
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 480px) {
+            .photo-strip img {
+                width: 208px;
+                height: 139px;
+            }
+        }
+
         /* What to expect */
         .expect-grid {
             display: grid;
@@ -1661,8 +1752,20 @@
         }
 
         @media (max-width: 768px) {
+            /* A tile left alone on the last row was stretching the full width
+               of the row: flex-grow lets it take all the free space, and the
+               360px cap is far wider than a phone row, so nothing stopped it.
+               max-width pins it to exactly the width a paired tile gets — two
+               tiles and one gap inside the container's 2rem gutters — and
+               justify-content: center then centres it.
+               That expression only holds if the row count is fixed, so the
+               basis goes to 240px: three of those plus gaps need an 832px
+               viewport, beyond this breakpoint, so the range is always two up.
+               At 200px it flipped to three up above 712px and the cap would
+               have been wrong there. */
             .org-logo {
-                flex-basis: 200px;
+                flex-basis: 240px;
+                max-width: calc(50vw - 44px);
                 height: 100px;
                 padding: 1rem 1.25rem;
             }
@@ -1740,6 +1843,8 @@
 
             .org-logo {
                 flex-basis: 130px;
+                /* Same pinning as above, recomputed for this block's 1rem gap. */
+                max-width: calc(50vw - 40px);
                 height: 80px;
                 padding: 0.85rem 1rem;
             }
@@ -2811,6 +2916,22 @@
                         <div class="stat-label">Meaningful Connections Made</div>
                     </div>
                 </div>
+                <!-- The folder name carries a space, so every path needs %20.
+                     The camera originals live in its full-res/ subfolder and
+                     must stay out of git — see .gitignore. -->
+                <div class="photo-strip-wrap fade-in">
+                    <div class="photo-strip" role="group" tabindex="0" aria-label="Photographs from the 2025 edition">
+                        <div class="photo-strip-track">
+                            <img src="assets/2025%20Photos/AISafetyDay_edited_008.jpg" alt="A speaker with a microphone in front of a Zurich AI Safety Day title slide" loading="lazy" width="248" height="165">
+                            <img src="assets/2025%20Photos/AISafetyDay_edited_031.webp" alt="The ETH lecture hall seen from the back, most seats taken" loading="lazy" width="248" height="165">
+                            <img src="assets/2025%20Photos/AISafetyDay_edited_014.jpg" alt="Two attendees talking in the lecture hall between sessions" loading="lazy" width="248" height="165">
+                            <img src="assets/2025%20Photos/AISafetyDay_edited_063.jpg" alt="Two speakers seated on the stage edge during a Future of Life Institute session" loading="lazy" width="248" height="165">
+                            <img src="assets/2025%20Photos/DSC_8650.jpg" alt="Attendees at the org fair beside the BlueDot Impact stand" loading="lazy" width="248" height="165">
+                            <img src="assets/2025%20Photos/AISafetyDay_edited_068.jpg" alt="A speaker presenting in front of a UK AI Security Institute slide" loading="lazy" width="248" height="165">
+                            <img src="assets/2025%20Photos/AISafetyDay_edited_088.jpg" alt="The audience seen from above, spread across the tiered desks" loading="lazy" width="248" height="165">
+                        </div>
+                    </div>
+                </div>
                 <div class="section-cta fade-in">
                     <a href="/2025/" class="btn-secondary">Explore the 2025 Edition</a>
                 </div>
@@ -3605,6 +3726,140 @@
             window.addEventListener('pointermove', function (e) { px = e.clientX; py = e.clientY; schedule(); }, { passive: true });
             window.addEventListener('scroll', schedule, { passive: true });
             document.addEventListener('pointerleave', function () { px = -9999; py = -9999; schedule(); });
+        })();
+    </script>
+
+    <!-- Photo strip: slow continuous drift, steered by the pointer at the edges. -->
+    <script>
+        (function () {
+            var strips = document.querySelectorAll('.photo-strip');
+            if (!strips.length) return;
+
+            var BASE = 14;      /* px per second, unattended */
+            var FAST = 130;     /* px per second, pointer parked over an end photo */
+            var EDGE = 0.2;     /* share of the width each end zone covers, ~one photo */
+
+            Array.prototype.forEach.call(strips, function (strip) {
+                /* The run is finite — a first photo and a last one, no wrap. So
+                   the drift turns around at each end rather than looping.
+                   While the pointer is steering, the ends clamp instead: pushing
+                   against the last photo should stop there, not bounce back. */
+                var track = strip.querySelector('.photo-strip-track');
+                if (!track) return;
+
+                var pos = 0, max = 0;
+                function apply() { track.style.transform = 'translate3d(' + (-pos) + 'px, 0, 0)'; }
+                function measure() {
+                    max = Math.max(0, track.scrollWidth - strip.clientWidth);
+                    if (pos > max) { pos = max; }
+                    apply();
+                }
+                measure();
+                window.addEventListener('resize', measure, { passive: true });
+                if (window.ResizeObserver) new ResizeObserver(measure).observe(strip);
+                /* The photos are lazy-loaded, so the track's width is not final
+                   until they arrive. */
+                window.addEventListener('load', measure);
+
+                var dir = 1, speed = BASE, last = 0, raf = null, visible = true;
+                var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+                var held = false;      /* keyboard focus, or a finger on the strip */
+                var steering = false;  /* pointer parked over one of the end photos */
+                var dragging = false, dragFrom = 0, dragPos = 0;
+
+                function frame(now) {
+                    raf = null;
+                    if (!last) last = now;
+                    var dt = Math.min((now - last) / 1000, 0.05);   /* clamp after a tab switch */
+                    last = now;
+
+                    if (!held && max > 0) {
+                        pos += dir * speed * dt;
+                        if (pos >= max) {
+                            pos = max;
+                            if (!steering) dir = -1;
+                        } else if (pos <= 0) {
+                            pos = 0;
+                            if (!steering) dir = 1;
+                        }
+                        apply();
+                    }
+                    start();
+                }
+
+                function start() {
+                    if (raf || !visible || reduce.matches) return;
+                    raf = requestAnimationFrame(frame);
+                }
+                function stop() {
+                    if (raf) { cancelAnimationFrame(raf); raf = null; }
+                    last = 0;
+                }
+
+                strip.addEventListener('pointermove', function (e) {
+                    if (dragging) {
+                        pos = Math.min(max, Math.max(0, dragPos - (e.clientX - dragFrom)));
+                        apply();
+                        return;
+                    }
+                    if (e.pointerType === 'touch') return;
+                    var r = strip.getBoundingClientRect();
+                    var t = (e.clientX - r.left) / r.width;
+                    if (t < EDGE) { dir = -1; speed = FAST; steering = true; }
+                    else if (t > 1 - EDGE) { dir = 1; speed = FAST; steering = true; }
+                    else { speed = BASE; steering = false; }
+                }, { passive: true });
+
+                strip.addEventListener('pointerleave', function () {
+                    speed = BASE;
+                    steering = false;
+                });
+
+                /* Drag and arrow keys, replacing what the scroll container used
+                   to give for free. Hand control over whenever the visitor takes
+                   it, so the drift never fights a finger or a key. */
+                strip.addEventListener('pointerdown', function (e) {
+                    dragging = true;
+                    held = true;
+                    dragFrom = e.clientX;
+                    dragPos = pos;
+                    try { strip.setPointerCapture(e.pointerId); } catch (err) {}
+                });
+
+                function endDrag(e) {
+                    if (!dragging) return;
+                    dragging = false;
+                    held = false;
+                    try { strip.releasePointerCapture(e.pointerId); } catch (err) {}
+                }
+                strip.addEventListener('pointerup', endDrag);
+                strip.addEventListener('pointercancel', endDrag);
+
+                strip.addEventListener('keydown', function (e) {
+                    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                    e.preventDefault();
+                    var step = 260;
+                    pos = Math.min(max, Math.max(0, pos + (e.key === 'ArrowRight' ? step : -step)));
+                    apply();
+                });
+
+                strip.addEventListener('focus', function () { held = true; });
+                strip.addEventListener('blur', function () { held = false; });
+
+                if (window.IntersectionObserver) {
+                    new IntersectionObserver(function (entries) {
+                        visible = entries[0].isIntersecting;
+                        if (visible) start(); else stop();
+                    }, { rootMargin: '200px' }).observe(strip);
+                } else {
+                    start();
+                }
+
+                reduce.addEventListener('change', function () { reduce.matches ? stop() : start(); });
+                document.addEventListener('visibilitychange', function () {
+                    document.hidden ? stop() : start();
+                });
+            });
         })();
     </script>
 </body>
