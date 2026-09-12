@@ -417,23 +417,13 @@
             -webkit-backdrop-filter: blur(4px);
         }
 
-        /* The auto margins matter: a long caption can make the figure wider
-           than the picture, and a block-level image would then sit left. */
         .lightbox img {
             display: block;
             max-width: 92vw;
-            max-height: 82vh;
+            max-height: 88vh;
             width: auto;
             height: auto;
             margin: 0 auto;
-        }
-
-        .lightbox figcaption {
-            color: rgba(255, 255, 255, 0.82);
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin: 0.8rem auto 0;
-            max-width: 60ch;
         }
 
         /* Pinned to the viewport corner rather than to the picture: hung above
@@ -1299,7 +1289,6 @@
                     <figure>
                         <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
                         <img alt="">
-                        <figcaption></figcaption>
                     </figure>
                 </dialog>
             </div>
@@ -1701,7 +1690,6 @@
             if (!collage || !dialog || typeof dialog.showModal !== 'function') return;
 
             var full = dialog.querySelector('img');
-            var caption = dialog.querySelector('figcaption');
             var buttons = Array.prototype.slice.call(collage.querySelectorAll('button'));
             var index = -1;
 
@@ -1710,8 +1698,9 @@
                 var btn = buttons[index];
                 var thumb = btn.querySelector('img');
                 full.src = btn.getAttribute('data-full');
+                /* The description stays as alt text — read by screen readers,
+                   just no longer printed under the picture. */
                 full.alt = thumb ? thumb.alt : '';
-                caption.textContent = thumb ? thumb.alt : '';
                 if (!dialog.open) dialog.showModal();
             }
 
