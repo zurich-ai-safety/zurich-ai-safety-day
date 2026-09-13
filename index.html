@@ -1978,6 +1978,9 @@
             color: var(--pink);
             margin: 3rem 0 1.2rem;
             line-height: 1.4;
+            /* The nav's Tickets link lands here rather than on the section, so
+               this needs the same clearance the sections give the fixed bar. */
+            scroll-margin-top: 90px;
         }
 
         /* Centred, matching the section intro above it. .apply-box sets
@@ -2044,6 +2047,90 @@
             .tier-who {
                 grid-column: 1 / -1;
             }
+        }
+
+        /* Section divider, borrowing the hero's rules. There the date sits
+           between two 1px lines, one fading transparent-to-pink and the other
+           pink-to-transparent; stated as one unbroken line that is the same
+           gradient with nothing in the middle. No glow — the hero puts that on
+           the lettering, not on the rules. */
+        .section-divider {
+            height: 1px;
+            border: 0;
+            background: linear-gradient(90deg, transparent, var(--pink), transparent);
+        }
+
+        /* FAQ — a plain ruled list rather than cards. These are five short
+           logistics answers, and boxing each one would give them more weight on
+           the page than the speakers above them.
+           Built on <details>, like the speaker cards, so it opens without any
+           script. The default disclosure triangle is suppressed in favour of a
+           chevron matching the one on those cards; both the list-style and the
+           -webkit- pseudo-element are needed to cover every engine. */
+        .faq-list {
+            margin-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .faq-item summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: 1.2rem 0;
+            cursor: pointer;
+            list-style: none;
+            font-family: var(--font-tech);
+            font-size: 1.02rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text);
+            transition: color 0.3s ease;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary:hover {
+            color: var(--pink);
+        }
+
+        .faq-item summary:focus-visible {
+            outline: 2px solid var(--pink);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .faq-chevron {
+            flex: 0 0 auto;
+            color: var(--pink);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] .faq-chevron {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 0 1.4rem;
+            font-size: 0.98rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        .faq-answer a {
+            color: var(--pink);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .faq-answer a:hover {
+            color: var(--pink-bright);
         }
 
         /* Footer — matches the nav: cream, barely translucent */
@@ -2825,7 +2912,8 @@
                 <li><a href="#orgs">Org Fair</a></li>
                 <li><a href="#why">Why Zurich</a></li>
                 <li><a href="#venue">Venue</a></li>
-                <li><a href="/2025/">2025 Edition</a></li>
+                <li><a href="#tickets">Tickets</a></li>
+                <li><a href="#faq">FAQ</a></li>
             </ul>
             <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="register-btn" target="_blank" rel="noopener">Apply now<span class="visually-hidden"> (opens in a new tab)</span></a>
             <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -2838,7 +2926,8 @@
                 <a href="#orgs">Org Fair</a>
                 <a href="#why">Why Zurich</a>
                 <a href="#venue">Venue</a>
-                <a href="/2025/">2025 Edition</a>
+                <a href="#tickets">Tickets</a>
+                <a href="#faq">FAQ</a>
         </div>
     </nav>
 
@@ -3434,7 +3523,7 @@
                     </div>
                     <p class="apply-note">If you are accepted, we will invite you to pay for your ticket to secure your spot.</p>
 
-                    <h3 class="tier-heading">Ticket prices</h3>
+                    <h3 class="tier-heading" id="tickets">Ticket prices</h3>
                     <p class="tier-intro">The conference runs on a trust-based ticket price system where you choose how much you pay, but we include income-based guidelines.</p>
                     <ul class="tier-list">
                         <li class="tier">
@@ -3463,6 +3552,77 @@
                             <span class="tier-who">Net income above 100,000 CHF a year</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <hr class="section-divider">
+        </div>
+
+        <!-- FAQ -->
+        <section id="faq" class="fade-in" role="region" aria-labelledby="faq-title">
+            <div class="container">
+                <div class="section-head">
+                    <span class="kicker">FAQ</span>
+                    <h2 id="faq-title" class="section-title">Frequently Asked <span class="title-pink">Questions</span></h2>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>
+                            Will there be pre- or post-events?
+                            <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>We are still putting the program together, but we expect to run additional events on Friday afternoon and evening, and on the Saturday and Sunday evenings. These will be for networking and socialising rather than talks. Accepted attendees will get the details before the conference.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>
+                            What is included in the ticket?
+                            <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Full access to the program on both days, plus breakfast, lunch and snacks.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>
+                            Do you offer travel support?
+                            <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Unfortunately not. Our budget is limited, so attendees are responsible for their own travel and accommodation.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>
+                            Can you provide a letter of invitation for a visa?
+                            <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Yes. Ask us <a href="mailto:conferences@aisafety.ch?subject=Visa%20invitation%20letter">via email</a> as soon as you receive your acceptance email, as visa appointments and processing can take a long time.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>
+                            What food will be served?
+                            <svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>All catering is vegan. We serve breakfast and lunch on both days, with snacks throughout.</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </section>
