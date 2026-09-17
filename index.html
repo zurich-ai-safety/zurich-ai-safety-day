@@ -1205,76 +1205,85 @@
             }
         }
 
-        /* The extra height from stretching goes to the bio row, not to gaps
-           between the rows. */
-        .speakers-grid--lead .speaker-card {
-            grid-template-rows: auto 1fr;
-        }
-
-        /* Collapsed, the bio fills the height the card is given rather than
-           stopping at a fixed five lines — otherwise the stretched card shows
-           dead space under the text. Stuart's card sets the row height, since
-           his bio is shown in full and carries no control beneath it, and
-           Susan's clamped bio then grows into that height however tall it is.
-           Height does the truncating now, so the line cap is only kept high
-           enough never to bite first; the mask still fades the cut. */
-        /* align-self overrides the card's align-items: center, which was sizing
-           this to its content and floating it in the middle of the row — the
-           bio has to fill the row for the flex sizing below to mean anything. */
-        .speakers-grid--lead .speaker-body {
-            display: flex;
-            flex-direction: column;
-            align-self: stretch;
-            min-height: 0;
-        }
-
-        /* flex-basis 0, not auto: on auto the untruncated bio would still count
-           towards the card's natural height, the row would size to all eleven
-           lines of it and nothing would ever be clamped. At 0 the card asks for
-           almost nothing, Stuart's card wins the row, and the bio grows into
-           whatever that comes to. The min-height is the floor if his card is
-           ever the shorter of the two. */
-        .js .speakers-grid--lead .bio-clamp {
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 0;
-            min-height: 0;
-        }
-
-        .js .speakers-grid--lead .bio-clamp .speaker-bio {
-            flex: 1 1 0;
-            min-height: 5.6em;
-            -webkit-line-clamp: 99;
-            line-clamp: 99;
-        }
-
-        /* Opened, it goes back to being sized by its own text. */
-        .js .speakers-grid--lead .bio-clamp.is-open,
-        .js .speakers-grid--lead .bio-clamp.is-open .speaker-bio {
-            flex: 0 0 auto;
-        }
-
-        /* The portrait spans both rows and the text stacks beside it.
-           Previously the bio sat full width underneath, which meant the top row
-           took its height from the 132px photo while the name block is only
-           about 74px — and that leftover fell between the title and the bio.
-           It showed most on Susan's card, whose title runs to one line where
-           Stuart's runs to two. With the photo spanning, the row is sized by
-           the text alone and the two sit together.
-           The bio measure narrows from 488px to about 346px, which is still a
-           comfortable 45 characters or so a line. */
         .speakers-grid--lead .speaker-card {
             row-gap: 0.9rem;
         }
 
-        .speakers-grid--lead .speaker-photo {
-            grid-row: 1 / -1;
-            align-self: start;
-        }
+        /* Everything below only applies where the two cards sit side by side.
+           Under 621px the card collapses to a single centred column and none of
+           it holds: the two-column placement invents a phantom column, the
+           two-row template lands the 1fr on the wrong row, and a flex body
+           inside justify-items: center is sized to its content rather than the
+           card — which is what pushed the text out of the card on a phone.
+           Stacked, there is no neighbour to match heights with anyway, so the
+           plain five-line clamp underneath is the right behaviour. */
+        @media (min-width: 621px) {
+            /* The portrait spans both rows and the text stacks beside it.
+               Previously the bio sat full width underneath, which meant the top
+               row took its height from the 132px photo while the name block is
+               only about 74px — and that leftover fell between the title and
+               the bio. It showed most on Susan's card, whose title runs to one
+               line where Stuart's runs to two.
+               The bio measure narrows from 488px to about 346px, which is still
+               a comfortable 45 characters or so a line. */
+            .speakers-grid--lead .speaker-photo {
+                grid-row: 1 / -1;
+                align-self: start;
+            }
 
-        .speakers-grid--lead .speaker-info,
-        .speakers-grid--lead .speaker-body {
-            grid-column: 2;
+            .speakers-grid--lead .speaker-info,
+            .speakers-grid--lead .speaker-body {
+                grid-column: 2;
+            }
+
+            /* The extra height from stretching goes to the bio row, not to gaps
+               between the rows. */
+            .speakers-grid--lead .speaker-card {
+                grid-template-rows: auto 1fr;
+            }
+
+            /* Collapsed, the bio fills the height the card is given rather than
+               stopping at a fixed five lines — otherwise the stretched card
+               shows dead space under the text. Stuart's card sets the row
+               height, since his bio is shown in full and carries no control
+               beneath it, and Susan's clamped bio grows into that height.
+               align-self overrides the card's align-items: center, which would
+               otherwise size this to its content and float it in the middle of
+               the row. */
+            .speakers-grid--lead .speaker-body {
+                display: flex;
+                flex-direction: column;
+                align-self: stretch;
+                min-height: 0;
+            }
+
+            /* flex-basis 0, not auto: on auto the untruncated bio would still
+               count towards the card's natural height, the row would size to
+               all eleven lines of it and nothing would ever be clamped. At 0
+               the card asks for almost nothing, Stuart's card wins the row, and
+               the bio grows into whatever that comes to. The min-height is the
+               floor if his card is ever the shorter of the two.
+               Height does the truncating here, so the line cap is only kept
+               high enough never to bite first; the mask still fades the cut. */
+            .js .speakers-grid--lead .bio-clamp {
+                display: flex;
+                flex-direction: column;
+                flex: 1 1 0;
+                min-height: 0;
+            }
+
+            .js .speakers-grid--lead .bio-clamp .speaker-bio {
+                flex: 1 1 0;
+                min-height: 5.6em;
+                -webkit-line-clamp: 99;
+                line-clamp: 99;
+            }
+
+            /* Opened, it goes back to being sized by its own text. */
+            .js .speakers-grid--lead .bio-clamp.is-open,
+            .js .speakers-grid--lead .bio-clamp.is-open .speaker-bio {
+                flex: 0 0 auto;
+            }
         }
 
         /* The gap below the affiliation is now the row-gap above the bio. */
@@ -1488,17 +1497,6 @@
                 padding: 2rem 1.5rem;
             }
 
-            /* The stacked card is one column, so the spanning portrait and the
-               column-2 placements have to be undone — left in, grid-column: 2
-               would invent a second column and put the text off to the side. */
-            .speakers-grid--lead .speaker-photo {
-                grid-row: auto;
-            }
-
-            .speakers-grid--lead .speaker-info,
-            .speakers-grid--lead .speaker-body {
-                grid-column: 1;
-            }
 
             /* Was 168x200, set when the desktop portrait was 200 wide. It would
                now be larger stacked than side-on, so it follows the new size —
