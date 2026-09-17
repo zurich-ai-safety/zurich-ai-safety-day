@@ -1093,9 +1093,11 @@
             justify-content: center;
         }
 
+        /* The column tracks the portrait width — changing one without the other
+           leaves a gap beside the photo. */
         .speaker-card {
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 110px 1fr;
             gap: 2rem;
             align-items: center;
             max-width: 720px;
@@ -1114,9 +1116,11 @@
             box-shadow: 0 16px 44px rgba(26, 14, 46, 0.12);
         }
 
+        /* Matches the compact cards, so every portrait in the section is the
+           same size. */
         .speaker-photo {
-            width: 200px;
-            height: 240px;
+            width: 110px;
+            height: 132px;
             border-radius: 16px;
             object-fit: cover;
             object-position: center top;
@@ -1136,9 +1140,10 @@
             line-height: 1.4;
         }
 
+        /* One size for every speaker name, lead card or compact. */
         .speaker-name {
             font-family: var(--font-tech);
-            font-size: clamp(1.35rem, 3vw, 1.7rem);
+            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
             font-weight: 400;
             letter-spacing: var(--track);
             color: var(--ink-heading);
@@ -1147,7 +1152,7 @@
         }
 
         .speaker-affil {
-            font-size: 0.95rem;
+            font-size: 0.86rem;
             font-weight: 500;
             color: var(--ink);
             margin-bottom: 0.9rem;
@@ -1170,29 +1175,109 @@
            proportions. The 480px floor forces exactly two columns: the shared
            320px would fit three at full width and crush the text column. */
         .speakers-grid--lead {
-            /* min() is load-bearing: a bare minmax(480px, 1fr) cannot shrink
-               below its floor, so on any viewport under ~544px the column stays
-               480px wide and the card runs off the screen. */
-            grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
-            /* Each card keeps its own height. Without this, expanding one bio
-               stretches the other card to match and pads its interior. */
+            /* 380 rather than the old 480: the portrait is now 110px instead of
+               200, and the bio spans the full card width anyway, so the column
+               beside the photo only carries the name and title. At 480 the pair
+               needed a 1056px viewport to sit side by side and dropped to one
+               column on a narrower window; 380 holds two from about 856px up.
+               It still cannot reach three — that would need 1204px against the
+               container's 1136.
+               min() is load-bearing: a bare minmax(380px, 1fr) cannot shrink
+               below its floor, so on a narrow phone the column would stay 380px
+               and the card would run off the screen. */
+            grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+            /* Each card keeps its own height, so expanding one bio does not
+               stretch its neighbour. */
             align-items: start;
         }
 
-        /* Portrait and name occupy the top row; the bio spans the full card
-           beneath them. Beside the photo the bio only had 256px to work with,
-           where full width gives it 488px, which is a far better measure for a
-           paragraph this long. */
+        /* While both are collapsed the two cards match, which they otherwise
+           would not: Susan's clamped bio carries a Read more control under it
+           and Stuart's does not, so hers runs a line taller.
+           Rather than guessing a height, the row is simply allowed to stretch —
+           but only while nothing is open, so the moment a bio expands the rule
+           drops and the other card stays put with whitespace beneath it.
+           Gated on @supports so a browser without :has() keeps the safe
+           behaviour above rather than stretching on expand. */
+        @supports selector(:has(*)) {
+            .speakers-grid--lead:not(:has(.bio-clamp.is-open)) {
+                align-items: stretch;
+            }
+        }
+
+        /* The extra height from stretching goes to the bio row, not to gaps
+           between the rows. */
         .speakers-grid--lead .speaker-card {
-            row-gap: 1.5rem;
+            grid-template-rows: auto 1fr;
         }
 
+        /* Collapsed, the bio fills the height the card is given rather than
+           stopping at a fixed five lines — otherwise the stretched card shows
+           dead space under the text. Stuart's card sets the row height, since
+           his bio is shown in full and carries no control beneath it, and
+           Susan's clamped bio then grows into that height however tall it is.
+           Height does the truncating now, so the line cap is only kept high
+           enough never to bite first; the mask still fades the cut. */
+        /* align-self overrides the card's align-items: center, which was sizing
+           this to its content and floating it in the middle of the row — the
+           bio has to fill the row for the flex sizing below to mean anything. */
         .speakers-grid--lead .speaker-body {
-            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-self: stretch;
+            min-height: 0;
         }
 
-        /* The gap below the affiliation belonged to the bio that used to
-           follow it inside this block. */
+        /* flex-basis 0, not auto: on auto the untruncated bio would still count
+           towards the card's natural height, the row would size to all eleven
+           lines of it and nothing would ever be clamped. At 0 the card asks for
+           almost nothing, Stuart's card wins the row, and the bio grows into
+           whatever that comes to. The min-height is the floor if his card is
+           ever the shorter of the two. */
+        .js .speakers-grid--lead .bio-clamp {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 0;
+            min-height: 0;
+        }
+
+        .js .speakers-grid--lead .bio-clamp .speaker-bio {
+            flex: 1 1 0;
+            min-height: 5.6em;
+            -webkit-line-clamp: 99;
+            line-clamp: 99;
+        }
+
+        /* Opened, it goes back to being sized by its own text. */
+        .js .speakers-grid--lead .bio-clamp.is-open,
+        .js .speakers-grid--lead .bio-clamp.is-open .speaker-bio {
+            flex: 0 0 auto;
+        }
+
+        /* The portrait spans both rows and the text stacks beside it.
+           Previously the bio sat full width underneath, which meant the top row
+           took its height from the 132px photo while the name block is only
+           about 74px — and that leftover fell between the title and the bio.
+           It showed most on Susan's card, whose title runs to one line where
+           Stuart's runs to two. With the photo spanning, the row is sized by
+           the text alone and the two sit together.
+           The bio measure narrows from 488px to about 346px, which is still a
+           comfortable 45 characters or so a line. */
+        .speakers-grid--lead .speaker-card {
+            row-gap: 0.9rem;
+        }
+
+        .speakers-grid--lead .speaker-photo {
+            grid-row: 1 / -1;
+            align-self: start;
+        }
+
+        .speakers-grid--lead .speaker-info,
+        .speakers-grid--lead .speaker-body {
+            grid-column: 2;
+        }
+
+        /* The gap below the affiliation is now the row-gap above the bio. */
         .speakers-grid--lead .speaker-info .speaker-affil {
             margin-bottom: 0;
         }
@@ -1403,9 +1488,25 @@
                 padding: 2rem 1.5rem;
             }
 
+            /* The stacked card is one column, so the spanning portrait and the
+               column-2 placements have to be undone — left in, grid-column: 2
+               would invent a second column and put the text off to the side. */
+            .speakers-grid--lead .speaker-photo {
+                grid-row: auto;
+            }
+
+            .speakers-grid--lead .speaker-info,
+            .speakers-grid--lead .speaker-body {
+                grid-column: 1;
+            }
+
+            /* Was 168x200, set when the desktop portrait was 200 wide. It would
+               now be larger stacked than side-on, so it follows the new size —
+               a touch bigger only because a centred portrait carries the top of
+               the stacked card. */
             .speaker-card:not(.speaker-card--compact) .speaker-photo {
-                width: 168px;
-                height: 200px;
+                width: 132px;
+                height: 158px;
             }
 
             /* The card centres its text when stacked, which suits the name and
@@ -3116,7 +3217,7 @@
                 <p class="update-note fade-in"><span class="pulse-dot" aria-hidden="true"></span>Updated every week</p>
                 <div class="speakers-grid speakers-grid--lead fade-in">
                     <article class="speaker-card">
-                        <img class="speaker-photo" src="assets/Speakers/russell.jpg" alt="Portrait of Stuart Russell, Professor of Computer Science at UC Berkeley" loading="lazy" width="200" height="240">
+                        <img class="speaker-photo" src="assets/Speakers/russell.jpg" alt="Portrait of Stuart Russell, Professor of Computer Science at UC Berkeley" loading="lazy" width="110" height="132">
                         <div class="speaker-info">
                             <span class="speaker-tag">Keynote</span>
                             <h3 class="speaker-name">Stuart Russell</h3>
@@ -3127,7 +3228,7 @@
                         </div>
                     </article>
                     <article class="speaker-card">
-                        <img class="speaker-photo" src="assets/Speakers/susan_nesbitt.jpg" alt="Portrait of Susan Nesbitt, Managing Director at Cantellus Group" loading="lazy" width="200" height="240">
+                        <img class="speaker-photo" src="assets/Speakers/susan_nesbitt.jpg" alt="Portrait of Susan Nesbitt, Managing Director at Cantellus Group" loading="lazy" width="110" height="132">
                         <div class="speaker-info">
                             <span class="speaker-tag">Speaker</span>
                             <h3 class="speaker-name">Susan Nesbitt</h3>
@@ -3182,19 +3283,19 @@
                     </details>
                     <details class="speaker-card speaker-card--compact">
                         <summary class="speaker-summary">
-                            <img class="speaker-photo" src="assets/Speakers/christian_witt.jpg" alt="Portrait of Christian Schroeder de Witt, Principal Investigator at the Oxford Witt Lab" loading="lazy" width="110" height="132">
+                            <img class="speaker-photo" src="assets/Speakers/christian_witt.jpg" alt="Portrait of Christian Schroeder de Witt, founder of Witt Lab" loading="lazy" width="110" height="132">
                             <div class="speaker-head">
                                 <span class="speaker-tag">Speaker</span>
                                 <h3 class="speaker-name">Christian Schroeder de Witt</h3>
-                                <p class="speaker-affil">Principal Investigator, Oxford Witt Lab, University of Oxford</p>
+                                <p class="speaker-affil">Founder, Witt Lab</p>
                             </div>
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </summary>
                         <div class="speaker-detail">
-                            <p class="speaker-affil-alt">Royal Academy of Engineering Research Fellow</p>
-                            <p class="speaker-bio">Defined the field of multi-agent security, addressing worst-case guarantees in agentic systems. His earlier work with Sam Sokota solved a 25-year-old problem in information security, perfectly secure steganography, named a 2023 Biggest Discovery in Computer Science by <em>Quanta Magazine</em>. He also helped pioneer deep multi-agent reinforcement learning.</p>
+                            <p class="speaker-affil-alt">Associate Professor, University of Oxford &middot; joining UCL in October 2026</p>
+                            <p class="speaker-bio">Founded Witt Lab to study multi-agent security: what becomes of security when the parties to a system are learned agents that reason, communicate and pursue goals. Holds an EPSRC Open Fellowship, a Royal Academy of Engineering Research Fellowship and a Schmidt Sciences AI2050 Early Career Fellowship. DPhil from Oxford on deep multi-agent reinforcement learning.</p>
                         </div>
                     </details>
                     <details class="speaker-card speaker-card--compact">
