@@ -1218,28 +1218,25 @@
            Stacked, there is no neighbour to match heights with anyway, so the
            plain five-line clamp underneath is the right behaviour. */
         @media (min-width: 621px) {
-            /* The portrait spans both rows and the text stacks beside it.
-               Previously the bio sat full width underneath, which meant the top
-               row took its height from the 132px photo while the name block is
-               only about 74px — and that leftover fell between the title and
-               the bio. It showed most on Susan's card, whose title runs to one
-               line where Stuart's runs to two.
-               The bio measure narrows from 488px to about 346px, which is still
-               a comfortable 45 characters or so a line. */
-            .speakers-grid--lead .speaker-photo {
-                grid-row: 1 / -1;
-                align-self: start;
-            }
-
-            .speakers-grid--lead .speaker-info,
-            .speakers-grid--lead .speaker-body {
-                grid-column: 2;
-            }
-
-            /* The extra height from stretching goes to the bio row, not to gaps
-               between the rows. */
+            /* Portrait and name on the top row, bio across the full card width
+               beneath them — which gives it a 488px measure instead of the
+               346px it would get squeezed beside the photo.
+               align-items: end is what keeps the title and the bio together.
+               The row is 132px tall because the portrait says so, while the
+               name block is only about 74px; centred, that 58px of slack splits
+               either side and half of it lands between the title and the text,
+               which is the gap that showed on Susan's card. Sending the name
+               block to the bottom of the row puts all the slack above the tag
+               instead, where it reads as breathing room beside the portrait. */
             .speakers-grid--lead .speaker-card {
+                align-items: end;
+                /* The extra height from stretching goes to the bio row, not to
+                   the gaps between rows. */
                 grid-template-rows: auto 1fr;
+            }
+
+            .speakers-grid--lead .speaker-body {
+                grid-column: 1 / -1;
             }
 
             /* Collapsed, the bio fills the height the card is given rather than
@@ -1247,9 +1244,9 @@
                shows dead space under the text. Stuart's card sets the row
                height, since his bio is shown in full and carries no control
                beneath it, and Susan's clamped bio grows into that height.
-               align-self overrides the card's align-items: center, which would
-               otherwise size this to its content and float it in the middle of
-               the row. */
+               align-self overrides the card's align-items, which would
+               otherwise size this to its content and leave it sitting at the
+               bottom of the row. */
             .speakers-grid--lead .speaker-body {
                 display: flex;
                 flex-direction: column;
