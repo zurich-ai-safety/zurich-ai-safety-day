@@ -24,10 +24,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400&family=Geist:wght@500&family=DM+Sans:wght@400&family=IBM+Plex+Sans:wght@700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Generality Labs set their mark in Geist Mono and the name in Geist.
-         U+2200 FOR ALL sits outside the subsets Google serves by default, so
-         the glyph is requested explicitly with &text= — a single-glyph file. -->
-    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500&text=%E2%88%80&display=swap" rel="stylesheet">
 
     <script type="application/ld+json">
     {
@@ -1648,12 +1644,14 @@
         /* Narrower side padding than the other tiles, bought back as width for
            the wordmark: at this size even the widest fallback serif fits on
            one line. */
-        /* Type-only lockup, for an org whose logo *is* text. Generality Labs
-           set U+2200 in Geist Mono 500 at #24857A and the name in Geist 500 at
-           #1A1919, both read off their own stylesheet, with the glyph 22/15 the
-           size of the name. Those ratios are kept rather than the pixel values,
-           so one font-size drives the whole lockup: name 1em, glyph 1.47em, gap
-           one word space.
+        /* Half-typeset lockup: their own symbol paired with the name set in
+           Geist 500 at #1A1919, read off their stylesheet. The mark used to be
+           U+2200 in Geist Mono, standing in for the symbol; now that they have
+           supplied the artwork the glyph is gone, but the name stays typeset
+           because the file is the symbol alone.
+           One font-size still drives the pair: name 1em, mark 0.94em tall, gap
+           one word space. 0.94em is what the old glyph's ink measured, so the
+           swap does not change the tile's balance.
            That size is a percentage of the tile's own content box, so the pair
            grows to whatever the tile allows and needs no per-breakpoint
            overrides. The pair is 8.12x the name's font-size wide, so 11.5
@@ -1685,23 +1683,13 @@
             }
         }
 
+        /* Sized in em so it tracks the name through the cqw scaling. No
+           baseline nudge any more: the artwork's box is its ink, edge to edge
+           in the viewBox, so centring the box centres the mark. The old glyph
+           needed a correction only because a text baseline sits off-centre. */
         .org-logo--lockup-mono .lockup-glyph {
-            /* ui-monospace is the safety net: every desktop and mobile system
-               mono covers U+2200, so a failed webfont still draws the mark. */
-            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
-            font-size: 1.4706em;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            line-height: 1;
-            color: #24857A;
-            /* Their header nudges the mark 1px *down*; here it is optically
-               centred on the name instead. The sign's ink centre sits 0.319em
-               above its own baseline, the name's cap band is centred 0.358em
-               above its baseline, and align-items: center leaves the glyph
-               baseline 0.107em (of glyph size) below the name's — so the mark
-               comes up 0.032em to bring the two centres level. Every term
-               scales with font-size, so the em value holds at any size. */
-            transform: translateY(-0.032em);
+            height: 0.94em;
+            width: auto;
             flex-shrink: 0;
         }
 
@@ -1778,6 +1766,30 @@
             max-width: 100%;
             height: 80px;
             border-radius: 12px;
+        }
+
+        /* A --block whose artwork is square rather than a wide banner. At the
+           shared 80px it would sit as a small badge in a 360px tile, so the
+           padding is trimmed to buy back height: 104px is what the 120px tile
+           allows once 0.4rem is left top and bottom. */
+        .org-logo--block-square {
+            padding: 0.4rem;
+        }
+
+        .org-logo--block-square img {
+            height: 104px;
+        }
+
+        @media (max-width: 768px) {
+            .org-logo--block-square img {
+                height: 84px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .org-logo--block-square img {
+                height: 68px;
+            }
         }
 
         /* Subfield labels inside the Org Fair. Same face and accent as the
@@ -3428,6 +3440,22 @@
                             <p class="speaker-bio">Also a Research Scientist at the Max Planck Institute in Germany, a member of the EU AI Scientific Panel, a CIFAR AI Chair and faculty at the Vector Institute. Her research focuses on Causal Reasoning with LLMs, and AI Safety in Multi-Agent LLMs. Author of over 100 papers, and a recipient of the ELLIS PhD Award and three Rising Star awards.</p>
                         </div>
                     </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/justin_olive.jfif" alt="Portrait of Justin Olive, CEO of Generality Labs" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Justin Olive</h3>
+                                <p class="speaker-affil">CEO, Generality Labs</p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-bio">Leads a nonprofit R&amp;D lab based in London which provides tools and analysis that help researchers measure the safety of advanced AI.</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </section>
@@ -3463,7 +3491,7 @@
                     </a>
                     <a href="https://generality.org/" class="org-logo org-logo--lockup-mono" target="_blank" rel="noopener noreferrer">
                         <span class="lockup-inner">
-                            <span class="lockup-glyph" aria-hidden="true">&#8704;</span>
+                            <img class="lockup-glyph" src="assets/Orgs/logo_generality_labs.svg" alt="" aria-hidden="true" width="34" height="44">
                             <span class="lockup-name">Generality Labs</span>
                         </span>
                     </a>
@@ -3484,6 +3512,12 @@
                         <img src="assets/Orgs/eurosafeai-icon.png" alt="" aria-hidden="true" loading="lazy" width="80" height="79">
                         <span>EuroSafeAI</span>
                     </a>
+                    <!-- No website yet, so a div rather than an anchor: a link
+                         with nowhere to go is worse than none. Swap to <a> when
+                         they have one. -->
+                    <div class="org-logo org-logo--block org-logo--block-square">
+                        <img src="assets/Orgs/Jinesis-Lab.png" alt="Jinesis Lab, University of Toronto" loading="lazy">
+                    </div>
                 </div>
                 <h3 class="org-group fade-in" id="orgs-governance-and-policy">Governance and Policy</h3>
                 <div class="org-logos fade-in" aria-labelledby="orgs-governance-and-policy">
