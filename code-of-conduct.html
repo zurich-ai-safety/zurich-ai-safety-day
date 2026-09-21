@@ -299,6 +299,63 @@
     <!-- GoatCounter: cookieless, no personal data stored. -->
     <script data-goatcounter="https://saisd.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
+
+    <!-- Application-form attribution. The source is worked out on the landing
+         page, held for the visit, and written into the Airtable link just
+         before it is followed, so an applicant's record shows where they came
+         from. sessionStorage rather than localStorage: it lasts the visit and
+         no longer, which covers land -> browse -> apply without leaving an
+         identifier on the device between visits. -->
+    <script>
+        (function () {
+            var KEY = 'saisd_source';
+
+            /* utm values arrive from the URL and end up in an Airtable record,
+               so they are stripped to word characters and capped. */
+            function clean(v) {
+                return v ? v.replace(/[^\w.\-]/g, '').slice(0, 60) : '';
+            }
+
+            function detect() {
+                var p = new URLSearchParams(window.location.search);
+                var s = clean(p.get('utm_source'));
+                var c = clean(p.get('utm_campaign'));
+                if (s && c) return s + '-' + c;
+                if (s) return s;
+                if (c) return c;
+                var r = document.referrer || '';
+                /* lnkd.in is LinkedIn's own shortener and does not contain
+                   "linkedin.", so it has to be named separately. */
+                if (r.indexOf('linkedin.') > -1 || r.indexOf('lnkd.in') > -1) return 'linkedin-organic';
+                if (r.indexOf('ai-weeks.ch') > -1) return 'ai-weeks-untagged';
+                return 'direct';
+            }
+
+            var stored = null;
+            try { stored = sessionStorage.getItem(KEY); } catch (e) {}
+            var found = detect();
+            /* The first real source wins. Moving around the site leaves our own
+               domain as the referrer, which reads as "direct", and that must
+               not overwrite the campaign the visit started from. */
+            if (found !== 'direct' && (!stored || stored === 'direct')) {
+                try { sessionStorage.setItem(KEY, found); } catch (e) {}
+                stored = found;
+            }
+            var source = stored || found;
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var links = document.querySelectorAll('a[href*="airtable.com"]');
+                for (var i = 0; i < links.length; i++) {
+                    try {
+                        var u = new URL(links[i].href);
+                        u.searchParams.set('prefill_Source', source);
+                        u.searchParams.set('hide_Source', 'true');
+                        links[i].href = u.toString();
+                    } catch (e) {}
+                }
+            });
+        })();
+    </script>
 </head>
 <body>
     <div class="backdrop" aria-hidden="true">
