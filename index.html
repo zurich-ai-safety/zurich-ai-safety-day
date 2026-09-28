@@ -1450,6 +1450,33 @@
 
         /* Grid cells do not shrink below their content by default, which lets a
            long unbroken title push the card wider than its column. */
+        /* The speaker's organisation, top right of the collapsed card. Taken
+           out of flow so it cannot move anything: an absolutely positioned
+           child of a grid is not a grid item, so the summary stays a clean
+           three-column layout and the card keeps its height.
+           It clears the other elements rather than dodging them. The name
+           block is centred against the 132px portrait, so it starts about 49px
+           down while this sits in the 12-44px band; the chevron is centred on
+           the card, far below. At this size the mark is wider than the gap to
+           the right of the title column, but nothing occupies that strip above
+           49px, so the two never meet. */
+        .speaker-card--compact {
+            position: relative;
+        }
+
+        .speaker-org {
+            position: absolute;
+            top: 0.75rem;
+            right: 1.25rem;
+            max-height: 32px;
+            max-width: 108px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
         .speaker-head {
             min-width: 0;
         }
@@ -1517,6 +1544,16 @@
             .speaker-card--compact .speaker-photo {
                 width: 84px;
                 height: 100px;
+            }
+
+            /* The card is 116px rather than 172px here, so the name block
+               starts around 21px down — the mark tucks up and shrinks to stay
+               clear of it. */
+            .speaker-org {
+                top: 0.5rem;
+                right: 1rem;
+                max-height: 26px;
+                max-width: 84px;
             }
 
             .speaker-detail {
@@ -3461,6 +3498,7 @@
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <img class="speaker-org" src="assets/Orgs/deepmind.png" alt="" aria-hidden="true" loading="lazy">
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-bio">Dr. Adrian Hutter leads the Gemini safety post-training team at Google DeepMind. His current research centers on instilling robust values in AI models across diverse environments. He has a background in theoretical quantum physics and has been interested in how to ensure the development of AGI is broadly beneficial for over a decade.</p>
@@ -3494,6 +3532,7 @@
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <img class="speaker-org" src="assets/Orgs/UK-AISI.svg" alt="" aria-hidden="true" loading="lazy">
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-affil-alt">10 Downing Street Innovation Fellow</p>
@@ -3511,6 +3550,7 @@
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <img class="speaker-org" src="assets/Orgs/fli.svg" alt="" aria-hidden="true" loading="lazy">
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-affil-alt">Co-founder, AI Safety Lab, KU Leuven</p>
@@ -3579,6 +3619,7 @@
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <img class="speaker-org" src="assets/Orgs/securebio-ink.svg" alt="" aria-hidden="true" loading="lazy">
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-bio">Works on SecureBio's AI team, which focuses on understanding and reducing catastrophic biological risks posed by emerging artificial intelligence, leading targeted evaluations designed to assess model safeguards and identify high-risk capabilities. PhD in Virology from Erasmus MC, Rotterdam, where she studied neuroinvasive mechanisms of high-containment viruses.</p>
@@ -3629,6 +3670,7 @@
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <img class="speaker-org" src="assets/Orgs/logo_generality_labs.svg" alt="" aria-hidden="true" loading="lazy">
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-bio">Leads a nonprofit R&amp;D lab based in London which provides tools and analysis that help researchers measure the safety of advanced AI.</p>
@@ -3645,6 +3687,7 @@
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <img class="speaker-org" src="assets/Orgs/saferai.svg" alt="" aria-hidden="true" loading="lazy">
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-bio">His remit covers research management and recruiting. Research interests include AI-driven systemic risks to the financial system and frontier model risk management. Previously managed large-scale product, engineering and data teams in tech companies. Holds a DPhil in theoretical physics from Oxford.</p>
