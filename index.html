@@ -23,7 +23,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400&family=Geist:wght@500&family=DM+Sans:wght@400&family=IBM+Plex+Sans:wght@700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400&family=Geist:wght@500&family=DM+Sans:wght@400&family=IBM+Plex+Sans:wght@700&family=Newsreader:wght@500&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <script type="application/ld+json">
     {
@@ -1794,6 +1794,33 @@
             white-space: nowrap;
         }
 
+        /* Lens Academy supply the magnifying glass alone, so the name is
+           typeset beside it. Their header sets it in Newsreader 500 at
+           #181818, with the mark 1.6x the type and a gap of 0.4x — read off
+           their own stylesheet and kept as ratios, so the lockup holds its
+           proportions at whatever size the tile allows. The mark keeps its own
+           amber and needs no recolour: it is already dark enough for white.
+           "Lens Academy" is 6.69em wide in Newsreader, so mark plus gap plus
+           name comes to 8.69em; at 2.1rem that is 292px inside a 339px tile. */
+        .org-logo--lockup-lens {
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+            gap: 0.84rem;
+        }
+
+        .org-logo--lockup-lens img {
+            height: 3.36rem;
+        }
+
+        .org-logo--lockup-lens span {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 500;
+            font-size: 2.1rem;
+            letter-spacing: normal;
+            color: #181818;
+            white-space: nowrap;
+        }
+
         .org-logo--block {
             padding: 0.9rem 1rem;
         }
@@ -1970,6 +1997,19 @@
 
             .org-logo--lockup-sbio span {
                 font-size: 1.5rem;
+            }
+
+            /* The shared --lockup sizes overflow a 219px tile at this length. */
+            .org-logo--lockup-lens {
+                padding: 0.7rem 0.4rem;
+            }
+
+            .org-logo--lockup-lens img {
+                height: 2.16rem;
+            }
+
+            .org-logo--lockup-lens span {
+                font-size: 1.35rem;
             }
 
             .org-logo--lockup-long span {
@@ -3877,6 +3917,10 @@
                     </a>
                     <a href="https://zurichbiosecurity.ch/" class="org-logo org-logo--block" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/zurich-biosecurity-hub.webp" alt="Zurich Biosecurity Hub" loading="lazy">
+                    </a>
+                    <a href="https://lensacademy.org/" class="org-logo org-logo--lockup org-logo--lockup-lens" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/lens-academy.png" alt="" aria-hidden="true" loading="lazy" width="54" height="54">
+                        <span>Lens Academy</span>
                     </a>
                 </div>
                 <div class="section-cta fade-in">
