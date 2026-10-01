@@ -1532,6 +1532,15 @@
             pointer-events: none;
         }
 
+        /* Pivotal's mark is a solid blue rectangle, not line art, so at the
+           shared 26px it outweighs every other logo in the row. A notch
+           smaller, and rounded the way its Org Fair tile is. Two classes so
+           the mobile .speaker-org override cannot win back the 26px. */
+        .speaker-org.speaker-org--block {
+            max-height: 20px;
+            border-radius: 4px;
+        }
+
         .speaker-head {
             min-width: 0;
         }
@@ -3881,6 +3890,40 @@
                             <p class="speaker-bio">Researches AI safety, with a focus on developing a rigorous science of misalignment. Alongside his doctorate, he has several years of experience in field-building and AI safety career advising.</p>
                         </div>
                     </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/goncalo_paulo.jpg" alt="Portrait of Gon&ccedil;alo Paulo, Member of Technical Staff at EleutherAI" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Gon&ccedil;alo Paulo</h3>
+                                <p class="speaker-affil">Member of Technical Staff<span class="speaker-affil-org">EleutherAI</span></p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <img class="speaker-org" src="assets/Orgs/eleutherai.svg" alt="" aria-hidden="true" loading="lazy">
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-bio">Works on making open-weight models safer. A physicist by training, with a master's in Lisbon and a PhD in Theoretical and Applied Mechanics from Sapienza University of Rome, he joined EleutherAI's interpretability team to work on automated interpretability and sparse autoencoders, then moved to data attribution: how specific training data shapes what a model does.</p>
+                        </div>
+                    </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/tobias_haeberli.jpg" alt="Portrait of Tobias H&auml;berli, Co-Director of Pivotal Research" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Tobias H&auml;berli</h3>
+                                <p class="speaker-affil">Co-Director<span class="speaker-affil-org">Pivotal Research</span></p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <img class="speaker-org speaker-org--block" src="assets/Orgs/pivotal.svg" alt="" aria-hidden="true" loading="lazy">
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-bio">Tobias H&auml;berli directs Pivotal Research, which runs AI safety and biodefense research fellowships in London.</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </section>
@@ -3939,6 +3982,9 @@
                     </a>
                     <a href="https://zhijing-jin.com" class="org-logo org-logo--block org-logo--block-square" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/Jinesis-Lab.png" alt="Jinesis Lab, University of Toronto" loading="lazy">
+                    </a>
+                    <a href="https://www.eleuther.ai/" class="org-logo" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/eleutherai.svg" alt="EleutherAI" loading="lazy">
                     </a>
                 </div>
                 <h3 class="org-group fade-in" id="orgs-governance-and-policy">Governance and Policy</h3>
