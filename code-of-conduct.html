@@ -294,6 +294,21 @@
             .nav-container { padding: 0 1.5rem; }
             .footer-links { gap: 1.2rem; }
         }
+
+        /* Screen-reader-only text, e.g. "(opens in a new tab)" on the Apply
+           button. Same rule as index.html. */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 
     <!-- GoatCounter: cookieless, no personal data stored. -->
@@ -366,7 +381,7 @@
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="/" class="nav-back">&larr; Swiss AI Safety Days</a>
-            <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="register-btn" target="_blank" rel="noopener" data-goatcounter-click="apply-nav-code-of-conduct">Apply now<span class="visually-hidden"> (opens in a new tab)</span></a>
+            <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="register-btn" target="_blank" rel="noopener" data-goatcounter-click="apply-nav-code-of-conduct">Apply by 17 Oct<span class="visually-hidden"> (opens in a new tab)</span></a>
         </div>
     </nav>
 

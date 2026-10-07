@@ -1161,6 +1161,21 @@
             object-fit: contain;
             object-position: center;
         }
+
+        /* Screen-reader-only text, e.g. "(opens in a new tab)" on the Apply
+           button. Same rule as index.html. */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 
     <!-- GoatCounter: cookieless, no personal data stored. -->
@@ -1492,7 +1507,7 @@
                 <h2 id="cta-title" class="section-title">Join Us in 2026</h2>
                 <p class="section-intro">The second edition takes place on 7&ndash;8 November 2026 at ETH Zurich, expanding to two full days.</p>
                 <div class="hero-cta">
-                    <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="btn-primary" target="_blank" rel="noopener" data-goatcounter-click="apply-2025-page">Apply now<span class="visually-hidden"> (opens in a new tab)</span></a>
+                    <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="btn-primary" target="_blank" rel="noopener" data-goatcounter-click="apply-2025-page">Apply by 17 Oct<span class="visually-hidden"> (opens in a new tab)</span></a>
                     <a href="/" class="btn-secondary">Back to the 2026 Edition</a>
                 </div>
             </div>
