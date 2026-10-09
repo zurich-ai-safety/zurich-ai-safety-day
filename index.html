@@ -1167,9 +1167,10 @@
            cards still open with scripting disabled.
            align-items: start keeps an opened card from stretching its
            neighbour to match. */
-        /* Two featured cards side by side, both at the original card
-           proportions. The 480px floor forces exactly two columns: the shared
-           320px would fit three at full width and crush the text column. */
+        /* The keynote cards. On a phone (under 621px) this grid stacks them one
+           per row at full width; from 621px up the media query below turns it
+           into a wrapped flex row sized like the compact grid, three across on
+           desktop. */
         .speakers-grid--lead {
             /* 380 rather than the old 480: the portrait is now 110px instead of
                200, and the bio spans the full card width anyway, so the column
@@ -1188,8 +1189,8 @@
         }
 
         /* While both are collapsed the two cards match, which they otherwise
-           would not: Susan's clamped bio carries a Read more control under it
-           and Stuart's does not, so hers runs a line taller.
+           would not: Yoshua's clamped bio carries a Read more control under it
+           and Stuart's does not, so his runs a line taller.
            Rather than guessing a height, the row is simply allowed to stretch —
            but only while nothing is open, so the moment a bio expands the rule
            drops and the other card stays put with whitespace beneath it.
@@ -1214,18 +1215,46 @@
            Stacked, there is no neighbour to match heights with anyway, so the
            plain five-line clamp underneath is the right behaviour. */
         @media (min-width: 621px) {
-            /* Portrait and name on the top row, bio across the full card width
-               beneath them — which gives it a 488px measure instead of the
-               346px it would get squeezed beside the photo.
-               align-items: end is what keeps the title and the bio together.
-               The row is 132px tall because the portrait says so, while the
-               name block is only about 74px; centred, that 58px of slack splits
-               either side and half of it lands between the title and the text,
-               which is the gap that showed on Susan's card. Sending the name
-               block to the bottom of the row puts all the slack above the tag
-               instead, where it reads as breathing room beside the portrait. */
+            /* Three keynotes to a row, sized and spaced like the compact grid
+               below so the two read as one set: flex rather than grid so a
+               short row (two up on a tablet) centres its leftover card, a
+               300px basis with the same 368px cap ((1136 - 32) / 3), and the
+               1rem gap the compact grid uses instead of the shared 2rem.
+               Phones keep the stacked grid above untouched. */
+            .speakers-grid--lead {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
             .speakers-grid--lead .speaker-card {
-                align-items: end;
+                flex: 1 1 300px;
+                max-width: 368px;
+                min-width: 0;
+                /* The compact cards' 0.625rem in place of 2rem, inside and
+                   between the portrait and the name. */
+                padding: 0.625rem;
+                column-gap: 0.625rem;
+                row-gap: 0.625rem;
+            }
+
+            /* The rows below follow the same tighter spacing. */
+            .speakers-grid--lead + .speakers-grid--pair {
+                margin-top: 1rem;
+            }
+
+            /* Portrait and name on the top row, bio across the full card width
+               beneath them, rather than squeezed into the column beside the
+               photo.
+               align-items: start, as on the compact cards: with three side by
+               side, the portraits and Keynote tags have to start on the same
+               line across the row. (It used to be end, which kept a short title
+               next to its bio when there were two wide cards, but three-up the
+               title blocks differ in height and end-alignment left every
+               portrait and tag at a different level.) */
+            .speakers-grid--lead .speaker-card {
+                align-items: start;
                 /* The extra height from stretching goes to the bio row, not to
                    the gaps between rows. */
                 grid-template-rows: auto 1fr;
@@ -1239,7 +1268,7 @@
                stopping at a fixed five lines — otherwise the stretched card
                shows dead space under the text. Stuart's card sets the row
                height, since his bio is shown in full and carries no control
-               beneath it, and Susan's clamped bio grows into that height.
+               beneath it, and Yoshua's clamped bio grows into that height.
                align-self overrides the card's align-items, which would
                otherwise size this to its content and leave it sitting at the
                bottom of the row. */
@@ -3563,23 +3592,23 @@
                         <div class="speaker-info">
                             <span class="speaker-tag">Keynote</span>
                             <h3 class="speaker-name">Stuart Russell</h3>
-                            <p class="speaker-affil">Distinguished Professor of Computer Science, UC Berkeley &middot; Director, Center for Human-Compatible AI</p>
+                            <p class="speaker-affil">Distinguished Prof., UC Berkeley &middot; Director, CHAI</p>
                         </div>
                         <div class="speaker-body">
                             <p class="speaker-bio">Co-author of <em>Artificial Intelligence: A Modern Approach</em>, the standard AI textbook used in over 1,500 universities across 135 countries, and a Fellow of the Royal Society. One of the field's leading voices on keeping advanced AI under human control, a case he makes in his book <em>Human Compatible</em> and his 2021 BBC Reith Lectures.</p>
                         </div>
                     </article>
                     <article class="speaker-card">
-                        <img class="speaker-photo" src="assets/Speakers/susan_nesbitt.jpg" alt="Portrait of Susan Nesbitt, Managing Director at Cantellus Group" loading="lazy" width="110" height="132">
+                        <img class="speaker-photo" src="assets/Speakers/yoshua_bengio.jpg" alt="Portrait of Yoshua Bengio, Scientific Director of LawZero and Professor at Universit&eacute; de Montr&eacute;al" loading="lazy" width="110" height="132">
                         <div class="speaker-info">
-                            <span class="speaker-tag">Speaker</span>
-                            <h3 class="speaker-name">Susan Nesbitt</h3>
-                            <p class="speaker-affil">Managing Director, Cantellus Group</p>
+                            <span class="speaker-tag">Keynote</span>
+                            <h3 class="speaker-name">Yoshua Bengio</h3>
+                            <p class="speaker-affil">Co-President and Scientific Director, LawZero &middot; Professor, Universit&eacute; de Montr&eacute;al</p>
                         </div>
                         <div class="speaker-body">
                             <div class="bio-clamp">
-                                <p class="speaker-bio" id="bio-nesbitt">Susan Nesbitt is Managing Director at Cantellus Group, where she advises governments, technology companies, and organizations on the strategy, governance, and responsible deployment of agentic AI systems, helping leaders move from experimentation to enterprise adoption. She serves on IASEAI's Policy Committee, is a member of OpenAI's External Red Teaming Network, advises AI Safety Connect, and contributes to international initiatives with UNESCO on AI governance and the ethical use of AI. Previously, Susan led Global Social Impact Products &amp; Partnerships at WhatsApp and held leadership roles at the World Economic Forum.</p>
-                                <button class="bio-toggle" type="button" aria-expanded="false" aria-controls="bio-nesbitt">
+                                <p class="speaker-bio" id="bio-bengio">The most cited living scientist across all fields and recipient of the 2018 A.M. Turing Award, considered to be the “Nobel Prize of computing.” He leads LawZero, a nonprofit dedicated to developing safe-by-design AI systems as a global public good, incubated by Mila, the Quebec AI Institute, which he founded. He co-chairs the UN's Independent International Scientific Panel on AI and chairs the International AI Safety Report, backed by more than 30 countries and international organisations, including the EU, OECD and UN. He is a Fellow of both the Royal Society of London and Canada.</p>
+                                <button class="bio-toggle" type="button" aria-expanded="false" aria-controls="bio-bengio">
                                     <span class="bio-open">Read more</span><span class="bio-less">Show less</span>
                                     <svg class="speaker-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                         <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3588,8 +3617,36 @@
                             </div>
                         </div>
                     </article>
+                    <article class="speaker-card">
+                        <img class="speaker-photo" src="assets/Speakers/adam_gleave.jpg" alt="Portrait of Adam Gleave, Co-founder and CEO of FAR.AI" loading="lazy" width="110" height="132">
+                        <div class="speaker-info">
+                            <span class="speaker-tag">Keynote</span>
+                            <h3 class="speaker-name">Adam Gleave</h3>
+                            <p class="speaker-affil">Co-founder and CEO, FAR.AI</p>
+                        </div>
+                        <div class="speaker-body">
+                            <p class="speaker-bio">Holds a PhD in artificial intelligence from UC Berkeley, advised by Stuart Russell, and previously worked at Google DeepMind alongside Jan Leike and Geoffrey Irving. His research focuses on making advanced AI systems verifiably safe: from value learning and robustness in deep RL to, more recently, detecting and eliminating hidden or deceptive behavior in frontier models.</p>
+                        </div>
+                    </article>
                 </div>
                 <div class="speakers-grid speakers-grid--pair fade-in">
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/susan_nesbitt.jpg" alt="Portrait of Susan Nesbitt, Managing Director at Cantellus Group" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Susan Nesbitt</h3>
+                                <p class="speaker-affil">Managing Director<span class="speaker-affil-org">Cantellus Group</span></p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-affil-alt">IASEAI Policy Committee &middot; OpenAI External Red Teaming Network</p>
+                            <p class="speaker-bio">Advises governments, technology companies, and organizations on the strategy, governance, and responsible deployment of agentic AI systems. She also advises AI Safety Connect and contributes to UNESCO initiatives on AI governance. Previously, she led Global Social Impact Products &amp; Partnerships at WhatsApp and held leadership roles at the World Economic Forum.</p>
+                        </div>
+                    </details>
                     <details class="speaker-card speaker-card--compact">
                         <summary class="speaker-summary">
                             <img class="speaker-photo" src="assets/Speakers/nora_ammann.webp" alt="Portrait of Nora Ammann, Programme Director at ARIA" loading="lazy" width="110" height="132">
