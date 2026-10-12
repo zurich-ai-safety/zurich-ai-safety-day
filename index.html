@@ -1941,6 +1941,13 @@
             border-radius: 12px;
         }
 
+        /* The opposite of --large: a heavy wordmark whose SVG is cropped to
+           its ink, with no whitespace baked in, so at the shared 62px it
+           reads a size bigger than the tiles around it (Iliad). */
+        .org-logo--compact img {
+            height: 44px;
+        }
+
         /* A --block whose artwork is square rather than a wide banner. At the
            shared 80px it would sit as a small badge in a 360px tile, so the
            padding is trimmed to buy back height: 104px is what the 120px tile
@@ -2145,6 +2152,13 @@
 
             .org-logo img {
                 height: 50px;
+            }
+
+            /* Scaled with the 62 to 50 drop above, then a notch more: on the
+               half-width phone tiles the other wordmarks are bound by width
+               and land well under 50px tall. */
+            .org-logo--compact img {
+                height: 30px;
             }
 
             .org-logo--large {
@@ -4250,6 +4264,9 @@
                     <a href="https://lensacademy.org/" class="org-logo org-logo--lockup org-logo--lockup-lens" target="_blank" rel="noopener noreferrer">
                         <img src="assets/Orgs/lens-academy.png" alt="" aria-hidden="true" loading="lazy" width="54" height="54">
                         <span>Lens Academy</span>
+                    </a>
+                    <a href="https://www.iliad.ac/" class="org-logo org-logo--compact" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/Orgs/iliad.svg" alt="Iliad" loading="lazy">
                     </a>
                 </div>
                 <div class="section-cta fade-in">
