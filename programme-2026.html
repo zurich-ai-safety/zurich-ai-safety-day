@@ -84,12 +84,6 @@ a { color: inherit; }
 .site-link--app { color: #111114; border-color: var(--text); background: linear-gradient(#f7f7f8, #dcdce0); }
 .site-link--app:hover { color: #111114; border-color: var(--text); box-shadow: 0 0 22px rgba(242, 167, 227, 0.45); }
 
-.filament { position: absolute; inset: -40px -60px auto -60px; width: calc(100% + 120px); height: 420px; z-index: 0; pointer-events: none; }
-.filament path { fill: none; stroke-linecap: round; }
-.filament .glow { stroke: url(#tube); stroke-width: 14; opacity: 0.38; filter: url(#bloom); }
-.filament .core { stroke: url(#tube); stroke-width: 2; opacity: 0.85; }
-.filament .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.6s cubic-bezier(.6, .05, .2, 1) .15s forwards; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
 
 .hero-copy { position: relative; z-index: 1; padding-top: 34px; }
 .eyebrow { margin: 0 0 14px; font-family: var(--f-display); font-size: 13px; letter-spacing: 0.32em; color: var(--orchid); }
@@ -303,7 +297,6 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .topbar { padding-top: 16px; padding-bottom: 6px; }
   .mark span { display: none; }
   .site-link { padding: 7px 14px; font-size: 11px; }
-  .filament { height: 300px; inset: -10px -120px auto -120px; width: calc(100% + 240px); }
   .hero { padding-bottom: 24px; }
   .hero-copy { padding-top: 22px; }
   .dateline { gap: 8px 12px; font-size: 11px; letter-spacing: 0.2em; }
@@ -336,12 +329,11 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .filament .draw { stroke-dashoffset: 0; }
 }
 
 @media print {
   body { background: #fff; color: #000; }
-  .filament, .bar, .scrim, .drawer, .toast, .site-link, .grid-view { display: none !important; }
+  .bar, .scrim, .drawer, .toast, .site-link, .grid-view { display: none !important; }
   .list-view { display: block !important; }
   .wordmark em, .eyebrow { color: #000; text-shadow: none; }
   .card { border-color: #ccc; background: none; break-inside: avoid; }
@@ -353,19 +345,6 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
 <body>
 
 <header class="hero">
-  <svg class="filament" viewBox="0 0 1400 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <linearGradient id="tube" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#ffffff"/>
-        <stop offset="0.35" stop-color="#f2a7e3"/>
-        <stop offset="0.7" stop-color="#d84fc6"/>
-        <stop offset="1" stop-color="#7a2f9e"/>
-      </linearGradient>
-      <filter id="bloom" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
-    </defs>
-    <path class="glow draw" pathLength="1" d="M -40 360 C 160 380 230 120 420 90 C 610 60 700 250 590 300 C 470 355 455 150 640 120 C 860 85 930 330 790 345 C 690 356 760 120 980 95 C 1180 72 1230 300 1440 250"/>
-    <path class="core draw" pathLength="1" d="M -40 360 C 160 380 230 120 420 90 C 610 60 700 250 590 300 C 470 355 455 150 640 120 C 860 85 930 330 790 345 C 690 356 760 120 980 95 C 1180 72 1230 300 1440 250"/>
-  </svg>
   <div class="wrap topbar">
     <a class="mark" href="https://swissaisafetydays.ch/">
       <svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#4fd8d8" opacity=".7"><circle cx="47" cy="24" r="7"/><circle cx="47" cy="76" r="7"/><circle cx="21" cy="50" r="7"/><circle cx="73" cy="50" r="7"/></g><g fill="#d84fc6" opacity=".85"><circle cx="53" cy="24" r="7"/><circle cx="53" cy="76" r="7"/><circle cx="27" cy="50" r="7"/><circle cx="79" cy="50" r="7"/></g><g fill="#fff"><circle cx="50" cy="24" r="7"/><circle cx="50" cy="76" r="7"/><circle cx="24" cy="50" r="7"/><circle cx="76" cy="50" r="7"/></g><circle cx="50" cy="50" r="9" fill="#d84fc6"/></svg>
@@ -395,8 +374,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       <label class="field field--topic"><span class="sr-only">Topic</span><select id="topic"><option value="">All topics</option></select></label>
       <button class="filters-toggle" id="filters-toggle" type="button" aria-expanded="false" aria-controls="chips">Filters</button>
       <div class="views" role="group" aria-label="View">
-        <button data-view="grid" aria-pressed="true">Rooms</button>
-        <button data-view="list" aria-pressed="false">List</button>
+        <button data-view="grid" aria-pressed="false">Rooms</button>
+        <button data-view="list" aria-pressed="true">List</button>
       </div>
     </div>
     <div class="chips" role="group" aria-label="Show sessions of this kind" id="chips"></div>
@@ -404,10 +383,10 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
 </div>
 
 <main class="wrap" id="programme" role="tabpanel" aria-labelledby="tab-sat">
-  <section class="grid-view" id="grid-view" aria-label="Programme by room">
+  <section class="grid-view" id="grid-view" aria-label="Programme by room" hidden>
     <div class="grid-scroll"><div class="grid" id="grid"></div></div>
   </section>
-  <section class="list-view" id="list-view" aria-label="Programme by time" hidden><ol class="slots" id="slots"></ol></section>
+  <section class="list-view" id="list-view" aria-label="Programme by time"><ol class="slots" id="slots"></ol></section>
   <p class="empty" id="empty" hidden>No sessions on this day match your filters.<button type="button" id="clear">Clear filters</button></p>
   <ul class="legend" id="legend" aria-label="Colour key"></ul>
 </main>
@@ -451,7 +430,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   }
 
   // ---------------------------------------------------------------- state
-  const state = { day: 'sat', view: 'grid', family: '', topic: '', q: '' };
+  const state = { day: 'sat', view: 'list', family: '', topic: '', q: '' };
   const zurichNow = () => {
     const forced = new URLSearchParams(location.search).get('now');   // ?now=2026-11-07T10:15 previews the live line
     if (forced) return { date: forced.slice(0, 10), min: +forced.slice(11, 13) * 60 + +forced.slice(14, 16) };
@@ -736,7 +715,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   const linked = hash.startsWith('s=') ? DATA.sessions.find(s => s.key === hash.slice(2)) : null;
   const today = zurichNow().date;
   state.day = linked ? linked.day : hash === 'sun' || hash === 'sat' ? hash : today === DAYS.sun.date ? 'sun' : 'sat';
-  state.view = store.get('saisd-view') || (matchMedia('(max-width: 760px)').matches ? 'list' : 'grid');
+  state.view = store.get('saisd-view') || 'list';   // List by default on every screen; a visitor's own choice is remembered
   render();
   if (linked) openSession(linked.key);
   // Move the "now" line each minute, unless someone is reading a session or moving through them.
