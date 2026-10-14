@@ -565,7 +565,10 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       if (today && items.some(s => now.min >= s.start && now.min < s.end)) li.classList.add('is-now');
       li.append(el('div', 'slot-time', fmt(start)));
       const wrap = el('div', 'slot-cards');
-      for (const s of items) wrap.append(sessionButton(s, 'list', today && now.min >= s.start && now.min < s.end));
+      // Breaks and meals lead each time slot and office hours come after the session they follow,
+      // so the same kinds line up in the same columns down the list.
+      const rank = s => s.family === 'pause' ? 0 : s.family === 'qa' ? 2 : 1;
+      for (const s of [...items].sort((a, b) => rank(a) - rank(b))) wrap.append(sessionButton(s, 'list', today && now.min >= s.start && now.min < s.end));
       li.append(wrap); slots.append(li);
     }
   }
