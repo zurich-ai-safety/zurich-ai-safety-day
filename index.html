@@ -2617,39 +2617,6 @@
             color: var(--ink-heading);
         }
 
-        /* ── Mobile wordmark ─────────────────────────────────────────
-           Below the nav breakpoint the one-line wordmark is squeezed to
-           ~23px on a phone, which is smaller than the body copy. Stacked
-           over three lines the binding constraint becomes the longest
-           line rather than all twenty characters, so the same width
-           carries roughly 2.3x the size.
-           "AI SAFETY" is 6.031em in Tachyon (5.059em in the Montserrat
-           fallback), so dividing by 6.15 leaves ~2% of slack and holds if
-           the webfont fails. The 44px covers the effective 1.25rem gutter
-           either side — the negative inline margin below borrows 0.75rem
-           back from .hero-content's 2rem, so the wordmark gets the extra
-           width without narrowing the gutter for the text beneath it.
-           5rem caps it at ~536px and up, where filling the full width
-           would start to crowd the date line. */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: min(calc((100vw - 44px) / 6.15), 5rem);
-                /* Tighter than the 1.4 used for text: three stacked lines
-                   of display type read as one mark only if the leading is
-                   close. */
-                line-height: 1.1;
-                margin-inline: -0.75rem;
-                margin-bottom: 0.9rem;
-            }
-
-            /* One line per word group. white-space: nowrap stays on the
-               h1, so "AI SAFETY" still cannot break internally. */
-            .hero h1 .wm-w,
-            .hero h1 .wm-p {
-                display: block;
-            }
-        }
-
         /* Mobile */
         @media (max-width: 768px) {
             section {
