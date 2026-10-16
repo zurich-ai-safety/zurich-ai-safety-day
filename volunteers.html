@@ -60,7 +60,8 @@ a { color: inherit; }
 /* Hero */
 .hero { padding-block: clamp(2rem, 6vw, 3.6rem) 2.2rem; }
 .eyebrow { font: 500 .8rem var(--display); letter-spacing: .32em; text-transform: uppercase; color: var(--pink); margin: 0 0 1rem; }
-.hero h1 { font-family: var(--display); font-weight: 400; margin: 0; font-size: clamp(2.1rem, 6.6vw, 5.4rem); line-height: 1.05; letter-spacing: .01em; }
+/* One line at every width: the title is ~17.5em wide in Michroma, so the page width minus gutters (and a scrollbar) / 18 fits; 4.3rem caps it at the 1240px wrap. */
+.hero h1 { font-family: var(--display); font-weight: 400; margin: 0; font-size: min(calc((100vw - 4rem) / 18), 4.3rem); white-space: nowrap; line-height: 1.05; letter-spacing: .01em; }
 .hero h1 .glow { color: var(--pink); text-shadow: 0 0 22px rgba(243,154,217,.55), 0 0 2px rgba(243,154,217,.8); }
 .dateline { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.4rem; font: 700 .85rem var(--body); letter-spacing: .3em; text-transform: uppercase; }
 .dateline::before, .dateline::after { content: ""; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, var(--pink)); }
@@ -192,7 +193,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88r
     <p class="eyebrow">Volunteers</p>
     <h1>SWISS <span class="glow">AI SAFETY</span> DAYS</h1>
     <div class="dateline">7–8 November 2026 <i></i> ETH Zurich</div>
-    <p class="lede">Choose your name to see where you need to be, what you’ll do and who you’re working with. For talks and speakers, see the <a href="https://swissaisafetydays.ch/programme-2026#sat" id="lede-link">programme</a>. All times are Zurich time.</p>
+    <p class="lede">Choose your name to see where you need to be, what you’ll do and who you’re working with. For talks and speakers, see the <a href="https://swissaisafetydays.ch/programme-2026#sat" id="lede-link">programme</a>.</p>
   </section>
 
   <section class="controls" aria-label="Choose volunteer and day">
@@ -212,7 +213,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88r
 </main>
 
 <footer>
-  <div class="wrap">Questions about your shift? Write to <a id="contact" href="mailto:conferences@aisafety.ch">conferences@aisafety.ch</a>.<span id="updated"></span></div>
+  <div class="wrap">Volunteer coordination contact: <a id="contact" href="mailto:marina@aisafety.ch">marina@aisafety.ch</a> and Slack channel.<span id="updated"></span></div>
 </footer>
 
 <script>
@@ -224,7 +225,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88r
 const CONFIG = {
   xlsxUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRM0Y0UCB_xar0nytiI0RjZtBe0Z0-gbRTKUlzaGtK_pu_q6UPwajkRw9eA55GUoA/pub?output=xlsx",
   programmeUrl: "https://swissaisafetydays.ch/programme-2026",
-  contact: "conferences@aisafety.ch",
+  contact: "marina@aisafety.ch",
   dayDates: { sat: "2026-11-07", sun: "2026-11-08" }
 };
 
