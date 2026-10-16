@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="robots" content="noindex, nofollow">
+<title>Volunteers · Swiss AI Safety Days 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+/* Swap fonts/colours here to match the main site exactly. */
+:root {
+  --bg: #0a0a0c;
+  --bg-glow: #2a1530;
+  --card: #141317;
+  --card-hi: #1a181e;
+  --line: #2b2830;
+  --text: #f4f2f6;
+  --muted: #9b97a3;
+  --pink: #f39ad9;           /* talks, brand */
+  --magenta: #e046c8;        /* workshops, groups */
+  --cyan: #39d3d6;           /* office hours */
+  --violet: #a985f0;         /* networking, setup, foyers */
+  --grey: #6e6a75;           /* breaks, meals, check-in */
+  --display: "Michroma", "Eurostile", "Helvetica Neue", Arial, sans-serif;
+  --body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0; color: var(--text); font-family: var(--body); line-height: 1.5;
+  background: radial-gradient(1200px 520px at 75% -120px, var(--bg-glow), transparent 70%), var(--bg);
+  background-repeat: no-repeat; background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: min(1240px, 100% - 3rem); margin-inline: auto; }
+
+/* Header */
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.1rem; }
+.brand { display: flex; align-items: center; gap: .9rem; white-space: nowrap; flex: none; text-decoration: none; font-family: var(--display); font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; }
+.brand svg { width: 22px; height: 22px; flex: none; }
+.actions { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
+.pill {
+  display: inline-flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer;
+  font: 600 .78rem/1 var(--body); letter-spacing: .2em; text-transform: uppercase;
+  padding: .9rem 1.2rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text);
+}
+.pill:hover { border-color: var(--muted); }
+.pill.solid { background: linear-gradient(#fff, #d9d6dd); color: #111; border-color: transparent; box-shadow: 0 0 18px rgba(255,255,255,.12); }
+
+/* Hero */
+.hero { padding-block: clamp(2rem, 6vw, 3.6rem) 2.2rem; }
+.eyebrow { font: 500 .8rem var(--display); letter-spacing: .32em; text-transform: uppercase; color: var(--pink); margin: 0 0 1rem; }
+/* One line at every width: the title is ~17.5em wide in Michroma, so the page width minus gutters (and a scrollbar) / 18 fits; 4.3rem caps it at the 1240px wrap. */
+.hero h1 { font-family: var(--display); font-weight: 400; margin: 0; font-size: min(calc((100vw - 4rem) / 18), 4.3rem); white-space: nowrap; line-height: 1.05; letter-spacing: .01em; }
+.hero h1 .glow { color: var(--pink); text-shadow: 0 0 22px rgba(243,154,217,.55), 0 0 2px rgba(243,154,217,.8); }
+.dateline { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.4rem; font: 700 .85rem var(--body); letter-spacing: .3em; text-transform: uppercase; }
+.dateline::before, .dateline::after { content: ""; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, var(--pink)); }
+.dateline::after { background: linear-gradient(90deg, var(--pink), transparent); }
+.dateline i { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 8px var(--pink); }
+.hero p.lede { max-width: 62ch; color: #cfcbd5; margin: 0; }
+
+/* Controls */
+.controls { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.controls .wrap { display: flex; flex-wrap: wrap; gap: .9rem 1.2rem; align-items: center; justify-content: space-between; padding-block: .9rem; }
+.days { display: flex; gap: .4rem; }
+.day-tab {
+  font-family: var(--display); font-size: 1rem; letter-spacing: .08em; color: var(--muted);
+  background: transparent; border: 1px solid transparent; border-radius: 999px; padding: .7rem 1.2rem; cursor: pointer;
+}
+.day-tab b { font: 700 .8rem var(--body); letter-spacing: .14em; margin-left: .5rem; }
+.day-tab[aria-selected="true"] { color: var(--text); border-color: var(--pink); background: rgba(243,154,217,.06); box-shadow: inset 0 0 14px rgba(243,154,217,.12); }
+.day-tab:disabled { opacity: .35; cursor: default; }
+.right { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
+.select-wrap { position: relative; }
+.select-wrap label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+select {
+  appearance: none; -webkit-appearance: none; min-width: min(340px, 82vw);
+  font: 600 .95rem var(--body); color: var(--text); background: var(--card);
+  border: 1px solid var(--line); border-radius: 999px; padding: .75rem 2.6rem .75rem 1.1rem; cursor: pointer;
+}
+select:hover { border-color: var(--muted); }
+.select-wrap::after { content: ""; position: absolute; right: 1.1rem; top: 50%; border: 5px solid transparent; border-top-color: var(--text); transform: translateY(-20%); pointer-events: none; }
+.right .pill { padding: .78rem 1.1rem; }
+.right .pill[hidden] { display: none; }
+
+/* Person */
+.person { padding-block: 1.8rem 4rem; }
+.who { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem 1rem; margin-bottom: 1.6rem; }
+.who h2 { font: 400 clamp(1.3rem, 3vw, 1.9rem) var(--display); margin: 0; letter-spacing: .02em; }
+.tags { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; margin: 0; padding: 0; }
+.tags li { font-size: .85rem; border: 1px solid var(--line); border-radius: 999px; padding: .3rem .8rem; display: flex; align-items: center; gap: .45rem; }
+.tags li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.tags li.hi { border-color: var(--pink); }
+.tags li.hi::before { background: var(--pink); box-shadow: 0 0 6px var(--pink); }
+.who .pill { margin-left: auto; border-color: var(--pink); box-shadow: inset 0 0 14px rgba(243,154,217,.12); }
+.who .pill:hover { background: rgba(243,154,217,.08); }
+@media (max-width: 640px) { .who .pill { margin-left: 0; width: 100%; } }
+
+/* Timeline */
+.timeline { --tcol: 4.2rem; --gap: .6rem; --ncol: 1.7rem; list-style: none; margin: 0; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: calc(var(--tcol) + var(--gap) + var(--ncol) / 2 - 1px); top: .6rem; bottom: .6rem; width: 2px; background: linear-gradient(var(--pink), rgba(243,154,217,.35)); box-shadow: 0 0 8px rgba(243,154,217,.5); }
+.slot { display: grid; grid-template-columns: var(--tcol) var(--ncol) minmax(0, 620px); column-gap: var(--gap); margin-bottom: 1.1rem; }
+.slot .t { font: 400 .9rem var(--display); color: #d9d5de; text-align: right; padding-top: .95rem; font-variant-numeric: tabular-nums; }
+.slot .t .end { display: block; margin-top: .55rem; color: var(--pink); text-shadow: 0 0 10px rgba(243,154,217,.45); }
+.slot .t .end small { display: block; font: 700 .62rem var(--body); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); text-shadow: none; margin-bottom: .1rem; }
+.until { display: inline-flex; align-items: baseline; gap: .4rem; color: var(--muted); font-weight: 600; font-size: .82rem; }
+.until em { font-style: normal; color: var(--pink); font-family: var(--display); font-weight: 400; font-size: 1rem; text-shadow: 0 0 10px rgba(243,154,217,.45); }
+.slot .node { position: relative; }
+.slot .node::after { content: ""; position: absolute; left: 50%; top: 1rem; width: 15px; height: 15px; transform: translateX(-50%); z-index: 1;
+  border-radius: 50%; border: 2px solid var(--pink); background: var(--bg); box-shadow: 0 0 8px rgba(243,154,217,.6); }
+.slot.now .node::after { background: var(--pink); }
+.card {
+  position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: .95rem 1.1rem .95rem 1.3rem; overflow: hidden;
+}
+.card::before { content: ""; position: absolute; left: 0; top: .7rem; bottom: .7rem; width: 3px; border-radius: 0 3px 3px 0; background: var(--c, var(--pink)); }
+.card.quiet { background: transparent; border-style: dashed; }
+.card.quiet::before { display: none; }
+.card h3 { font: 700 1.02rem/1.3 var(--body); margin: 0; }
+.card.quiet h3 { font-weight: 600; color: #d9d5de; }
+.meta { font-size: .85rem; color: var(--muted); margin: .35rem 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem; }
+.meta b { color: #e6e2ea; font-weight: 700; }
+.sub { font-size: .9rem; color: #cfcbd5; margin: .45rem 0 0; }
+.note { font-size: .85rem; margin: .55rem 0 0; color: var(--pink); }
+.with { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+.chip { font-size: .8rem; border: 1px solid var(--line); border-radius: 999px; padding: .2rem .65rem; color: #dcd8e1; }
+.chip small { color: var(--muted); font-size: .75rem; margin-left: .25rem; }
+.chip.lead { border-color: var(--pink); }
+.chip.lead small { color: var(--pink); }
+.badge { display: inline-block; font: 700 .68rem var(--body); letter-spacing: .14em; text-transform: uppercase; color: #111;
+  background: var(--pink); border-radius: 999px; padding: .12rem .5rem; margin-left: .45rem; vertical-align: .18em; }
+.badge.soft { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+
+.empty, .notice { max-width: 640px; color: var(--muted); }
+.notice { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 1.1rem 1.2rem; margin: 1.5rem 0; }
+.notice h2 { font: 700 1.05rem var(--body); color: var(--text); margin: 0 0 .3rem; }
+.notice p { margin: .3rem 0; }
+.start { padding: 2rem 0 0; color: var(--muted); max-width: 52ch; }
+
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; padding-block: 1.4rem 2.4rem; }
+
+@media (max-width: 640px) {
+  .wrap { width: calc(100% - 2rem); }
+  .actions .pill.ghost { display: none; }
+  .brand { font-size: .62rem; letter-spacing: .12em; gap: .6rem; }
+  .top .wrap { gap: .6rem; }
+  .actions .pill { padding: .75rem .9rem; font-size: .7rem; letter-spacing: .14em; }
+  .dateline { font-size: .68rem; letter-spacing: .18em; gap: .6rem; white-space: nowrap; }
+  .dateline::before, .dateline::after { width: 22px; }
+  .controls .wrap { flex-direction: column; align-items: stretch; }
+  .right, .select-wrap, select { width: 100%; }
+  .timeline { --tcol: 3.3rem; --gap: .4rem; --ncol: 1.3rem; }
+  .slot { grid-template-columns: var(--tcol) var(--ncol) minmax(0, 1fr); }
+  .slot .t { font-size: .78rem; }
+}
+@media print {
+  :root { --bg: #fff; --card: #fff; --text: #000; --muted: #444; --line: #bbb; }
+  body { background: #fff; }
+  .top, .hero, .controls, footer, .timeline::before, .slot .node { display: none !important; }
+  .slot { grid-template-columns: 4rem minmax(0, 1fr); break-inside: avoid; }
+  .slot .t { color: #000; }
+  .card h3, .sub, .chip, .meta b { color: #000; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="https://swissaisafetydays.ch/" aria-label="Swiss AI Safety Days">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="3" r="2" fill="#f4f2f6"/><circle cx="11" cy="19" r="2" fill="#f4f2f6"/><circle cx="3" cy="11" r="2" fill="#f39ad9"/><circle cx="19" cy="11" r="2" fill="#a985f0"/><circle cx="11" cy="11" r="2.2" fill="#f39ad9"/></svg>
+      <span>Swiss AI Safety Days</span>
+    </a>
+    <div class="actions">
+      <a class="pill solid" id="programme-btn" href="https://swissaisafetydays.ch/programme-2026#sat">Programme</a>
+      <a class="pill ghost" href="https://swissaisafetydays.ch/">Event website</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap">
+    <p class="eyebrow">Volunteers</p>
+    <h1>SWISS <span class="glow">AI SAFETY</span> DAYS</h1>
+    <div class="dateline">7–8 November 2026 <i></i> ETH Zurich</div>
+    <p class="lede">Choose your name to see where you need to be, what you’ll do and who you’re working with. For talks and speakers, see the <a href="https://swissaisafetydays.ch/programme-2026#sat" id="lede-link">programme</a>.</p>
+  </section>
+
+  <section class="controls" aria-label="Choose volunteer and day">
+    <div class="wrap">
+      <div class="days" role="tablist" id="days"></div>
+      <div class="right">
+        <div class="select-wrap">
+          <label for="who">Your name</label>
+          <select id="who" disabled><option>Loading schedule…</option></select>
+        </div>
+        <button class="pill" id="print" type="button" hidden>Print</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="person wrap" id="person" aria-live="polite"></section>
+</main>
+
+<footer>
+  <div class="wrap">Volunteer coordination contact: <a id="contact" href="mailto:marina@aisafety.ch">marina@aisafety.ch</a> and Slack channel.<span id="updated"></span></div>
+</footer>
+
+<script>
+/* ==================================================================
+   SETTINGS
+   xlsxUrl: where the schedule file lives on your server. Upload a new
+   version to the same path and the page shows it on the next load.
+   ================================================================== */
+const CONFIG = {
+  xlsxUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRM0Y0UCB_xar0nytiI0RjZtBe0Z0-gbRTKUlzaGtK_pu_q6UPwajkRw9eA55GUoA/pub?output=xlsx",
+  programmeUrl: "https://swissaisafetydays.ch/programme-2026",
+  contact: "marina@aisafety.ch",
+  dayDates: { sat: "2026-11-07", sun: "2026-11-08" }
+};
+
+const VolunteerPage = (() => {
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const EVERYONE = ["everyone", "everybody", "all volunteers"];
+  let DAYS = [];
+  let PEOPLE = { volunteers: [], org: [] };
+  let currentDay = null;
+
+  /* ---------- reading the sheet ---------- */
+  const COLS = {
+    start: ["start"], end: ["end"], location: ["location"], task: ["session / task", "session", "task"],
+    slot: ["slot"], name: ["volunteer", "name"], role: ["role"], shift: ["shift"],
+    lead: ["volunteer room lead", "room lead", "lead"], notes: ["notes", "note"]
+  };
+  function normTime(v) {
+    if (v === null || v === undefined || v === "") return "";
+    if (typeof v === "number") { const m = Math.round((v % 1) * 1440); return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); }
+    const s = String(v).trim();
+    const m = s.match(/^(\d{1,2})[:.](\d{2})(?::\d{2})?\s*(am|pm)?$/i);
+    if (!m) return s;
+    let h = +m[1];
+    if (m[3]) { const pm = m[3].toLowerCase() === "pm"; if (pm && h < 12) h += 12; if (!pm && h === 12) h = 0; }
+    return String(h).padStart(2, "0") + ":" + m[2];
+  }
+  const mins = (t, f) => { const m = /^(\d{2}):(\d{2})$/.exec(t); return m ? +m[1] * 60 + +m[2] : f; };
+
+  function rowsFromSheet(json) {
+    if (!json.length) return null;
+    const headers = Object.keys(json[0]);
+    const map = {};
+    for (const k in COLS) map[k] = headers.find((h) => COLS[k].includes(h.trim().toLowerCase()));
+    if (!map.name) return null;
+    return json.map((r) => {
+      const o = {};
+      for (const k in COLS) o[k] = map[k] ? String(r[map[k]] ?? "").trim() : "";
+      o.start = normTime(map.start ? r[map.start] : "");
+      o.end = normTime(map.end ? r[map.end] : "");
+      o.s = mins(o.start, 0); o.e = mins(o.end, 24 * 60);
+      o.isOrg = o.shift.toLowerCase() === "org team";
+      o.isLead = /^(yes|y|true|x|1)$/i.test(o.lead);
+      o.isAll = EVERYONE.includes(o.name.toLowerCase());
+      return o;
+    }).filter((o) => o.name);
+  }
+  function dayKey(title, i) {
+    if (/sat/i.test(title)) return "sat";
+    if (/sun/i.test(title)) return "sun";
+    if (/fri/i.test(title)) return "fri";
+    return "day" + (i + 1);
+  }
+  function dayLabel(d) {
+    const date = CONFIG.dayDates[d.key];
+    if (!date) return { a: d.title.slice(0, 3).toUpperCase(), b: d.title.slice(3).trim() };
+    const dt = new Date(date + "T12:00:00");
+    return { a: dt.toLocaleDateString("en-GB", { weekday: "short" }).toUpperCase(), b: dt.getDate() + " " + dt.toLocaleDateString("en-GB", { month: "short" }).toUpperCase() };
+  }
+  function fromWorkbook(wb) {
+    const days = [];
+    wb.SheetNames.forEach((name, i) => {
+      const rows = rowsFromSheet(XLSX.utils.sheet_to_json(wb.Sheets[name], { raw: false, defval: "" }));
+      if (rows && rows.length) days.push({ key: dayKey(name, i), title: name.trim(), rows });
+    });
+    return days;
+  }
+
+  /* ---------- logic ---------- */
+  function roomKey(loc) {
+    const s = loc.toLowerCase().replace(/\(?\btbc\b\)?/g, "").replace(/\s+/g, " ").trim();
+    if (/foyer|→|->|&|catering/.test(s)) return s;
+    const m = s.match(/hg\s*e\s*\d+(\.\d+)?/);
+    return m ? m[0].replace(/\s+/g, " ") : s;
+  }
+  const overlaps = (a, b) => a.s < b.e && b.s < a.e;
+  const isCheckIn = (r) => /check-?in/i.test(r.task + " " + r.role);
+
+  function collectPeople() {
+    const vol = new Set(), org = new Set();
+    DAYS.forEach((d) => d.rows.forEach((r) => { if (!r.isAll) (r.isOrg ? org : vol).add(r.name); }));
+    vol.forEach((n) => org.delete(n));
+    const sort = (a) => [...a].sort((x, y) => x.localeCompare(y, "en", { sensitivity: "base" }));
+    PEOPLE = { volunteers: sort(vol), org: sort(org) };
+  }
+
+  function tasksFor(name, day) {
+    const isOrgPerson = PEOPLE.org.includes(name);
+    const own = day.rows.filter((r) => r.name === name);
+    const shifts = new Set(own.map((r) => r.shift.toLowerCase()));
+    const shared = isOrgPerson || !own.length ? [] : day.rows.filter((r) => {
+      if (!r.isAll) return false;
+      const sh = r.shift.toLowerCase().trim();
+      if (["", "—", "-", "all"].includes(sh)) return true;
+      if (sh === "both") return shifts.has("morning") || shifts.has("afternoon");
+      return shifts.has(sh);
+    });
+    return { own, tasks: [...own, ...shared].sort((a, b) => a.s - b.s || a.e - b.e) };
+  }
+
+  function teamFor(task, day, me) {
+    if (task.isAll || isCheckIn(task)) return [];
+    const rk = roomKey(task.location), seen = new Set([me]), mods = [], leads = [], helpers = [];
+    day.rows.forEach((c) => {
+      if (c.isAll || seen.has(c.name) || isCheckIn(c) || !overlaps(task, c)) return;
+      if (!(c.task === task.task || roomKey(c.location) === rk)) return;
+      seen.add(c.name);
+      if (c.isOrg) mods.push({ name: c.name, label: "moderator", lead: true });
+      else if (c.isLead) leads.push({ name: c.name, label: "room lead", lead: true });
+      else helpers.push({ name: c.name, label: c.role });
+    });
+    return [...mods, ...leads, ...helpers];
+  }
+
+  function colourFor(t) {
+    const txt = (t.task + " " + t.role + " " + t.location).toLowerCase();
+    if (isCheckIn(t) || /catering|break host|flow|pack-down/.test(txt)) return "quiet";
+    if (/setup|registration|info desk|queue guidance|poster|org-fair|exhibitor|1-1|speed networking|wayfinding/.test(txt)) return "var(--violet)";
+    const rk = roomKey(t.location);
+    if (rk === "hg e 5") return "var(--cyan)";
+    if (rk === "hg e 1.1" || rk === "hg e 1.2") return "var(--magenta)";
+    return "var(--pink)";
+  }
+
+  function nowMinutes(key) {
+    const date = CONFIG.dayDates[key];
+    if (!date) return null;
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false })
+      .formatToParts(new Date()).map((x) => [x.type, x.value]));
+    return `${p.year}-${p.month}-${p.day}` === date ? (+p.hour % 24) * 60 + +p.minute : null;
+  }
+
+  /* ---------- rendering ---------- */
+  function renderDays(name) {
+    const el = $("#days");
+    el.innerHTML = DAYS.map((d) => {
+      const has = !name || tasksFor(name, d).own.length > 0;
+      const l = dayLabel(d);
+      return `<button class="day-tab" role="tab" type="button" data-key="${esc(d.key)}" aria-selected="${d.key === currentDay}" ${has ? "" : "disabled"}>${esc(l.a)}<b>${esc(l.b)}</b></button>`;
+    }).join("");
+    el.querySelectorAll(".day-tab").forEach((b) => b.addEventListener("click", () => { currentDay = b.dataset.key; render(); }));
+    const link = CONFIG.programmeUrl + "#" + currentDay;
+    $("#programme-btn").href = link; $("#lede-link").href = link;
+  }
+
+  function render() {
+    const name = $("#who").value;
+    const el = $("#person");
+    if (name) {
+      const works = DAYS.filter((d) => tasksFor(name, d).own.length);
+      if (works.length && !works.some((d) => d.key === currentDay)) currentDay = works[0].key;
+    }
+    renderDays(name);
+    $("#print").hidden = !name;
+    if (!name) { el.innerHTML = `<p class="start">Choose your name above to see your tasks for the day.</p>`; return; }
+
+    const day = DAYS.find((d) => d.key === currentDay);
+    const { own, tasks } = tasksFor(name, day);
+    if (!tasks.length) { el.innerHTML = `<p class="empty">${esc(name)} has no tasks on ${esc(day.title)}.</p>`; return; }
+
+    const timed = own.filter((r) => r.start);
+    const tags = [];
+    if (timed.length) {
+      const first = timed.reduce((a, r) => (r.s < a.s ? r : a)), last = timed.reduce((a, r) => (r.e > a.e ? r : a));
+      tags.push(`<li>${esc(first.start)}–${esc(last.end === "end" ? "end" : last.end)}</li>`);
+    }
+    const leadRooms = [...new Set(own.filter((r) => r.isLead).map((r) => r.location))];
+    if (leadRooms.length) tags.push(`<li class="hi">Room lead, ${esc(leadRooms.join(", "))}</li>`);
+    const modCount = own.filter((r) => r.isOrg).length;
+    if (modCount) tags.push(`<li class="hi">Moderating ${modCount} session${modCount > 1 ? "s" : ""}</li>`);
+
+    const now = nowMinutes(day.key);
+    let nextDone = false;
+    const items = tasks.map((t) => {
+      const c = colourFor(t);
+      const quiet = c === "quiet";
+      let badge = "", cls = "slot";
+      if (now !== null) {
+        if (t.s <= now && now < t.e) { badge = `<span class="badge">Now</span>`; cls += " now"; }
+        else if (!nextDone && t.s > now) { badge = `<span class="badge soft">Next</span>`; nextDone = true; }
+      }
+      const endTxt = t.end === "end" ? "End" : esc(t.end);
+      const until = t.end ? `<span class="until">until <em>${endTxt}</em></span>` : "";
+      const team = teamFor(t, day, name);
+      const title = t.role || t.task;
+      const session = t.role && t.task && t.task !== t.role ? `<p class="sub">${esc(t.task)}</p>` : "";
+      return `<li class="${cls}">
+        <div class="t">${esc(t.start)}</div><div class="node" aria-hidden="true"></div>
+        <article class="card${quiet ? " quiet" : ""}" ${quiet ? "" : `style="--c:${c}"`}>
+          <h3>${esc(title)}${badge}</h3>
+          <p class="meta"><b>${esc(t.location)}</b>${until}${t.isAll ? "<span>All crew</span>" : ""}</p>
+          ${session}
+          ${t.notes ? `<p class="note">${esc(t.notes)}</p>` : ""}
+          ${team.length ? `<div class="with" aria-label="Working with">${team.map((p) => `<span class="chip${p.lead ? " lead" : ""}">${esc(p.name)}${p.label ? `<small>${esc(p.label)}</small>` : ""}</span>`).join("")}</div>` : ""}
+        </article></li>`;
+    }).join("");
+
+    el.innerHTML = `<div class="who"><h2>${esc(name)}</h2><ul class="tags">${tags.join("")}</ul>
+      <a class="pill" href="${esc(CONFIG.programmeUrl + "#" + day.key)}">See ${esc(day.title.split(" ")[0])} programme</a></div>
+      <ol class="timeline">${items}</ol>`;
+  }
+
+  function fillSelect() {
+    const sel = $("#who");
+    const opt = (n) => `<option value="${esc(n)}">${esc(n)}</option>`;
+    sel.innerHTML = `<option value="">Choose your name</option><optgroup label="Volunteers">${PEOPLE.volunteers.map(opt).join("")}</optgroup>` +
+      (PEOPLE.org.length ? `<optgroup label="Organising team">${PEOPLE.org.map(opt).join("")}</optgroup>` : "");
+    sel.disabled = false;
+    const params = new URLSearchParams(location.search);
+    let initial = params.get("name") || "";
+    if (!initial) { try { initial = localStorage.getItem("sasd-volunteer") || ""; } catch (e) {} }
+    if ([...PEOPLE.volunteers, ...PEOPLE.org].includes(initial)) sel.value = initial;
+    const d = params.get("day") || location.hash.slice(1);
+    currentDay = DAYS.some((x) => x.key === d) ? d : (DAYS.find((x) => nowMinutes(x.key) !== null) || DAYS[0]).key;
+    render();
+  }
+
+  function onChoose() {
+    const name = $("#who").value;
+    try { name ? localStorage.setItem("sasd-volunteer", name) : localStorage.removeItem("sasd-volunteer"); } catch (e) {}
+    const url = new URL(location.href);
+    name ? url.searchParams.set("name", name) : url.searchParams.delete("name");
+    history.replaceState(null, "", url);
+    render();
+  }
+
+  function setData(days) { DAYS = days; collectPeople(); fillSelect(); }
+  function setRows(sheets) { setData(Object.entries(sheets).map(([title, json], i) => ({ key: dayKey(title, i), title, rows: rowsFromSheet(json) || [] }))); }
+
+  function showLoadError(err) {
+    $("#who").innerHTML = "<option>Schedule not available</option>";
+    $("#person").innerHTML = `<div class="notice" role="alert">
+      <h2>The schedule couldn’t be loaded</h2>
+      <p>The page looks for the file at <code>${esc(CONFIG.xlsxUrl)}</code> (${esc(err.message || err)}). Check it’s uploaded there, then reload.</p>
+      <p>Organisers can preview a file from their computer: <input type="file" id="local" accept=".xlsx,.xls"></p></div>`;
+    $("#local").addEventListener("change", async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      try { setData(fromWorkbook(XLSX.read(await f.arrayBuffer(), { type: "array" }))); }
+      catch (x) { alert("That file couldn’t be read: " + x.message); }
+    });
+  }
+
+  async function load() {
+    $("#contact").href = "mailto:" + CONFIG.contact; $("#contact").textContent = CONFIG.contact;
+    $("#who").addEventListener("change", onChoose);
+    $("#print").addEventListener("click", () => window.print());
+    try {
+      if (typeof XLSX === "undefined") throw new Error("spreadsheet reader didn’t load");
+      const res = await fetch(CONFIG.xlsxUrl + (CONFIG.xlsxUrl.includes("?") ? "&" : "?") + "v=" + Date.now(), { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const days = fromWorkbook(XLSX.read(await res.arrayBuffer(), { type: "array" }));
+      if (!days.length) throw new Error("no tab with a ‘Volunteer’ column");
+      const lm = res.headers.get("last-modified");
+      if (lm) $("#updated").textContent = " Schedule last updated " + new Date(lm).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Zurich" }) + ".";
+      setData(days);
+    } catch (err) { showLoadError(err); }
+  }
+
+  return { load, setRows };
+})();
+
+VolunteerPage.load();
+</script>
+</body>
+</html>
