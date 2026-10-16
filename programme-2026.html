@@ -432,11 +432,34 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   const roomOf = id => DATA.rooms.find(r => r.id === id);
   const roomName = s => s.room ? (roomOf(s.room) || { label: s.room }).label : 'Across campus';
   const famLabel = id => (FAMILIES.find(f => f.id === id) || {}).label || '';
-  // One view per room: ?room=<room label, slugged> (foyer, hg-e-5, hg-e-7, hg-e-1-1, hg-e-1-2)
-  // shows only that room's sessions. An unknown value falls back to the full programme.
+  // One view per room: ?room=<room label, slugged> (foyer, hg-e-5, hg-e-7, hg-e-1-1, hg-e-1-2,
+  // plus hg-e-3 from EXTRA_ROOMS) shows only that room's sessions. An unknown value falls back to
+  // the full programme.
   const slug = t => String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const roomParam = new URLSearchParams(location.search).get('room');
-  const ROOM = roomParam ? DATA.rooms.find(r => slug(r.label) === slug(roomParam) || slug(r.id) === slug(roomParam)) || null : null;
+  const loose = t => slug(t).replace(/-/g, '');   // so ?room=hg-e3 or ?room=HGE3 also find HG E 3
+  const findRoom = rooms => rooms.find(r => loose(r.label) === loose(roomParam) || loose(r.id) === loose(roomParam));
+  // Rooms that are not in the agenda data but still get a room view (not the full programme).
+  // Each is open for the whole programme day, from the day's first session to its last, not
+  // counting the evening social events, so it follows agenda changes. Ignored once the agenda
+  // itself has a room with the same name.
+  const EXTRA_ROOMS = [
+    { id: 'HG E 3', label: 'HG E 3', sub: 'Silent work and rest', title: 'Silent Work and Rest Room', type: 'Quiet room',
+      text: 'Open all day for quiet work or a rest from the conference. Please keep conversations and calls outside.' },
+  ];
+  let ROOM = roomParam ? findRoom(DATA.rooms) || null : null;
+  const extra = roomParam && !ROOM ? findRoom(EXTRA_ROOMS) : null;
+  if (extra) {
+    ROOM = { id: extra.id, label: extra.label, sub: extra.sub };
+    DATA.rooms.push(ROOM);
+    for (const day of Object.keys(DAYS)) {
+      const open = DATA.sessions.filter(s => s.day === day && s.room && s.family !== 'social');
+      if (!open.length) continue;
+      DATA.sessions.push({ key: `${day}-${slug(extra.id)}`, day, title: extra.title, type: extra.type, family: 'pause', room: extra.id,
+        start: Math.min(...open.map(s => s.start)), end: Math.max(...open.map(s => s.end)),
+        speakers: [], topics: [], blocks: [{ kind: 'p', text: extra.text }], swapcard: '' });
+    }
+  }
   for (const s of DATA.sessions) {
     s.hay = [s.title, s.type, s.room, roomName(s), ...s.speakers, ...s.topics,
       ...s.blocks.flatMap(b => b.kind === 'people' ? b.items.flatMap(i => [i.name, i.org, i.title]) : [b.text])].join(' ').toLowerCase();
@@ -646,7 +669,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     drawer.className = `drawer fam-${s.family}`;
     drawer.replaceChildren();
     const top = el('div', 'd-top');
-    const eb = el('p', 'd-eyebrow'); eb.append(el('i'), document.createTextNode(s.family === 'pause' ? 'Break' : (s.type || famLabel(s.family))));
+    const eb = el('p', 'd-eyebrow'); eb.append(el('i'), document.createTextNode(s.family === 'pause' ? (s.type || 'Break') : (s.type || famLabel(s.family))));
     const close = el('button', 'd-close', '×'); close.type = 'button'; close.setAttribute('aria-label', 'Close');
     close.addEventListener('click', closeSession);
     top.append(eb, close);
