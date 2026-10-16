@@ -134,6 +134,18 @@ a { color: inherit; }
 .views button { background: none; border: 0; border-radius: 999px; padding: 5px 14px; font-size: 11px; font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
 .views button[aria-pressed="true"] { background: rgba(242, 167, 227, 0.16); color: var(--text); }
 
+/* ---------------------------------------------------------------- room view (?room=hg-e-7 etc.) */
+.room-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin: 30px 0 0; font-weight: 400; }
+.room-kicker { flex: 1 1 100%; font-size: 12px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orchid); }
+.room-head b { font-family: var(--f-display); font-weight: 400; font-size: clamp(32px, 4.8vw, 60px); line-height: 1.05; letter-spacing: 0.04em; color: var(--text); text-shadow: 0 0 22px rgba(242, 167, 227, 0.35); }
+.room-sub { font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-2); }
+.is-room .tools, .is-room .chips { display: none; }
+/* One room rarely runs two things at once, so its cards get two wider columns instead of three. */
+.is-room .slot-cards { grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr)); }
+.bar-room { justify-self: end; display: flex; align-items: baseline; gap: 12px; white-space: nowrap; }
+.bar-room b { font-family: var(--f-display); font-weight: 400; font-size: 15px; letter-spacing: 0.08em; color: var(--orchid); }
+.bar-room span { font-size: 11px; font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--text-3); }
+
 /* ---------------------------------------------------------------- grid view */
 main { padding-top: 24px; padding-bottom: 40px; }
 .grid-scroll { position: relative; }
@@ -297,6 +309,9 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .dateline { gap: 8px 12px; font-size: 11px; letter-spacing: 0.2em; }
   .dateline::before, .dateline::after { display: none; }
   .lede { font-size: 14px; }
+  .room-head { margin-top: 24px; }
+  .room-sub { font-size: 11px; letter-spacing: 0.14em; }
+  .bar-room { display: none; }
   .bar-inner { grid-template-columns: 1fr; gap: 10px; padding-top: 10px; padding-bottom: 10px; }
   .day { flex: 1; justify-content: center; padding: 7px 10px; }
   .tools { justify-self: stretch; flex-wrap: nowrap; gap: 8px; }
@@ -330,7 +345,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   body { background: #fff; color: #000; }
   .bar, .scrim, .drawer, .site-link, .grid-view { display: none !important; }
   .list-view { display: block !important; }
-  .wordmark em, .eyebrow { color: #000; text-shadow: none; }
+  .wordmark em, .eyebrow, .room-kicker, .room-head b, .room-sub { color: #000; text-shadow: none; }
   .card { border-color: #ccc; background: none; break-inside: avoid; }
   .card-title, .card-who, .card-meta, .slot-time { color: #000; }
   .slots::before, .slot-time::after { display: none; }
@@ -417,6 +432,11 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   const roomOf = id => DATA.rooms.find(r => r.id === id);
   const roomName = s => s.room ? (roomOf(s.room) || { label: s.room }).label : 'Across campus';
   const famLabel = id => (FAMILIES.find(f => f.id === id) || {}).label || '';
+  // One view per room: ?room=<room label, slugged> (foyer, hg-e-5, hg-e-7, hg-e-1-1, hg-e-1-2)
+  // shows only that room's sessions. An unknown value falls back to the full programme.
+  const slug = t => String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const roomParam = new URLSearchParams(location.search).get('room');
+  const ROOM = roomParam ? DATA.rooms.find(r => slug(r.label) === slug(roomParam) || slug(r.id) === slug(roomParam)) || null : null;
   for (const s of DATA.sessions) {
     s.hay = [s.title, s.type, s.room, roomName(s), ...s.speakers, ...s.topics,
       ...s.blocks.flatMap(b => b.kind === 'people' ? b.items.flatMap(i => [i.name, i.org, i.title]) : [b.text])].join(' ').toLowerCase();
@@ -433,7 +453,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   };
   const matches = s => (!state.family || s.family === state.family) && (!state.topic || s.topics.includes(state.topic)) && (!state.q || s.hay.includes(state.q));
   const filtering = () => !!(state.family || state.topic || state.q);
-  const dayList = () => DATA.sessions.filter(s => s.day === state.day);
+  const dayList = () => DATA.sessions.filter(s => s.day === state.day && (!ROOM || s.room === ROOM.id));
 
   // ---------------------------------------------------------------- controls
   const chips = $('#chips');
@@ -450,6 +470,26 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   for (const t of topics) { const o = el('option', null, t); o.value = t; $('#topic').append(o); }
   $('#updated').textContent = new Date(DATA.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Zurich' });
   if (DATA.app) { $('#app-link').href = DATA.app; $('#app-link').hidden = false; }
+  if (ROOM) {
+    // Room view: the room's name under the dateline and in the control bar, no filters or Rooms grid,
+    // and the top-right link goes back to the full programme.
+    document.body.classList.add('is-room');
+    document.title = `${ROOM.label} · Programme · Swiss AI Safety Days 2026`;
+    const head = el('h2', 'room-head');
+    head.append(el('span', 'room-kicker', 'Room'), el('b', null, ROOM.label));
+    if (ROOM.sub) head.append(el('span', 'room-sub', ROOM.sub));
+    $('.dateline').after(head);
+    const lede = $('.lede'), full = el('a', null, 'full programme');
+    full.href = location.pathname;
+    lede.textContent = 'Every session in this room, day by day. Open any session for its speakers, or see the ';
+    lede.append(full, document.createTextNode(' for all rooms.'));
+    const back = $('.links .site-link:not(.site-link--app)');
+    back.textContent = 'Full programme'; back.href = location.pathname;
+    const tag = el('div', 'bar-room'); tag.append(el('b', null, ROOM.label)); if (ROOM.sub) tag.append(el('span', null, ROOM.sub));
+    $('.bar-inner').append(tag);
+    $('#empty').firstChild.textContent = 'Nothing is scheduled in this room on this day.';
+    $('#clear').hidden = true;
+  }
 
   chips.addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; state.family = b.dataset.family; render(); });
   $('#topic').addEventListener('change', e => { state.topic = e.target.value; render(); });
@@ -586,7 +626,9 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       if (live) b.append(el('span', 'live', 'Now'));
       b.append(el('span', 'card-title', s.title));
       const meta = el('span', 'card-meta');
-      meta.append(el('b', null, roomName(s)), document.createTextNode(` · until ${fmt(s.end)}` + (s.type && s.family !== 'pause' ? ` · ${s.type}` : '')));
+      const kind = s.type && s.family !== 'pause' ? ` · ${s.type}` : '';
+      if (ROOM) meta.append(el('b', null, `${fmt(s.start)}–${fmt(s.end)}`), document.createTextNode(kind));   // the room is in the header
+      else meta.append(el('b', null, roomName(s)), document.createTextNode(` · until ${fmt(s.end)}` + kind));
       b.append(meta);
       if (who) b.append(el('span', 'card-who', who));
     }
@@ -678,7 +720,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const grid = state.view === 'grid';
     $('#grid-view').hidden = !grid; $('#list-view').hidden = grid;
     if (grid) renderGrid(list, bounds); else renderList(list);
-    $('#empty').hidden = !(filtering() && !list.some(matches));
+    $('#empty').hidden = !((filtering() || ROOM) && !list.some(matches));
   }
 
   // ---------------------------------------------------------------- start
@@ -686,7 +728,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   const linked = hash.startsWith('s=') ? DATA.sessions.find(s => s.key === hash.slice(2)) : null;
   const today = zurichNow().date;
   state.day = linked ? linked.day : hash === 'sun' || hash === 'sat' ? hash : today === DAYS.sun.date ? 'sun' : 'sat';
-  state.view = store.get('saisd-view') || 'list';   // List by default on every screen; a visitor's own choice is remembered
+  state.view = ROOM ? 'list' : store.get('saisd-view') || 'list';   // List by default on every screen; a visitor's own choice is remembered
   render();
   if (linked) openSession(linked.key);
   // Move the "now" line each minute, unless someone is reading a session or moving through them.
