@@ -150,6 +150,9 @@ a { color: inherit; }
 /* ---------------------------------------------------------------- grid view */
 main { padding-top: 24px; padding-bottom: 40px; }
 .grid-scroll { position: relative; }
+/* All-day sessions (e.g. Friday's participant-led socials) above the Rooms grid. */
+.allday { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin: 0 0 16px; }
+.allday[hidden], .grid-scroll[hidden] { display: none; }
 .grid { --cols: 1.3fr repeat(4, 1fr); min-width: 940px; }
 .grid-head { position: sticky; top: var(--bar-h); z-index: 20; display: grid; grid-template-columns: var(--time-col) var(--cols);
   background: var(--void); box-shadow: 0 6px 8px -6px var(--void); padding: 10px 0 14px; }
@@ -272,6 +275,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
 .d-body { border-top: 1px solid var(--hair); padding-top: 18px; }
 .d-body p { margin: 0 0 12px; color: var(--text-2); font-size: 14.5px; }
 .d-body .note { font-size: 13px; color: var(--orchid); }
+.d-body .d-link { color: var(--orchid); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.d-body .d-link:hover { color: var(--orchid-hot); }
 .d-body .d-label { margin: 16px 0 8px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); }
 .people { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px; }
 .people li { padding: 11px 14px; border: 1px solid var(--hair); border-radius: 10px; background: rgba(255, 255, 255, 0.02); }
@@ -334,6 +339,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .slots::before { left: 59px; }
   .slot { grid-template-columns: 50px 1fr; gap: 0 20px; }
   .slot-time { font-size: 12px; letter-spacing: 0.02em; }
+  .slot-time--allday { font-size: 10.5px; letter-spacing: 0; }   /* "All day" fits the 50px time column */
   .slot-time::after { right: -16.5px; }
   .slot-cards { grid-template-columns: 1fr; }
   .drawer { top: auto; height: min(88dvh, 100%); width: 100%; border-left: 0; border-top: 1px solid rgba(242, 167, 227, 0.25); border-radius: 22px 22px 0 0; padding: 22px 20px 30px; transform: translateY(104%); }
@@ -399,6 +405,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
 
 <main class="wrap" id="programme" role="tabpanel" aria-labelledby="tab-sat">
   <section class="grid-view" id="grid-view" aria-label="Programme by room" hidden>
+    <div class="allday" id="allday" hidden></div>
     <div class="grid-scroll"><div class="grid" id="grid"></div></div>
   </section>
   <section class="list-view" id="list-view" aria-label="Programme by time"><ol class="slots" id="slots"></ol></section>
@@ -420,11 +427,10 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
 <script>
 (() => {
   const DATA = JSON.parse(document.getElementById('programme-data').textContent);
-  // Friday has no sessions in the agenda yet; its tab shows `note` until it does. The page still
-  // opens on Saturday (or Sunday, on the Sunday itself).
+  // Friday has no sessions in the agenda yet; EXTRA_SESSIONS gives it an all-day entry until it
+  // does. The page still opens on Saturday (or Sunday, on the Sunday itself).
   const DAYS = {
-    fri: { date: '2026-11-06', long: 'Friday 6 November',
-      note: 'No sessions are scheduled on Friday. We expect there to be participant-led social events, and accepted attendees will get the details before the conference.' },
+    fri: { date: '2026-11-06', long: 'Friday 6 November' },
     sat: { date: '2026-11-07', long: 'Saturday 7 November' },
     sun: { date: '2026-11-08', long: 'Sunday 8 November' },
   };
@@ -473,6 +479,20 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
         speakers: [], topics: [], blocks: [{ kind: 'p', text: extra.text }], swapcard: '' });
     }
   }
+  // Sessions that are not in the agenda data. Each is added only while the data has nothing on its
+  // day, so Friday sessions added to the agenda later take over. allDay sessions show as "All day".
+  const SOCIALS_DOC = 'https://docs.google.com/document/d/1rGcloSGinQmUMHtfaOOzL-uDxpfNKtX0DfCoJpAY4ZI/edit?usp=sharing';
+  const EXTRA_SESSIONS = [
+    { key: 'fri-participant-socials', day: 'fri', allDay: true, start: 0, end: 24 * 60,
+      title: 'Participant-led social events', type: 'Social', family: 'social', room: '', where: 'Around Zurich',
+      speakers: [], topics: [], swapcard: '',
+      blocks: [
+        { kind: 'p', text: 'Independently organised events led by participants, such as topical dinners, coworking, walking tours and museum visits. Anyone can organise one by adding it to the shared list.' },
+        { kind: 'link', text: 'See the list of participant-organised socials', href: SOCIALS_DOC },
+        { kind: 'p', text: 'The Swiss AI Safety Days team is not responsible for these events and cannot provide support for them.' },
+      ] },
+  ];
+  for (const x of EXTRA_SESSIONS) if (!DATA.sessions.some(s => s.day === x.day)) DATA.sessions.push(x);
   for (const s of DATA.sessions) {
     s.hay = [s.title, s.type, s.room, roomName(s), ...s.speakers, ...s.topics,
       ...s.blocks.flatMap(b => b.kind === 'people' ? b.items.flatMap(i => [i.name, i.org, i.title]) : [b.text])].join(' ').toLowerCase();
@@ -641,11 +661,11 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const slots = $('#slots'); slots.replaceChildren();
     const now = zurichNow(), today = now.date === DAYS[state.day].date;
     const groups = new Map();
-    for (const s of list.filter(matches)) (groups.get(s.start) || groups.set(s.start, []).get(s.start)).push(s);
+    for (const s of list.filter(matches)) { const k = s.allDay ? -1 : s.start; (groups.get(k) || groups.set(k, []).get(k)).push(s); }
     for (const [start, items] of [...groups].sort((a, b) => a[0] - b[0])) {
       const li = el('li', 'slot');
       if (today && items.some(s => now.min >= s.start && now.min < s.end)) li.classList.add('is-now');
-      li.append(el('div', 'slot-time', fmt(start)));
+      li.append(el('div', 'slot-time' + (start < 0 ? ' slot-time--allday' : ''), start < 0 ? 'All day' : fmt(start)));
       const wrap = el('div', 'slot-cards');
       // Breaks and meals lead each time slot and office hours come after the session they follow,
       // so the same kinds line up in the same columns down the list.
@@ -659,7 +679,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const b = el('button', (mode === 'grid' ? 's' : 'card') + ` fam-${s.family}` + (mode === 'grid' && s.family === 'pause' ? ' s--pause' : ''));
     b.type = 'button'; b.dataset.key = s.key;
     const who = s.speakers.join(', ');
-    b.setAttribute('aria-label', `${fmt(s.start)} to ${fmt(s.end)}, ${roomName(s)}: ${s.title}${who ? ', with ' + who : ''}`);
+    b.setAttribute('aria-label', `${s.allDay ? 'All day' : `${fmt(s.start)} to ${fmt(s.end)}`}, ${s.where || roomName(s)}: ${s.title}${who ? ', with ' + who : ''}`);
     if (mode === 'grid') {
       b.append(el('span', 's-time', `${fmt(s.start)}–${fmt(s.end)}`), el('span', 's-title', s.title));
       if (who) b.append(el('span', 's-who', who));
@@ -669,7 +689,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       b.append(el('span', 'card-title', s.title));
       const meta = el('span', 'card-meta');
       const kind = s.type && s.family !== 'pause' ? ` · ${s.type}` : '';
-      if (ROOM) meta.append(el('b', null, `${fmt(s.start)}–${fmt(s.end)}`), document.createTextNode(kind));   // the room is in the header
+      if (s.allDay) meta.append(el('b', null, 'All day'), document.createTextNode((s.where ? ` · ${s.where}` : s.room ? ` · ${roomName(s)}` : '') + kind));
+      else if (ROOM) meta.append(el('b', null, `${fmt(s.start)}–${fmt(s.end)}`), document.createTextNode(kind));   // the room is in the header
       else meta.append(el('b', null, roomName(s)), document.createTextNode(` · until ${fmt(s.end)}` + kind));
       b.append(meta);
       if (who) b.append(el('span', 'card-who', who));
@@ -695,13 +716,18 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const title = el('h2', 'd-title', s.title); title.id = 'd-title';
     const facts = el('dl', 'd-facts');
     const fact = (label, value, small) => { const d = el('div'); const dd = el('dd', null, value); if (small) dd.append(el('small', null, small)); d.append(el('dt', null, label), dd); facts.append(d); };
-    fact('When', `${DAYS[s.day].long}, ${fmt(s.start)}–${fmt(s.end)}`);
+    fact('When', `${DAYS[s.day].long}, ${s.allDay ? 'all day' : `${fmt(s.start)}–${fmt(s.end)}`}`);
     const r = roomOf(s.room);
-    fact('Where', r ? (r.label === 'Foyer' ? 'Foyer, ' + r.sub : r.label + (r.sub ? ', ' + r.sub.toLowerCase() : '')) : 'Across campus', 'ETH Zurich main building');
+    if (s.where) fact('Where', s.where);
+    else fact('Where', r ? (r.label === 'Foyer' ? 'Foyer, ' + r.sub : r.label + (r.sub ? ', ' + r.sub.toLowerCase() : '')) : 'Across campus', 'ETH Zurich main building');
     const bodyEl = el('div', 'd-body');
     for (const blk of s.blocks) {
       if (blk.kind === 'label') bodyEl.append(el('p', 'd-label', blk.text));
       else if (blk.kind === 'p') bodyEl.append(el('p', /stay for the whole block/i.test(blk.text) ? 'note' : null, blk.text));
+      else if (blk.kind === 'link') {
+        const a = el('a', 'd-link', blk.text); a.href = blk.href; a.target = '_blank'; a.rel = 'noopener';
+        const para = el('p'); para.append(a); bodyEl.append(para);
+      }
       else {
         const ul = el('ul', 'people');
         for (const i of blk.items) {
@@ -761,13 +787,19 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const nothing = !list.length;   // a day with no sessions at all (Friday, for now)
     const grid = state.view === 'grid';
     $('#grid-view').hidden = nothing || !grid; $('#list-view').hidden = nothing || grid;
-    if (!nothing) {
-      const bounds = { start: Math.floor(Math.min(...list.map(s => s.start)) / 30) * 30, end: Math.ceil(Math.max(...list.map(s => s.end)) / 30) * 30 };
-      if (grid) renderGrid(list, bounds); else renderList(list);
+    if (!nothing && !grid) renderList(list);
+    if (!nothing && grid) {
+      // All-day sessions sit in a strip above the grid; the grid itself covers the timed ones.
+      const timed = list.filter(s => !s.allDay), allDay = list.filter(s => s.allDay && matches(s));
+      const strip = $('#allday'); strip.replaceChildren(); strip.hidden = !allDay.length;
+      const today = zurichNow().date === DAYS[state.day].date;
+      for (const s of allDay) strip.append(sessionButton(s, 'list', today));
+      $('.grid-scroll').hidden = !timed.length;
+      if (timed.length) renderGrid(timed, { start: Math.floor(Math.min(...timed.map(s => s.start)) / 30) * 30, end: Math.ceil(Math.max(...timed.map(s => s.end)) / 30) * 30 });
     }
     const empty = $('#empty');
     empty.firstChild.textContent = !nothing ? 'No sessions on this day match your filters.'
-      : ROOM ? 'Nothing is scheduled in this room on this day.' : DAYS[state.day].note || 'Nothing is scheduled on this day.';
+      : ROOM ? 'Nothing is scheduled in this room on this day.' : 'Nothing is scheduled on this day.';
     $('#clear').hidden = nothing || !!ROOM;
     empty.hidden = !(nothing || (filtering() && !list.some(matches)));
   }
