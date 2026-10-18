@@ -524,6 +524,24 @@
             animation: fadeInUp 1s ease 0.3s backwards;
         }
 
+        /* "Applications closed" line between the tagline and the button
+           (17 Oct 2026). The tagline's own bottom margin shrinks when it is
+           there, so the line reads as part of the tagline block. */
+        .hero .tagline:has(+ .hero-status) {
+            margin-bottom: 1.1rem;
+        }
+
+        .hero-status {
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin: 0 auto 2.4rem;
+            animation: fadeInUp 1s ease 0.38s backwards;
+        }
+
         .hero-cta {
             display: flex;
             gap: 1.2rem;
@@ -2209,15 +2227,11 @@
             color: var(--ink-muted);
         }
 
-        /* Application process */
+        /* Applications section (closed since 17 Oct 2026) */
         .apply-box {
             max-width: 760px;
             margin: 0 auto;
             text-align: center;
-        }
-
-        .apply-cta {
-            margin-top: 2.4rem;
         }
 
         .apply-note {
@@ -2882,6 +2896,18 @@
             box-shadow: 0 6px 22px rgba(255, 255, 255, 0.22);
         }
 
+        /* Applications closed (17 Oct 2026): the pill stays as a status label,
+           not a link, so it reads as information rather than an action. The
+           inset ring keeps it the same size as the old filled button. */
+        nav .register-btn--closed,
+        nav .register-btn--closed:hover {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+            transform: none;
+            cursor: default;
+        }
+
         nav a:focus-visible,
         nav button:focus-visible {
             outline-color: #ffffff;
@@ -3284,63 +3310,6 @@
     <!-- GoatCounter: cookieless, no personal data stored. -->
     <script data-goatcounter="https://saisd.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
-
-    <!-- Application-form attribution. The source is worked out on the landing
-         page, held for the visit, and written into the Airtable link just
-         before it is followed, so an applicant's record shows where they came
-         from. sessionStorage rather than localStorage: it lasts the visit and
-         no longer, which covers land -> browse -> apply without leaving an
-         identifier on the device between visits. -->
-    <script>
-        (function () {
-            var KEY = 'saisd_source';
-
-            /* utm values arrive from the URL and end up in an Airtable record,
-               so they are stripped to word characters and capped. */
-            function clean(v) {
-                return v ? v.replace(/[^\w.\-]/g, '').slice(0, 60) : '';
-            }
-
-            function detect() {
-                var p = new URLSearchParams(window.location.search);
-                var s = clean(p.get('utm_source'));
-                var c = clean(p.get('utm_campaign'));
-                if (s && c) return s + '-' + c;
-                if (s) return s;
-                if (c) return c;
-                var r = document.referrer || '';
-                /* lnkd.in is LinkedIn's own shortener and does not contain
-                   "linkedin.", so it has to be named separately. */
-                if (r.indexOf('linkedin.') > -1 || r.indexOf('lnkd.in') > -1) return 'linkedin-organic';
-                if (r.indexOf('ai-weeks.ch') > -1) return 'ai-weeks-untagged';
-                return 'direct';
-            }
-
-            var stored = null;
-            try { stored = sessionStorage.getItem(KEY); } catch (e) {}
-            var found = detect();
-            /* The first real source wins. Moving around the site leaves our own
-               domain as the referrer, which reads as "direct", and that must
-               not overwrite the campaign the visit started from. */
-            if (found !== 'direct' && (!stored || stored === 'direct')) {
-                try { sessionStorage.setItem(KEY, found); } catch (e) {}
-                stored = found;
-            }
-            var source = stored || found;
-
-            document.addEventListener('DOMContentLoaded', function () {
-                var links = document.querySelectorAll('a[href*="airtable.com"]');
-                for (var i = 0; i < links.length; i++) {
-                    try {
-                        var u = new URL(links[i].href);
-                        u.searchParams.set('prefill_Source', source);
-                        u.searchParams.set('hide_Source', 'true');
-                        links[i].href = u.toString();
-                    } catch (e) {}
-                }
-            });
-        })();
-    </script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
@@ -3356,7 +3325,7 @@
                 <li><a href="#tickets">Tickets</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
-            <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="register-btn" target="_blank" rel="noopener" data-goatcounter-click="apply-nav">Apply by 17 Oct<span class="visually-hidden"> (opens in a new tab)</span></a>
+            <span class="register-btn register-btn--closed">Applications closed</span>
             <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                 <span></span><span></span><span></span>
             </button>
@@ -3382,8 +3351,9 @@
                 <h1><span class="wm-w">Swiss</span> <span class="wm-p">AI Safety</span> <span class="wm-w">Days</span></h1>
                 <p class="date">7&ndash;8 November 2026 <span class="sep">&bull;</span> ETH Zurich</p>
                 <p class="tagline">The next step in your AI safety career is here</p>
+                <p class="hero-status">Applications for 2026 are now closed</p>
                 <div class="hero-cta">
-                    <span class="glow-btn"><span class="glow-btn-bloom" aria-hidden="true"></span><a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" target="_blank" rel="noopener" data-goatcounter-click="apply-hero">Apply by 17 Oct<span class="visually-hidden"> (opens in a new tab)</span></a></span>
+                    <span class="glow-btn"><span class="glow-btn-bloom" aria-hidden="true"></span><a href="#speakers" data-goatcounter-click="hero-speakers">See who's speaking</a></span>
                 </div>
             </div>
             <div class="hero-footer">
@@ -3478,7 +3448,7 @@
                     <span class="kicker fade-in">2026</span>
                     <h2 id="expect-title" class="section-title fade-in">What to <span class="title-pink">Expect</span></h2>
                 </div>
-                <p class="section-intro fade-in">This year, the event doubles to two full days. The full program lands later this year. Three things are already certain:</p>
+                <p class="section-intro fade-in">This year, the event doubles to two full days. Three things to look forward to:</p>
                 <div class="expect-grid">
                     <article class="expect-item">
                         <div class="expect-icon-wrapper" aria-hidden="true">
@@ -4337,19 +4307,16 @@
             </div>
         </section>
 
-        <!-- Application process -->
+        <!-- Applications (closed 17 Oct 2026) -->
         <section id="apply" class="fade-in" role="region" aria-labelledby="apply-title">
             <div class="container">
                 <div class="apply-box">
-                    <h2 id="apply-title" class="section-title">Application <span class="title-pink">Process</span></h2>
-                    <p class="section-intro">Places are limited, so attendance is by application. We review applications on a rolling basis and send decisions throughout, so applying early gives you the best chance of a place.</p>
-                    <div class="apply-cta">
-                        <a href="https://airtable.com/appsZqpkshG3D89Ij/pagYnp7aOj0jNmpNP/form" class="btn-primary" target="_blank" rel="noopener" data-goatcounter-click="apply-section">Apply by 17 Oct<span class="visually-hidden"> (opens in a new tab)</span></a>
-                    </div>
+                    <h2 id="apply-title" class="section-title">Applications <span class="title-pink">Closed</span></h2>
+                    <p class="section-intro">Applications for 2026 closed on 17 October. Thank you to everyone who applied. We are still sending decisions, so keep an eye on your inbox and spam folder.</p>
                     <p class="apply-note">If you are accepted, we will invite you to pay for your ticket to secure your spot.</p>
 
                     <h3 class="tier-heading" id="tickets">Ticket prices</h3>
-                    <p class="tier-intro">The conference runs on a trust-based ticket price system where you choose how much you pay, but we include income-based guidelines.</p>
+                    <p class="tier-intro">For accepted attendees, the conference runs on a trust-based ticket price system where you choose how much you pay, but we include income-based guidelines.</p>
                     <ul class="tier-list">
                         <li class="tier">
                             <span class="tier-name">Free</span>
@@ -4401,7 +4368,7 @@
                             </svg>
                         </summary>
                         <div class="faq-answer">
-                            <p>We are still putting the program together, but we expect to run additional events on Friday afternoon and evening, and on the Saturday and Sunday evenings. These will be for networking and socialising rather than talks. Accepted attendees will get the details before the conference.</p>
+                            <p>Yes. On Saturday, an apéro follows the program from 18:00 to 20:00, and on Sunday there are participant-organised events from 17:00 to 19:00. We also expect to run networking events on Friday afternoon and evening. Accepted attendees will get the details before the conference.</p>
                         </div>
                     </details>
                     <details class="faq-item">
