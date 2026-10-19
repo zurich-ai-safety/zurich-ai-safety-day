@@ -378,7 +378,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <path d="M790 641 H836 M790 657 H836 M790 673 H836"/>
         </g>
       </svg>
-      <svg class="map" data-floor="f" viewBox="80 225 1340 960" role="img" aria-label="Map of ETH Zurich main building, floor F: organisers and material room F 33.1, volunteers room F 33.2, speaker room F 33.3, and the foyer with 1:1 meeting points C and D" hidden>
+      <svg class="map" data-floor="f" viewBox="80 225 1340 960" role="img" aria-label="Map of ETH Zurich main building, floor F: late-entry doors to E 7, E 1.1 and E 1.2, organisers and material room F 33.1, volunteers room F 33.2, speaker room F 33.3, and the foyer with 1:1 meeting points C and D" hidden>
         <!-- Building outline (simplified, not to scale) -->
         <g fill="#1f1c24">
           <rect x="110" y="235" width="190" height="220" rx="6"/>
@@ -405,16 +405,36 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
 
         <!-- Lecture halls (not in use) -->
         <g fill="#2c2a31">
-          <path d="M452 729 V997 A139 134 0 0 1 452 729 Z"/>
           <path d="M642 770 A115 92 0 0 0 642 954 Z"/>
           <path d="M780 770 A124 92 0 0 1 780 954 Z"/>
-          <path d="M969 729 A140 134 0 0 1 969 997 Z"/>
         </g>
         <g font-size="18" fill="#8d8794" class="code">
-          <text x="400" y="870" text-anchor="middle">F 1</text>
           <text x="594" y="868" text-anchor="middle">F 3</text>
           <text x="830" y="868" text-anchor="middle">F 5</text>
-          <text x="1030" y="870" text-anchor="middle">F 7</text>
+        </g>
+
+        <!-- The same lecture rooms as on floor E: their back doors open on this floor (late entry) -->
+        <g class="room" data-room="groups" tabindex="0" role="button" aria-label="HG E 1.2: discussion groups. Late entry from floor F. Show schedule">
+          <path class="shape" d="M452 861 V729 A139 132 0 0 0 313 861 Z" fill="#6b48e8"/>
+          <text x="438" y="800" text-anchor="end" font-size="18" fill="#fff" class="code">E 1.2</text>
+          <text text-anchor="end" font-size="15.5" font-weight="700" fill="#fff"><tspan x="438" y="826">Discussion</tspan><tspan x="438" y="846">groups</tspan></text>
+        </g>
+        <g class="room" data-room="workshop" tabindex="0" role="button" aria-label="HG E 1.1: workshops. Late entry from floor F. Show schedule">
+          <path class="shape" d="M452 865 H313 A139 132 0 0 0 452 997 Z" fill="#b48cf2"/>
+          <text x="438" y="899" text-anchor="end" font-size="18" fill="#1a1020" class="code">E 1.1</text>
+          <text x="438" y="927" text-anchor="end" font-size="15.5" font-weight="700" fill="#1a1020">Workshops</text>
+        </g>
+        <g class="room" data-room="keynote" tabindex="0" role="button" aria-label="HG E 7: main plenarium. Late entry from floor F. Show schedule">
+          <path class="shape" d="M969 729 A140 134 0 0 1 969 997 Z" fill="#f39ad9"/>
+          <text x="988" y="854" font-size="20" fill="#1a1020" class="code">E 7</text>
+          <text font-size="17" font-weight="700" fill="#1a1020"><tspan x="988" y="884">Main</tspan><tspan x="988" y="905">plenarium</tspan></text>
+        </g>
+        <!-- Doors for late entry, at the back of E 1.2, E 1.1 and E 7 -->
+        <g fill="#0e0c11" stroke="#f39ad9" stroke-width="2.5">
+          <rect x="338" y="758" width="39" height="15" rx="3" transform="rotate(-42 357 765)"/>
+          <rect x="338" y="954" width="39" height="15" rx="3" transform="rotate(42 357 961)"/>
+          <rect x="1044" y="757" width="39" height="15" rx="3" transform="rotate(42 1063 764)"/>
+          <rect x="1044" y="955" width="39" height="15" rx="3" transform="rotate(-42 1063 962)"/>
         </g>
 
         <!-- Foyer: 1:1 meeting points C & D -->
@@ -478,6 +498,10 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
     </ul>
     <p class="legend-floor" data-floor="f" hidden>FLOOR F</p>
     <ul class="legend" data-floor="f" hidden>
+      <li><button type="button" data-room="keynote"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 0 H21 A21 21 0 0 1 21 42 H0 Z" fill="#f39ad9"/></svg><span><b>Main plenarium</b><small>HG E 7</small></span></button></li>
+      <li><button type="button" data-room="workshop"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#b48cf2"/></svg><span><b>Workshops</b><small>HG E 1.1</small></span></button></li>
+      <li><button type="button" data-room="groups"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#6b48e8"/></svg><span><b>Discussion groups</b><small>HG E 1.2</small></span></button></li>
+      <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="14" y="3" width="14" height="36" rx="4" fill="#0e0c11" stroke="#f39ad9" stroke-width="2.5"/></svg><span><b>Doors (for the late entry)</b><small>Back entrances to E 7, E 1.1 and E 1.2</small></span></div></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#4fd8d8"/></svg><span><b>Organisers &amp; material room</b><small>HG F 33.1</small></span></div></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#b48cf2"/></svg><span><b>Volunteers room</b><small>HG F 33.2</small></span></div></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#f39ad9"/></svg><span><b>Speaker room</b><small>HG F 33.3</small></span></div></li>
@@ -625,7 +649,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
 
   // On phones, zoom the map in on the rooms so it fits the screen without scrolling.
   const narrow = matchMedia('(max-width: 760px)');
-  const ZOOM = { d: '290 560 840 520', e: '290 240 1040 780', f: '370 500 800 520' };
+  const ZOOM = { d: '290 560 840 520', e: '290 240 1040 780', f: '295 500 850 520' };
   const fit = () => document.querySelectorAll('.map').forEach(svg => svg.setAttribute('viewBox', narrow.matches ? ZOOM[svg.dataset.floor] : '80 225 1340 960'));
   fit(); narrow.addEventListener('change', fit);
 
