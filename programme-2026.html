@@ -347,6 +347,12 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .d-title { font-size: 21px; }
 }
 
+/* Three pills don't fit beside the logo on a phone: the third (Event website, or Full programme
+   in a room view) gives way; the logo and footer link to the website, the lede to the programme. */
+@media (max-width: 520px) {
+  .site-link--site { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
@@ -372,7 +378,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     </a>
     <div class="links">
       <a class="site-link site-link--app" id="app-link" href="#" target="_blank" rel="noopener" hidden>Open the app</a>
-      <a class="site-link" href="https://swissaisafetydays.ch/">Event website</a>
+      <a class="site-link" id="map-link" href="map.html">Venue map</a>
+      <a class="site-link site-link--site" href="https://swissaisafetydays.ch/">Event website</a>
     </div>
   </div>
   <div class="wrap hero-copy">
@@ -539,8 +546,11 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     full.href = location.pathname;
     lede.textContent = 'Every session in this room, day by day. Open any session for its speakers, or see the ';
     lede.append(full, document.createTextNode(' for all rooms.'));
-    const back = $('.links .site-link:not(.site-link--app)');
+    const back = $('.links .site-link--site');
     back.textContent = 'Full programme'; back.href = location.pathname;
+    // The venue map opens on this room when it has one (keys are map.html's room ids).
+    const mapKey = { 'HG E 7': 'keynote', 'HG E 1.1': 'workshop', 'HG E 1.2': 'groups', 'HG E 5': 'office', 'HG E 4 & E 30.0015 & 30.0025': 'foyer' }[ROOM.id];
+    if (mapKey) $('#map-link').href = `map.html#${mapKey}`;
     const tag = el('div', 'bar-room'); tag.append(el('b', null, ROOM.label)); if (ROOM.sub) tag.append(el('span', null, ROOM.sub));
     $('.bar-inner').append(tag);
   }
