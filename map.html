@@ -37,7 +37,7 @@
   --r-workshop: #b48cf2;
   --r-groups: #6b48e8;
   --r-office: #fdd3f0;
-  --r-reg: #ffffff;
+  --r-reg: #211e27;
   --r-foyer: #2a1d2a;
   --f-display: 'Tachyon', 'Montserrat', sans-serif;
   --f-body: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -85,7 +85,6 @@ a { color: inherit; }
 .wordmark em { font-style: normal; color: var(--orchid); text-shadow: 0 0 18px rgba(242, 167, 227, 0.55), 0 0 42px rgba(216, 79, 198, 0.35); }
 .dateline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; }
 .dateline span { white-space: nowrap; }
-.dateline::before { content: ''; height: 1px; width: 56px; background: linear-gradient(90deg, transparent, var(--orchid)); }
 .dateline i { width: 5px; height: 5px; border-radius: 50%; background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
 .lede { margin: 22px 0 0; color: var(--text-2); max-width: 620px; }
 
@@ -114,7 +113,8 @@ a { color: inherit; }
 .legend small + small { margin-top: 8px; }
 .sw { width: 42px; height: 42px; }
 .cta { margin-top: 22px; }
-.cta .btn { width: 100%; padding-top: 15px; padding-bottom: 15px; }
+.cta .btn { padding: 15px 28px; }
+@media (max-width: 760px) { .cta .btn { width: 100%; } }
 
 footer { border-top: 1px solid var(--hair); padding: 26px 0 40px; color: var(--text-3); font-size: 12.5px; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; }
@@ -164,7 +164,6 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
   .hero-copy { padding-top: 22px; padding-bottom: 20px; }
   .wordmark { font-size: min(calc((100vw - 40px) / 14.2), 80px); }
   .dateline { font-size: 11px; letter-spacing: 0.2em; gap: 8px 12px; }
-  .dateline::before { display: none; }
   .lede { font-size: 14px; }
   dialog { width: 100%; max-width: 100%; max-height: 88dvh; margin: auto 0 0; border-radius: 22px 22px 0 0; border-bottom: 0; }
   @keyframes pop { from { transform: translateY(40px); opacity: 0; } }
@@ -203,13 +202,17 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
 
 <main class="wrap layout">
   <section aria-labelledby="map-title">
-    <h2 id="map-title" class="lede" style="font-weight:400;font-size:15px;margin-top:0">Tap a room on the map, or in the list, to see what’s on there on Saturday and Sunday.</h2>
+    <h2 id="map-title" class="lede" style="font-weight:400;font-size:15px;margin-top:0;max-width:none">Tap a room on the map, or in the list, to see what’s on there on Saturday and Sunday.</h2>
     <div class="map-scroll">
       <svg class="map" viewBox="80 225 1340 960" role="group" aria-label="Map of ETH Zurich main building, floor E">
         <defs>
           <pattern id="hatch" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
             <rect width="22" height="22" fill="#221d2b"/>
             <rect width="8" height="22" fill="#3a2f4d"/>
+          </pattern>
+          <pattern id="regdots" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#211e27"/>
+            <circle cx="7" cy="7" r="1.3" fill="#f39ad9" opacity=".18"/>
           </pattern>
           <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
             <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="b"/>
@@ -244,11 +247,11 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
         <text x="594" y="868" text-anchor="middle" font-size="18" fill="#8d8794" class="code">E 3</text>
 
         <!-- Rooms you can open -->
-        <g class="room" data-room="foyer" tabindex="0" role="button" aria-label="HG E 4 foyer: 1:1s, org fair and poster sessions. Show schedule">
+        <g class="room" data-room="foyer" tabindex="0" role="button" aria-label="HG E 4 foyer: 1:1s, org fair and Poster Session. Show schedule">
           <rect class="shape" x="647" y="611" width="130" height="360" rx="6" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="8 6"/>
           <text x="712" y="738" text-anchor="middle" font-size="20" fill="#f4e6f0" class="code">E 4</text>
           <text x="712" y="765" text-anchor="middle" font-size="14" fill="#cfc4cf">Foyer</text>
-          <text text-anchor="middle" font-size="15" font-weight="700" fill="#f39ad9"><tspan x="712" y="797">1:1s</tspan><tspan x="712" y="819">Org fair</tspan><tspan x="712" y="841">Poster</tspan><tspan x="712" y="863">sessions</tspan></text>
+          <text text-anchor="middle" font-size="15" font-weight="700" fill="#f39ad9"><tspan x="712" y="797">1:1s</tspan><tspan x="712" y="819">Org fair</tspan><tspan x="712" y="841">Poster</tspan><tspan x="712" y="863">Session</tspan></text>
         </g>
 
         <g class="room" data-room="office" tabindex="0" role="button" aria-label="HG E 5: office hours. Show schedule">
@@ -257,10 +260,10 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <text font-size="16" font-weight="700" fill="#1a1020"><tspan x="799" y="874">Office</tspan><tspan x="799" y="895">hours</tspan></text>
         </g>
 
-        <g class="room" data-room="keynote" tabindex="0" role="button" aria-label="HG E 7: keynote sessions. Show schedule">
+        <g class="room" data-room="keynote" tabindex="0" role="button" aria-label="HG E 7: main plenarium. Show schedule">
           <path class="shape" d="M969 729 A140 134 0 0 1 969 997 Z" fill="#f39ad9"/>
           <text x="988" y="854" font-size="20" fill="#1a1020" class="code">E 7</text>
-          <text x="988" y="886" font-size="17" font-weight="700" fill="#1a1020">Keynotes</text>
+          <text font-size="17" font-weight="700" fill="#1a1020"><tspan x="988" y="884">Main</tspan><tspan x="988" y="905">plenarium</tspan></text>
         </g>
 
         <g class="room" data-room="groups" tabindex="0" role="button" aria-label="HG E 1.2: discussion groups. Show schedule">
@@ -276,8 +279,8 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
         </g>
 
         <g class="room" data-room="reg" tabindex="0" role="button" aria-label="Registration desk at the Polyterrasse entrance. Show opening times">
-          <path class="shape" d="M572 600 V531 A139 139 0 0 1 850 531 V600 Z" fill="#ffffff"/>
-          <text text-anchor="middle" font-size="19" font-weight="700" fill="#14101a"><tspan x="711" y="545">Registration</tspan><tspan x="711" y="569">desk</tspan></text>
+          <path class="shape" d="M572 600 V531 A139 139 0 0 1 850 531 V600 Z" fill="url(#regdots)" stroke="#f39ad9" stroke-opacity=".55" stroke-width="2"/>
+          <text text-anchor="middle" font-size="19" font-weight="700" fill="#ece6f0"><tspan x="711" y="545">Registration</tspan><tspan x="711" y="569">desk</tspan></text>
         </g>
 
         <g class="room" data-room="catering" tabindex="0" role="button" aria-label="Catering: breakfast, lunch and breaks. Show times">
@@ -301,21 +304,21 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
       </svg>
     </div>
     <p class="map-note">Simplified from the ETH HG floor E plan. Not to scale.</p>
+    <div class="cta"><a class="btn" href="programme-2026.html">See the complete programme</a></div>
   </section>
 
   <aside aria-label="Rooms">
     <ul class="legend">
-      <li><button type="button" data-room="keynote"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 0 H21 A21 21 0 0 1 21 42 H0 Z" fill="#f39ad9"/></svg><span><b>Keynote sessions</b><small>HG E 7</small></span></button></li>
+      <li><button type="button" data-room="keynote"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 0 H21 A21 21 0 0 1 21 42 H0 Z" fill="#f39ad9"/></svg><span><b>Main plenarium</b><small>HG E 7</small></span></button></li>
       <li><button type="button" data-room="workshop"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#b48cf2"/></svg><span><b>Workshops</b><small>HG E 1.1</small></span></button></li>
       <li><button type="button" data-room="groups"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#6b48e8"/></svg><span><b>Discussion groups</b><small>HG E 1.2</small></span></button></li>
       <li><button type="button" data-room="office"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 0 H21 A21 21 0 0 1 21 42 H0 Z" fill="#fdd3f0"/></svg><span><b>Office hours</b><small>HG E 5</small></span></button></li>
-      <li><button type="button" data-room="reg"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 42 V21 A21 21 0 0 1 42 21 V42 Z" fill="#fff"/></svg><span><b>Registration desk</b><small>At the Polyterrasse entrance</small></span></button></li>
+      <li><button type="button" data-room="reg"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M1 41 V21 A20 20 0 0 1 41 21 V41 Z" fill="#211e27" stroke="#f39ad9" stroke-opacity=".55" stroke-width="2"/></svg><span><b>Registration desk</b><small>At the Polyterrasse entrance</small></span></button></li>
       <li><button type="button" data-room="foyer"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>1:1s</b><small>HG E 4 foyer</small><small>1:1 meeting points A &amp; B are here. Meeting points C &amp; D are in the foyer one floor above.</small></span></button></li>
-      <li><button type="button" data-room="foyer"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>Org fair / Poster sessions</b><small>HG E 4 foyer</small></span></button></li>
+      <li><button type="button" data-room="foyer"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>Org fair / Poster Session</b><small>HG E 4 foyer</small></span></button></li>
       <li><button type="button" data-room="catering"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect width="42" height="42" rx="4" fill="url(#hatch-sw)"/><defs><pattern id="hatch-sw" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="10" height="10" fill="#221d2b"/><rect width="4" height="10" fill="#3a2f4d"/></pattern></defs></svg><span><b>Catering</b></span></button></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="14" y="3" width="14" height="36" rx="4" fill="#0e0c11" stroke="#f39ad9" stroke-width="2.5"/></svg><span><b>Door</b></span></div></li>
     </ul>
-    <div class="cta"><a class="btn" href="programme-2026.html">See the complete programme</a></div>
   </aside>
 </main>
 
@@ -345,14 +348,14 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
   const PROGRAMME_URL = 'programme-2026.html';
   const FOYER = 'HG E 4 & E 30.0015 & 30.0025';
   const ROOMS = {
-    keynote:  { code: 'HG E 7',   title: 'Keynote sessions',  c: '#f39ad9', match: s => s.room === 'HG E 7' },
+    keynote:  { code: 'HG E 7',   title: 'Main plenarium',    c: '#f39ad9', match: s => s.room === 'HG E 7' },
     workshop: { code: 'HG E 1.1', title: 'Workshops',         c: '#b48cf2', match: s => s.room === 'HG E 1.1' },
     groups:   { code: 'HG E 1.2', title: 'Discussion groups', c: '#6b48e8', match: s => s.room === 'HG E 1.2' },
     office:   { code: 'HG E 5',   title: 'Office hours',      c: '#fdd3f0', match: s => s.room === 'HG E 5' },
     foyer:    { code: 'HG E 4 · Foyer', title: '1:1s, org fair and posters', c: '#f39ad9',
                 sub: '1:1 meeting points A & B are here. C & D are in the foyer one floor above.',
                 match: s => s.room === FOYER },
-    reg:      { code: 'Polyterrasse entrance', title: 'Registration desk', c: '#ffffff',
+    reg:      { code: 'Polyterrasse entrance', title: 'Registration desk', c: '#b9b2c2',
                 sub: 'Pick up your badge here when you arrive.',
                 match: s => /registration|doors open/i.test(s.title) },
     catering: { code: 'Next to E 1.1/1.2 and E 7', title: 'Catering', c: '#8f7bb8',
