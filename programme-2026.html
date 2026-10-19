@@ -240,6 +240,19 @@ main { padding-top: 24px; padding-bottom: 40px; }
 .card.fam-pause .card-title { font-weight: 500; color: var(--text-2); }
 .card .live { align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--void); background: var(--orchid-hot); border-radius: 999px; padding: 2px 8px; box-shadow: 0 0 12px var(--orchid-hot); }
 
+/* Keynotes and the opening and closing plenaries (type Keynote or Plenary) stand out in both
+   views: a warm orchid-to-violet fill and a brighter edge. Hover and "now" still win. */
+.card.is-feature, .s.is-feature {
+  background: linear-gradient(135deg, rgba(242, 167, 227, 0.26), rgba(122, 47, 158, 0.36) 55%, rgba(216, 79, 198, 0.2));
+  border-color: rgba(242, 167, 227, 0.5); box-shadow: 0 0 24px rgba(216, 79, 198, 0.16); }
+.card.is-feature .card-meta, .card.is-feature .card-who { color: var(--text-2); }
+.card.is-feature .card-meta b, .s.is-feature .s-time { color: var(--text); }
+.card.is-feature:hover, .card.is-feature:focus-visible, .s.is-feature:hover, .s.is-feature:focus-visible {
+  border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 26px color-mix(in srgb, var(--c) 50%, transparent); }
+.s.is-feature.is-live { border-color: var(--c); box-shadow: 0 0 0 1px var(--c), 0 0 26px color-mix(in srgb, var(--c) 50%, transparent); }
+.legend .legend-feature i { height: 12px; border-radius: 3px; border: 1px solid rgba(242, 167, 227, 0.6); box-shadow: none;
+  background: linear-gradient(135deg, rgba(242, 167, 227, 0.45), rgba(122, 47, 158, 0.6)); }
+
 .empty { margin: 40px 0; text-align: center; color: var(--text-2); }
 .empty button { margin-left: 8px; background: none; border: 1px solid var(--hair-2); border-radius: 999px; padding: 6px 14px; color: var(--text); }
 .empty button:hover { border-color: var(--orchid); }
@@ -363,6 +376,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .list-view { display: block !important; }
   .wordmark em, .eyebrow, .room-kicker, .room-head b, .room-sub { color: #000; text-shadow: none; }
   .card { border-color: #ccc; background: none; break-inside: avoid; }
+  .card.is-feature { background: none; border: 2px solid #000; box-shadow: none; }
   .card-title, .card-who, .card-meta, .slot-time { color: #000; }
   .slots::before, .slot-time::after { display: none; }
 }
@@ -458,6 +472,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   const roomOf = id => DATA.rooms.find(r => r.id === id);
   const roomName = s => s.room ? (roomOf(s.room) || { label: s.room }).label : 'Across campus';
   const famLabel = id => (FAMILIES.find(f => f.id === id) || {}).label || '';
+  // Keynotes and the opening/closing plenaries get the highlighted card (class is-feature).
+  const featured = s => /^(keynote|plenary)$/i.test(s.type || '');
   // One view per room: ?room=<room label, slugged> (foyer, hg-e-5, hg-e-7, hg-e-1-1, hg-e-1-2,
   // plus hg-e-3 from EXTRA_ROOMS) shows only that room's sessions. An unknown value falls back to
   // the full programme.
@@ -529,6 +545,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   }
   const legend = $('#legend');
   for (const f of FAMILIES) { const li = el('li', `fam-${f.id}`); li.append(el('i'), document.createTextNode(f.label)); legend.append(li); }
+  if (DATA.sessions.some(featured)) { const li = el('li', 'fam-stage legend-feature'); li.append(el('i'), document.createTextNode('Keynotes, opening and closing')); legend.append(li); }
   const topics = [...new Set(DATA.sessions.flatMap(s => s.topics))].sort((a, b) => a.localeCompare(b));
   for (const t of topics) { const o = el('option', null, t); o.value = t; $('#topic').append(o); }
   $('#updated').textContent = new Date(DATA.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Zurich' });
@@ -549,7 +566,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const back = $('.links .site-link--site');
     back.textContent = 'Full programme'; back.href = location.pathname;
     // The venue map opens on this room when it has one (keys are map.html's room ids).
-    const mapKey = { 'HG E 7': 'keynote', 'HG E 1.1': 'workshop', 'HG E 1.2': 'groups', 'HG E 5': 'office', 'HG E 4 & E 30.0015 & 30.0025': 'foyer' }[ROOM.id];
+    const mapKey = { 'HG E 7': 'keynote', 'HG E 1.1': 'workshop', 'HG E 1.2': 'groups', 'HG E 5': 'office', 'HG E 4 & E 30.0015 & 30.0025': 'foyer', 'Side Foyers (HG E 30.0065 & 30.0075)': 'catering' }[ROOM.id];
     if (mapKey) $('#map-link').href = `map.html#${mapKey}`;
     const tag = el('div', 'bar-room'); tag.append(el('b', null, ROOM.label)); if (ROOM.sub) tag.append(el('span', null, ROOM.sub));
     $('.bar-inner').append(tag);
@@ -602,6 +619,11 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   function renderGrid(list, bounds) {
     const grid = $('#grid');
     grid.replaceChildren();
+    // One column per room in the data (the first, the Foyer, a little wider), so a room added to
+    // the agenda gets its own column instead of wrapping.
+    const n = DATA.rooms.length;
+    grid.style.setProperty('--cols', `1.3fr repeat(${n - 1}, 1fr)`);
+    grid.style.minWidth = `${78 + n * 172}px`;
     const ppm = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ppm'));
     const height = (bounds.end - bounds.start) * ppm;
 
@@ -686,7 +708,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   }
 
   function sessionButton(s, mode, live) {
-    const b = el('button', (mode === 'grid' ? 's' : 'card') + ` fam-${s.family}` + (mode === 'grid' && s.family === 'pause' ? ' s--pause' : ''));
+    const b = el('button', (mode === 'grid' ? 's' : 'card') + ` fam-${s.family}` + (mode === 'grid' && s.family === 'pause' ? ' s--pause' : '') + (featured(s) ? ' is-feature' : ''));
     b.type = 'button'; b.dataset.key = s.key;
     const who = s.speakers.join(', ');
     b.setAttribute('aria-label', `${s.allDay ? 'All day' : `${fmt(s.start)} to ${fmt(s.end)}`}, ${s.where || roomName(s)}: ${s.title}${who ? ', with ' + who : ''}`);
