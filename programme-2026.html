@@ -194,6 +194,7 @@ main { padding-top: 24px; padding-bottom: 40px; }
 .s--pause .s-title { color: var(--text-2); font-weight: 500; }
 .s--band { border-style: solid; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 14%, transparent), rgba(17, 17, 20, 0.6) 40%, color-mix(in srgb, var(--c) 14%, transparent)); align-items: center; justify-content: center; text-align: center; }
 .s--band::before { display: none; }
+.s--band.is-muted { background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0 6px, transparent 6px 12px); border-style: dashed; border-color: rgba(255, 255, 255, 0.12); }
 .s--band { z-index: 3; }
 .s.is-dim { opacity: 0.16; }
 .s.is-dim:hover, .s.is-dim:focus-visible { opacity: 0.6; }
@@ -235,9 +236,9 @@ main { padding-top: 24px; padding-bottom: 40px; }
 .card-meta { font-size: 12px; color: var(--text-3); letter-spacing: 0.02em; }
 .card-meta b { color: var(--text-2); font-weight: 600; }
 .card-who { font-size: 13px; color: var(--text-2); }
-.card.fam-pause { background: none; border-style: dashed; border-color: rgba(255, 255, 255, 0.12); }
-.card.fam-pause::before { display: none; }
-.card.fam-pause .card-title { font-weight: 500; color: var(--text-2); }
+.card.fam-pause, .card.is-muted { background: none; border-style: dashed; border-color: rgba(255, 255, 255, 0.12); }
+.card.fam-pause::before, .card.is-muted::before { display: none; }
+.card.fam-pause .card-title, .card.is-muted .card-title { font-weight: 500; color: var(--text-2); }
 .card .live { align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--void); background: var(--orchid-hot); border-radius: 999px; padding: 2px 8px; box-shadow: 0 0 12px var(--orchid-hot); }
 
 /* Keynotes and the opening and closing plenaries (type Keynote or Plenary) stand out in both
@@ -400,7 +401,6 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     <p class="eyebrow">PROGRAMME</p>
     <h1 class="wordmark">SWISS <em>AI SAFETY</em> DAYS</h1>
     <p class="dateline"><span>7–8 November 2026</span><i></i><span>ETH Zurich</span></p>
-    <p class="lede">Two days of talks, workshops, office hours and networking. Choose a day, then open any session for its speakers and room.</p>
   </div>
 </header>
 
@@ -507,15 +507,18 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   const SOCIALS_DOC = 'https://docs.google.com/document/d/1rGcloSGinQmUMHtfaOOzL-uDxpfNKtX0DfCoJpAY4ZI/edit?usp=sharing';
   const EXTRA_SESSIONS = [
     { key: 'fri-participant-socials', day: 'fri', allDay: true, start: 0, end: 24 * 60,
-      title: 'Participant-led social events', type: 'Social', family: 'social', room: '', where: 'Around Zurich',
+      title: 'Participant-led social events', type: 'Social', family: 'social', room: '', where: 'Zurich',
       speakers: [], topics: [], swapcard: '',
       blocks: [
         { kind: 'p', text: 'Independently organised events led by participants, such as topical dinners, coworking, walking tours and museum visits. Anyone can organise one by adding it to the shared list.' },
-        { kind: 'link', text: 'See the list of participant-organised socials', href: SOCIALS_DOC },
         { kind: 'p', text: 'The Swiss AI Safety Days team is not responsible for these events and cannot provide support for them.' },
       ] },
   ];
   for (const x of EXTRA_SESSIONS) if (!DATA.sessions.some(s => s.day === x.day)) DATA.sessions.push(x);
+  // Participant-organised events (any day, from the data or EXTRA_SESSIONS) happen around the city,
+  // not in a conference room: their location reads "Zurich", they are greyed out like breaks, and
+  // their drawer button opens the shared list of socials instead of Swapcard.
+  for (const s of DATA.sessions) if (/participant[\s-]*(organi[sz]ed|led)/i.test(s.title)) { s.where = 'Zurich'; s.muted = true; s.docLink = SOCIALS_DOC; }
   for (const s of DATA.sessions) {
     s.hay = [s.title, s.type, s.room, roomName(s), ...s.speakers, ...s.topics,
       ...s.blocks.flatMap(b => b.kind === 'people' ? b.items.flatMap(i => [i.name, i.org, i.title]) : [b.text])].join(' ').toLowerCase();
@@ -559,10 +562,13 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     head.append(el('span', 'room-kicker', 'Room'), el('b', null, ROOM.label));
     if (ROOM.sub) head.append(el('span', 'room-sub', ROOM.sub));
     $('.dateline').after(head);
-    const lede = $('.lede'), full = el('a', null, 'full programme');
+    // Room views keep a short lede (the full programme has none): it links back to all rooms,
+    // which matters on phones where the Full programme pill is hidden.
+    const lede = el('p', 'lede'), full = el('a', null, 'full programme');
     full.href = location.pathname;
     lede.textContent = 'Every session in this room, day by day. Open any session for its speakers, or see the ';
     lede.append(full, document.createTextNode(' for all rooms.'));
+    head.after(lede);
     const back = $('.links .site-link--site');
     back.textContent = 'Full programme'; back.href = location.pathname;
     // The venue map opens on this room when it has one (keys are map.html's room ids).
@@ -708,7 +714,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   }
 
   function sessionButton(s, mode, live) {
-    const b = el('button', (mode === 'grid' ? 's' : 'card') + ` fam-${s.family}` + (mode === 'grid' && s.family === 'pause' ? ' s--pause' : '') + (featured(s) ? ' is-feature' : ''));
+    const b = el('button', (mode === 'grid' ? 's' : 'card') + ` fam-${s.family}` + (mode === 'grid' && (s.family === 'pause' || s.muted) ? ' s--pause' : '') + (s.muted ? ' is-muted' : '') + (featured(s) ? ' is-feature' : ''));
     b.type = 'button'; b.dataset.key = s.key;
     const who = s.speakers.join(', ');
     b.setAttribute('aria-label', `${s.allDay ? 'All day' : `${fmt(s.start)} to ${fmt(s.end)}`}, ${s.where || roomName(s)}: ${s.title}${who ? ', with ' + who : ''}`);
@@ -723,7 +729,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       const kind = s.type && s.family !== 'pause' ? ` · ${s.type}` : '';
       if (s.allDay) meta.append(el('b', null, 'All day'), document.createTextNode((s.where ? ` · ${s.where}` : s.room ? ` · ${roomName(s)}` : '') + kind));
       else if (ROOM) meta.append(el('b', null, `${fmt(s.start)}–${fmt(s.end)}`), document.createTextNode(kind));   // the room is in the header
-      else meta.append(el('b', null, roomName(s)), document.createTextNode(` · until ${fmt(s.end)}` + kind));
+      else meta.append(el('b', null, s.where || roomName(s)), document.createTextNode(` · until ${fmt(s.end)}` + kind));
       b.append(meta);
       if (who) b.append(el('span', 'card-who', who));
     }
@@ -751,7 +757,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     fact('When', `${DAYS[s.day].long}, ${s.allDay ? 'all day' : `${fmt(s.start)}–${fmt(s.end)}`}`);
     const r = roomOf(s.room);
     if (s.where) fact('Where', s.where);
-    else fact('Where', r ? (r.label === 'Foyer' ? 'Foyer, ' + r.sub : r.label + (r.sub ? ', ' + r.sub.toLowerCase() : '')) : 'Across campus', 'ETH Zurich main building');
+    else fact('Where', r ? (r.label === 'Foyer' ? 'Foyer, ' + r.sub : r.label + (r.sub ? ', ' + r.sub.toLowerCase() : '')) : 'Across campus');
     const bodyEl = el('div', 'd-body');
     for (const blk of s.blocks) {
       if (blk.kind === 'label') bodyEl.append(el('p', 'd-label', blk.text));
@@ -773,7 +779,12 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     }
     const tp = el('div', 'd-topics'); s.topics.forEach(t => tp.append(el('span', null, t)));
     const acts = el('div', 'd-actions');
-    const register = s.swapcard && s.family !== 'pause';
+    const doc = s.docLink, register = !doc && s.swapcard && s.family !== 'pause';
+    if (doc) {
+      const list = el('a', 'btn', 'Open the list of socials');
+      list.href = doc; list.target = '_blank'; list.rel = 'noopener';
+      acts.append(list);
+    }
     if (register) {
       const reg = el('a', 'btn', 'Register in Swapcard');
       reg.href = s.swapcard; reg.target = '_blank'; reg.rel = 'noopener';
@@ -782,8 +793,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     drawer.append(top, title, facts);
     if (s.blocks.length) drawer.append(bodyEl);
     if (s.topics.length) drawer.append(tp);
-    if (register) drawer.append(acts);
-    if (register) drawer.append(el('p', 'd-hint', 'Opens this session in the Swapcard app, where you can register for it. Log in with the email you used to register for the event.'));
+    if (register || doc) drawer.append(acts);
+    if (doc) drawer.append(el('p', 'd-hint', 'Opens the shared Google Doc where participants list the events they organise. Anyone can add one.'));
     drawer.hidden = false; scrim.hidden = false;
     requestAnimationFrame(() => { drawer.classList.add('is-open'); scrim.classList.add('is-open'); });
     history.replaceState(null, '', `#s=${encodeURIComponent(s.key)}`);
