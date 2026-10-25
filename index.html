@@ -1525,6 +1525,20 @@
             font-weight: 500;
         }
 
+        /* Two roles at two organisations: one "Role, Org" line each, so it is
+           clear which role belongs to which organisation. */
+        .speaker-affil-pair {
+            display: block;
+            /* Hanging indent: when "Role, Org" wraps, the organisation's line
+               sits indented under its role instead of reading as a new pair. */
+            padding-left: 0.9em;
+            text-indent: -0.9em;
+        }
+
+        .speaker-affil-pair .speaker-affil-org {
+            display: inline;
+        }
+
         .speaker-chevron {
             color: var(--ink-accent);
             flex-shrink: 0;
@@ -3868,11 +3882,11 @@
                     </details>
                     <details class="speaker-card speaker-card--compact">
                         <summary class="speaker-summary">
-                            <img class="speaker-photo" src="assets/Speakers/carsten_lanquillon.jpg" alt="Portrait of Carsten Lanquillon, co-founder of COAI Research" loading="lazy" width="110" height="132">
+                            <img class="speaker-photo" src="assets/Speakers/carsten_lanquillon.jpg" alt="Portrait of Carsten Lanquillon, co-founder of COAI Research and professor at Heilbronn University" loading="lazy" width="110" height="132">
                             <div class="speaker-head">
                                 <span class="speaker-tag">Speaker</span>
                                 <h3 class="speaker-name">Carsten Lanquillon</h3>
-                                <p class="speaker-affil">Co-founder<span class="speaker-affil-org">COAI Research</span></p>
+                                <p class="speaker-affil"><span class="speaker-affil-pair">Co-founder, <span class="speaker-affil-org">COAI&nbsp;Research</span></span> <span class="speaker-affil-pair">Professor, <span class="speaker-affil-org">Heilbronn&nbsp;University</span></span></p>
                             </div>
                             <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
                                 <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -4135,6 +4149,23 @@
                         </summary>
                         <div class="speaker-detail">
                             <p class="speaker-bio">Works on AI safety and security at Anthropic. Previously, as a fellow at MATS and Anthropic, he worked on AI Control, red-teaming and monitoring. He studied Computer Science at ETH Z&uuml;rich.</p>
+                        </div>
+                    </details>
+                    <details class="speaker-card speaker-card--compact">
+                        <summary class="speaker-summary">
+                            <img class="speaker-photo" src="assets/Speakers/patrick_widmann.jpg" alt="Portrait of Patrick Widmann, Director of Zurich AI Safety" loading="lazy" width="110" height="132">
+                            <div class="speaker-head">
+                                <span class="speaker-tag">Speaker</span>
+                                <h3 class="speaker-name">Patrick Widmann</h3>
+                                <p class="speaker-affil">Director<span class="speaker-affil-org">Zurich AI Safety (ZAIS)</span></p>
+                            </div>
+                            <svg class="speaker-chevron" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <img class="speaker-org" src="assets/Orgs/zais-mark.png" alt="" aria-hidden="true" loading="lazy">
+                        </summary>
+                        <div class="speaker-detail">
+                            <p class="speaker-bio">Director of ZAIS, the organization building a central AI safety hub in Switzerland and behind the Swiss AI Safety Days. As an operator, founder and startup advisor in impact and AI, he has built and supported innovation ecosystems across Africa, Asia and Europe. Today, his focus is on helping Europe's strongest technical talent contribute to making AI safe.</p>
                         </div>
                     </details>
                 </div>
