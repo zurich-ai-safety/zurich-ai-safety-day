@@ -217,6 +217,26 @@ main { padding-top: 24px; padding-bottom: 40px; }
 .now-tag i { width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(242, 167, 227, 0.5), 0 0 18px var(--orchid-hot); animation: pulse 2.4s ease-in-out infinite; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(242, 167, 227, 0.16), 0 0 26px var(--orchid-hot); } }
 
+/* ---------------------------------------------------------------- phone timeline */
+/* On phones the List view is a timeline: each session starts at its time and is as tall as it
+   lasts. Overlapping sessions sit in lanes side by side; the lanes scroll sideways together
+   (.tl-scroll) beside the clock column, which stays put, and the next lane peeks in from the
+   right edge of the screen. */
+.tl { --ppm: 3px; }
+.tl[hidden] { display: none; }
+.tl .allday { grid-template-columns: 1fr; margin-bottom: 18px; }
+.tl-frame { position: relative; display: flex; }
+.tl-frame .spine { flex: 0 0 var(--time-col); position: relative; z-index: auto; background: none; }   /* not the Rooms grid's sticky phone spine */
+.tl-scroll { flex: 1 1 auto; min-width: 0; margin: 0 -16px 0 8px; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scrollbar-width: none; }
+.tl-scroll::-webkit-scrollbar { display: none; }
+.tl-body { position: relative; display: flex; gap: 8px; width: max-content; height: 100%; padding-right: 16px; }
+.tl-lane { position: relative; z-index: 2; flex: 0 0 calc(100vw - var(--time-col) - 40px); scroll-snap-align: start; }
+.tl-body.is-multi .tl-lane { flex-basis: calc(100vw - var(--time-col) - 80px); }
+.tl-lane::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px calc(var(--ppm) * 30)); background-position: 0 var(--grid-offset, 0); }
+.tl-lane .s { left: 0; right: 0; }
+
 /* ---------------------------------------------------------------- list view */
 .slots { list-style: none; margin: 0; padding: 0; position: relative; }
 .slots::before { content: ''; position: absolute; left: 65px; top: 6px; bottom: 6px; width: 2px; border-radius: 2px;
@@ -228,7 +248,6 @@ main { padding-top: 24px; padding-bottom: 40px; }
 .slot.is-now .slot-time { color: var(--orchid-hot); }
 .slot.is-now .slot-time::after { background: #fff; box-shadow: 0 0 0 3px rgba(242, 167, 227, 0.4), 0 0 18px var(--orchid-hot); }
 .slot-cards { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-.slot-dots { display: none; }
 .card { position: relative; display: flex; flex-direction: column; gap: 4px; text-align: left; margin: 0; padding: 14px 16px 14px 18px;
   border: 1px solid var(--hair); border-radius: var(--radius); background: linear-gradient(160deg, var(--panel-2), var(--panel)); transition: border-color .2s, box-shadow .25s; }
 .card::before { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c); box-shadow: 0 0 10px var(--c); }
@@ -357,15 +376,6 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .slot-time--allday { font-size: 10.5px; letter-spacing: 0; }   /* "All day" fits the 50px time column */
   .slot-time::after { right: -16.5px; }
   .slot-cards { grid-template-columns: 1fr; }
-  /* Sessions starting at the same time: one swipeable row instead of a tall stack. Each card
-     leaves the next one peeking in from the right edge of the screen. */
-  .slot-cards--multi { display: flex; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
-    margin: -3px -16px -3px 0; padding: 3px 16px 3px 0; scrollbar-width: none; }
-  .slot-cards--multi::-webkit-scrollbar { display: none; }
-  .slot-cards--multi > .card { flex: 0 0 calc(100% - 40px); scroll-snap-align: start; }
-  .slot-dots { display: flex; justify-content: flex-end; gap: 4px; margin-top: 9px; }
-  .slot-dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); transition: background .2s, box-shadow .2s; }
-  .slot-dots i.is-on { background: var(--orchid); box-shadow: 0 0 6px var(--orchid); }
   .drawer { top: auto; height: min(88dvh, 100%); width: 100%; border-left: 0; border-top: 1px solid rgba(242, 167, 227, 0.25); border-radius: 22px 22px 0 0; padding: 22px 20px 30px; transform: translateY(104%); }
   .drawer.is-open { transform: none; }
   .d-title { font-size: 21px; }
@@ -439,7 +449,7 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     <div class="allday" id="allday" hidden></div>
     <div class="grid-scroll"><div class="grid" id="grid"></div></div>
   </section>
-  <section class="list-view" id="list-view" aria-label="Programme by time"><ol class="slots" id="slots"></ol></section>
+  <section class="list-view" id="list-view" aria-label="Programme by time"><ol class="slots" id="slots"></ol><div class="tl" id="tl" hidden></div></section>
   <p class="empty" id="empty" hidden>No sessions on this day match your filters.<button type="button" id="clear">Clear filters</button></p>
   <ul class="legend" id="legend" aria-label="Colour key"></ul>
 </main>
@@ -692,9 +702,13 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       tag.append(pill, el('i')); spine.append(tag);
     }
     grid.append(head, body);
-    // Fit each block's text to its height: drop the speaker line first, then shorten the title.
+    fitBlocks(body);
+  }
+
+  // Fit each block's text to its height: drop the speaker line first, then shorten the title.
+  function fitBlocks(root) {
     requestAnimationFrame(() => {
-      for (const b of body.querySelectorAll('.s:not(.s--sm)')) {
+      for (const b of root.querySelectorAll('.s:not(.s--sm)')) {
         const over = () => b.scrollHeight > b.clientHeight + 1;
         if (!over()) continue;
         const who = b.querySelector('.s-who'); if (who) who.remove();
@@ -702,6 +716,76 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
         for (const n of [2, 1]) { if (!over()) break; t.style.webkitLineClamp = n; t.style.lineClamp = n; }
       }
     });
+  }
+
+  // ---------------------------------------------------------------- phone timeline
+  // The List view on phones: sessions placed on a time axis (top = start, height = length), in
+  // lanes when they overlap. Lanes fill in this order, so the main stage, breaks and meals form
+  // the first lane, then socials and workshops, and office hours come last.
+  const LANE_ORDER = { stage: 0, pause: 1, social: 2, hands: 3, qa: 4 };
+  function renderTimeline(list) {
+    const tl = $('#tl'), old = tl.querySelector('.tl-scroll');
+    const keep = old && tl.dataset.day === state.day ? old.scrollLeft : 0;
+    tl.dataset.day = state.day;
+    tl.replaceChildren();
+    const shown = list.filter(matches);
+    const now = zurichNow(), today = now.date === DAYS[state.day].date;
+    const live = s => today && now.min >= s.start && now.min < s.end;
+    const allDay = shown.filter(s => s.allDay), timed = shown.filter(s => !s.allDay);
+    if (allDay.length) {
+      const strip = el('div', 'allday');
+      for (const s of allDay) strip.append(sessionButton(s, 'list', live(s)));
+      tl.append(strip);
+    }
+    if (!timed.length) return;
+
+    const isMain = s => ((roomOf(s.room) || {}).sub === 'Main hall') ? 1 : 0;
+    const order = s => LANE_ORDER[s.family] ?? 3;
+    const lanes = [];
+    for (const s of [...timed].sort((a, b) => order(a) - order(b) || a.start - b.start || isMain(b) - isMain(a) || b.end - a.end)) {
+      let i = 0;
+      while (lanes[i] && lanes[i].some(o => o.start < s.end && s.start < o.end)) i++;
+      (lanes[i] = lanes[i] || []).push(s);
+    }
+
+    const start = Math.floor(Math.min(...timed.map(s => s.start)) / 30) * 30;
+    const end = Math.ceil(Math.max(...timed.map(s => s.end)) / 30) * 30;
+    const ppm = parseFloat(getComputedStyle(tl).getPropertyValue('--ppm'));
+    const height = (end - start) * ppm;
+    const frame = el('div', 'tl-frame'), scroller = el('div', 'tl-scroll');
+    const body = el('div', 'tl-body' + (lanes.length > 1 ? ' is-multi' : ''));
+    frame.style.height = height + 'px';
+    const spine = el('div', 'spine');
+    for (let m = start; m <= end; m += 30) {
+      const t = el('span', 'tick' + (m % 60 === 0 ? ' tick--hour' : ''), fmt(m));
+      if (today && Math.abs(m - now.min) < 10) t.style.opacity = 0;   // the "now" label sits here
+      t.style.top = Math.max(7, Math.min(height - 7, (m - start) * ppm)) + 'px';
+      spine.append(t);
+    }
+    for (const ln of lanes) {
+      const lane = el('div', 'tl-lane');
+      for (const s of ln.sort((a, b) => a.start - b.start)) {
+        const b = sessionButton(s, 'grid'), time = b.querySelector('.s-time');
+        const h = Math.max(22, (s.end - s.start) * ppm - 4);
+        // Short sessions get one line, so they show only the start time; the rest add the room.
+        if (h < 58) { b.classList.add('s--sm'); time.textContent = fmt(s.start); }
+        else if (!ROOM) time.append(` · ${s.where || roomName(s)}`);
+        if (live(s)) b.classList.add('is-live');
+        b.style.top = (s.start - start) * ppm + 2 + 'px'; b.style.height = h + 'px';
+        lane.append(b);
+      }
+      body.append(lane);
+    }
+    if (today && now.min >= start && now.min <= end) {
+      const y = (now.min - start) * ppm + 'px';
+      const line = el('div', 'now'); line.style.top = y; frame.append(line);
+      const tag = el('span', 'now-tag'); tag.style.top = y;
+      const pill = el('b', null, 'NOW'); pill.append(el('span', null, ' ' + fmt(now.min)));
+      tag.append(pill, el('i')); spine.append(tag);
+    }
+    scroller.append(body); frame.prepend(spine, scroller); tl.append(frame);
+    scroller.scrollLeft = keep;
+    fitBlocks(body);
   }
 
   // ---------------------------------------------------------------- list view
@@ -715,20 +799,6 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       if (today && items.some(s => now.min >= s.start && now.min < s.end)) li.classList.add('is-now');
       li.append(el('div', 'slot-time' + (start < 0 ? ' slot-time--allday' : ''), start < 0 ? 'All day' : fmt(start)));
       const wrap = el('div', 'slot-cards');
-      // On phones, sessions that start together sit side by side in a swipeable row; the dots
-      // under the time show how many there are and which one is in view.
-      if (items.length > 1) {
-        wrap.classList.add('slot-cards--multi');
-        const dots = el('span', 'slot-dots');
-        dots.setAttribute('aria-hidden', 'true');
-        for (let i = 0; i < items.length; i++) dots.append(el('i', i ? null : 'is-on'));
-        li.firstChild.append(dots);
-        wrap.addEventListener('scroll', () => {
-          const step = wrap.firstChild.offsetWidth + 10;
-          const on = Math.min(items.length - 1, Math.round(wrap.scrollLeft / step));
-          [...dots.children].forEach((d, i) => d.classList.toggle('is-on', i === on));
-        }, { passive: true });
-      }
       // Breaks and meals lead each time slot and office hours come after the session they follow,
       // so the same kinds line up in the same columns down the list.
       const rank = s => s.family === 'pause' ? 0 : s.family === 'qa' ? 2 : 1;
@@ -854,7 +924,9 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
     const nothing = !list.length;   // a day with no sessions at all (Friday, for now)
     const grid = state.view === 'grid';
     $('#grid-view').hidden = nothing || !grid; $('#list-view').hidden = nothing || grid;
-    if (!nothing && !grid) renderList(list);
+    const timeline = !nothing && !grid && phone.matches;
+    $('#slots').hidden = timeline; $('#tl').hidden = !timeline;
+    if (!nothing && !grid) (timeline ? renderTimeline : renderList)(list);
     if (!nothing && grid) {
       // All-day sessions sit in a strip above the grid; the grid itself covers the timed ones.
       const timed = list.filter(s => !s.allDay), allDay = list.filter(s => s.allDay && matches(s));
@@ -872,6 +944,8 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   }
 
   // ---------------------------------------------------------------- start
+  const phone = matchMedia('(max-width: 760px)');
+  phone.addEventListener('change', () => render());
   const hash = decodeURIComponent(location.hash.slice(1));
   const linked = hash.startsWith('s=') ? DATA.sessions.find(s => s.key === hash.slice(2)) : null;
   const today = zurichNow().date;
