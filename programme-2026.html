@@ -228,6 +228,7 @@ main { padding-top: 24px; padding-bottom: 40px; }
 .slot.is-now .slot-time { color: var(--orchid-hot); }
 .slot.is-now .slot-time::after { background: #fff; box-shadow: 0 0 0 3px rgba(242, 167, 227, 0.4), 0 0 18px var(--orchid-hot); }
 .slot-cards { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.slot-dots { display: none; }
 .card { position: relative; display: flex; flex-direction: column; gap: 4px; text-align: left; margin: 0; padding: 14px 16px 14px 18px;
   border: 1px solid var(--hair); border-radius: var(--radius); background: linear-gradient(160deg, var(--panel-2), var(--panel)); transition: border-color .2s, box-shadow .25s; }
 .card::before { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c); box-shadow: 0 0 10px var(--c); }
@@ -356,6 +357,15 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
   .slot-time--allday { font-size: 10.5px; letter-spacing: 0; }   /* "All day" fits the 50px time column */
   .slot-time::after { right: -16.5px; }
   .slot-cards { grid-template-columns: 1fr; }
+  /* Sessions starting at the same time: one swipeable row instead of a tall stack. Each card
+     leaves the next one peeking in from the right edge of the screen. */
+  .slot-cards--multi { display: flex; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+    margin: -3px -16px -3px 0; padding: 3px 16px 3px 0; scrollbar-width: none; }
+  .slot-cards--multi::-webkit-scrollbar { display: none; }
+  .slot-cards--multi > .card { flex: 0 0 calc(100% - 40px); scroll-snap-align: start; }
+  .slot-dots { display: flex; justify-content: flex-end; gap: 4px; margin-top: 9px; }
+  .slot-dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); transition: background .2s, box-shadow .2s; }
+  .slot-dots i.is-on { background: var(--orchid); box-shadow: 0 0 6px var(--orchid); }
   .drawer { top: auto; height: min(88dvh, 100%); width: 100%; border-left: 0; border-top: 1px solid rgba(242, 167, 227, 0.25); border-radius: 22px 22px 0 0; padding: 22px 20px 30px; transform: translateY(104%); }
   .drawer.is-open { transform: none; }
   .d-title { font-size: 21px; }
@@ -705,6 +715,20 @@ footer a:hover { color: var(--orchid); border-color: var(--orchid); }
       if (today && items.some(s => now.min >= s.start && now.min < s.end)) li.classList.add('is-now');
       li.append(el('div', 'slot-time' + (start < 0 ? ' slot-time--allday' : ''), start < 0 ? 'All day' : fmt(start)));
       const wrap = el('div', 'slot-cards');
+      // On phones, sessions that start together sit side by side in a swipeable row; the dots
+      // under the time show how many there are and which one is in view.
+      if (items.length > 1) {
+        wrap.classList.add('slot-cards--multi');
+        const dots = el('span', 'slot-dots');
+        dots.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < items.length; i++) dots.append(el('i', i ? null : 'is-on'));
+        li.firstChild.append(dots);
+        wrap.addEventListener('scroll', () => {
+          const step = wrap.firstChild.offsetWidth + 10;
+          const on = Math.min(items.length - 1, Math.round(wrap.scrollLeft / step));
+          [...dots.children].forEach((d, i) => d.classList.toggle('is-on', i === on));
+        }, { passive: true });
+      }
       // Breaks and meals lead each time slot and office hours come after the session they follow,
       // so the same kinds line up in the same columns down the list.
       const rank = s => s.family === 'pause' ? 0 : s.family === 'qa' ? 2 : 1;
