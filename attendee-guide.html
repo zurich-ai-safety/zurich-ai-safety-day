@@ -81,8 +81,12 @@ h1 { margin: 26px 0 10px; font-size: clamp(34px, 5.4vw, 48px); line-height: 1.12
 .contents li::marker { color: var(--text-3); font-size: 13px; }
 .contents a { text-decoration: none; color: var(--text-2); }
 .contents a:hover { color: var(--orchid); }
-.contents a.hot { color: var(--orchid); font-weight: 600; }
-.contents a.hot:hover { color: var(--text); }
+.contents a.hot {
+  color: var(--orchid); font-weight: 600;
+  background: rgba(216, 79, 198, 0.16);
+  padding: 2px 8px; margin-left: -8px; border-radius: 6px;
+}
+.contents a.hot:hover { color: var(--text); background: rgba(216, 79, 198, 0.28); }
 
 /* Highlight: the one paragraph to remember. */
 .highlight {
