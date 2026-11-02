@@ -157,6 +157,15 @@ select:hover { border-color: var(--muted); }
 .guide li::marker { color: var(--pink); }
 .guide p { margin: .25rem 0; }
 .guide q { color: #e6e2ea; font-style: italic; }
+.guide a { color: var(--text); text-decoration-color: var(--pink); text-underline-offset: .2em; word-break: break-word; }
+.guide a:hover { color: var(--pink); }
+.guide dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .3rem 1rem; margin: 0; }
+.guide dt { font-weight: 700; color: var(--text); }
+.guide dd { margin: 0; }
+.guide ol { margin: 0; padding-left: 1.3rem; }
+.guide ol li::marker { color: var(--pink); font-weight: 700; }
+.guide b { color: var(--text); }
+@media (max-width: 640px) { .guide dl { grid-template-columns: 1fr; gap: 0; } .guide dd { margin-bottom: .45rem; } }
 @media (max-width: 640px) { .guide { padding: 1.1rem 1rem .9rem; } }
 
 .empty, .notice { max-width: 640px; color: var(--muted); }
@@ -267,8 +276,38 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88r
   </aside>
 </template>
 
+<!-- Shown under the schedule when a volunteer's name is chosen (not the organising team). Edit the text here. -->
+<template id="volunteer-info">
+  <aside class="guide" aria-labelledby="info-title">
+    <h2 id="info-title">General volunteer information</h2>
+    <section>
+      <dl>
+        <dt>Slack channel</dt><dd><a href="https://ea-switzerland.slack.com/archives/C0C6B1W8GP4" target="_blank" rel="noopener">Volunteers channel on Slack</a></dd>
+        <dt>Swapcard</dt><dd><a href="https://app.swapcard.com/event/swiss-ai-safety-days/" target="_blank" rel="noopener">app.swapcard.com/event/swiss-ai-safety-days</a></dd>
+        <dt>Map</dt><dd><a href="https://swissaisafetydays.ch/map">swissaisafetydays.ch/map</a></dd>
+        <dt>Volunteers room</dt><dd><b>HG F 33.2</b>. You can leave your belongings there (not supervised).</dd>
+      </dl>
+    </section>
+    <section>
+      <h3>Make sure you have 3 things installed on your phone</h3>
+      <ol>
+        <li><b>Swapcard.</b> During the conference, Swapcard will be the source of truth for the programme.</li>
+        <li><b>Slack.</b> All the communication is in the Slack channel for volunteers.</li>
+        <li><b>Luma app.</b> Only relevant for the registration desk.</li>
+      </ol>
+    </section>
+    <section>
+      <h3>Emergency contact</h3>
+      <dl>
+        <dt>General questions</dt><dd>Volunteers Lead Marina, <a href="tel:+41778159681">+41 77 815 96 81</a></dd>
+        <dt>Ticket scanning app errors</dt><dd>Andre, <a href="tel:+4915203860678">+49 1520 3860678</a></dd>
+      </dl>
+    </section>
+  </aside>
+</template>
+
 <footer>
-  <div class="wrap">Volunteer coordination contact: <a id="contact" href="mailto:marina@aisafety.ch">marina@aisafety.ch</a> and Slack channel.<span id="updated"></span></div>
+  <div class="wrap">Volunteer coordination contact: <a id="contact" href="mailto:marina@aisafety.ch">marina@aisafety.ch</a> and <a href="https://ea-switzerland.slack.com/archives/C0C6B1W8GP4" target="_blank" rel="noopener">Slack channel</a>.<span id="updated"></span></div>
 </footer>
 
 <script>
@@ -439,7 +478,7 @@ const VolunteerPage = (() => {
 
     const day = DAYS.find((d) => d.key === currentDay);
     const { own, tasks } = tasksFor(name, day);
-    const guide = PEOPLE.org.includes(name) ? $("#moderator-guide").innerHTML : "";   // organising team only
+    const guide = $(PEOPLE.org.includes(name) ? "#moderator-guide" : "#volunteer-info").innerHTML;   // org team / volunteers
     if (!tasks.length) { el.innerHTML = `<p class="empty">${esc(name)} has no tasks on ${esc(day.title)}.</p>` + guide; return; }
 
     const timed = own.filter((r) => r.start);
