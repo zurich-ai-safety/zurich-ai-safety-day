@@ -1224,11 +1224,9 @@
            Stacked, there is no neighbour to match heights with anyway, so the
            plain five-line clamp underneath is the right behaviour. */
         @media (min-width: 621px) {
-            /* Three keynotes to a row, sized and spaced like the compact grid
-               below so the two read as one set: flex rather than grid so a
-               short row (two up on a tablet) centres its leftover card, a
-               300px basis with the same 368px cap ((1136 - 32) / 3), and the
-               1rem gap the compact grid uses instead of the shared 2rem.
+            /* Two keynotes to a row, spanning the same width as the compact
+               grid below, with the 1rem gap it uses instead of the shared
+               2rem. flex rather than grid so an odd card out centres itself.
                Phones keep the stacked grid above untouched. */
             .speakers-grid--lead {
                 display: flex;
@@ -1237,10 +1235,16 @@
                 gap: 1rem;
             }
 
+            /* The 40% basis is what caps a row at two: two fit (80% plus the
+               gap), a third never does. Below a 616px container the 300px
+               floor drops to one card per row, which grows to the compact
+               cards' 368px ((1136 - 32) / 3); two up, the half-width cap lets
+               them fill the row (560px each at full width). min() keeps the
+               floor from pushing a card out of a narrower container. */
             .speakers-grid--lead .speaker-card {
-                flex: 1 1 300px;
-                max-width: 368px;
-                min-width: 0;
+                flex: 1 1 40%;
+                max-width: max(368px, calc(50% - 0.5rem));
+                min-width: min(300px, 100%);
                 /* The compact cards' 0.625rem in place of 2rem, inside and
                    between the portrait and the name. */
                 padding: 0.625rem;
@@ -1256,10 +1260,10 @@
             /* Portrait and name on the top row, bio across the full card width
                beneath them, rather than squeezed into the column beside the
                photo.
-               align-items: start, as on the compact cards: with three side by
+               align-items: start, as on the compact cards: with cards side by
                side, the portraits and Keynote tags have to start on the same
                line across the row. (It used to be end, which kept a short title
-               next to its bio when there were two wide cards, but three-up the
+               next to its bio when there were two wide cards, but side by side the
                title blocks differ in height and end-alignment left every
                portrait and tag at a different level.) */
             .speakers-grid--lead .speaker-card {
@@ -1287,7 +1291,16 @@
                 align-self: stretch;
                 min-height: 0;
             }
+        }
 
+        /* The height-driven clamp below needs a neighbour to set the row
+           height. Two keynotes only share a row from a 616px container
+           (300 + 16 + 300): a 680px window, or about 697px where a classic
+           scrollbar takes its share, hence 700. Below that each card sits
+           alone, the bio would ask for no height at all and Yoshua's ran out
+           of the bottom of his card, so there the plain five-line clamp
+           further down applies instead. */
+        @media (min-width: 700px) {
             /* flex-basis 0, not auto: on auto the untruncated bio would still
                count towards the card's natural height, the row would size to
                all eleven lines of it and nothing would ever be clamped. At 0
