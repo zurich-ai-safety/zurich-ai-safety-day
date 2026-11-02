@@ -276,15 +276,13 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88r
   </aside>
 </template>
 
-<!-- Shown under the schedule when a volunteer's name is chosen (not the organising team). Edit the text here.
-     The "my-schedule" link is filled in with the chosen volunteer's own page. -->
+<!-- Shown under the schedule when a volunteer's name is chosen (not the organising team). Edit the text here. -->
 <template id="volunteer-info">
   <aside class="guide" aria-labelledby="info-title">
     <h2 id="info-title">General volunteer information</h2>
     <section>
       <dl>
         <dt>Slack channel</dt><dd><a href="https://ea-switzerland.slack.com/archives/C0C6B1W8GP4" target="_blank" rel="noopener">Volunteers channel on Slack</a></dd>
-        <dt>Shifts schedule</dt><dd><a class="my-schedule" href="volunteers.html">Your personal schedule (this page)</a></dd>
         <dt>Swapcard</dt><dd><a href="https://app.swapcard.com/event/swiss-ai-safety-days/" target="_blank" rel="noopener">app.swapcard.com/event/swiss-ai-safety-days</a></dd>
         <dt>Map</dt><dd><a href="https://swissaisafetydays.ch/map">swissaisafetydays.ch/map</a></dd>
         <dt>Volunteers room</dt><dd><b>HG F 33.2</b>. You can leave your belongings there (not supervised).</dd>
@@ -480,9 +478,7 @@ const VolunteerPage = (() => {
 
     const day = DAYS.find((d) => d.key === currentDay);
     const { own, tasks } = tasksFor(name, day);
-    const guide = PEOPLE.org.includes(name) ? $("#moderator-guide").innerHTML   // organising team
-      : $("#volunteer-info").innerHTML.replace('class="my-schedule" href="volunteers.html"',   // volunteers: link to their own page
-          `class="my-schedule" href="${esc("volunteers.html?name=" + encodeURIComponent(name))}"`);
+    const guide = $(PEOPLE.org.includes(name) ? "#moderator-guide" : "#volunteer-info").innerHTML;   // org team / volunteers
     if (!tasks.length) { el.innerHTML = `<p class="empty">${esc(name)} has no tasks on ${esc(day.title)}.</p>` + guide; return; }
 
     const timed = own.filter((r) => r.start);
