@@ -145,6 +145,29 @@ select:hover { border-color: var(--muted); }
   background: var(--pink); border-radius: 999px; padding: .12rem .5rem; margin-left: .45rem; vertical-align: .18em; }
 .badge.soft { background: transparent; color: var(--muted); border: 1px solid var(--line); }
 
+/* Moderator instructions (organising team only) */
+.guide { max-width: calc(4.2rem + 1.7rem + 1.2rem + 620px); margin-top: 2.4rem; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1.3rem 1.4rem 1.1rem; font-size: .9rem; color: #cfcbd5; }
+.guide > h2 { font: 400 .95rem var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--pink); margin: 0 0 .2rem; }
+.guide section { padding-top: .9rem; margin-top: .9rem; border-top: 1px solid var(--line); }
+.guide section:first-of-type { border-top: 0; margin-top: 0; }
+.guide h3 { font: 700 .98rem var(--body); color: var(--text); margin: 0 0 .35rem; }
+.guide h4 { font: 700 .72rem var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: .7rem 0 .25rem; }
+.guide ul { margin: 0; padding-left: 1.1rem; }
+.guide li { margin: .18rem 0; }
+.guide li::marker { color: var(--pink); }
+.guide p { margin: .25rem 0; }
+.guide q { color: #e6e2ea; font-style: italic; }
+.guide a { color: var(--text); text-decoration-color: var(--pink); text-underline-offset: .2em; word-break: break-word; }
+.guide a:hover { color: var(--pink); }
+.guide dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .3rem 1rem; margin: 0; }
+.guide dt { font-weight: 700; color: var(--text); }
+.guide dd { margin: 0; }
+.guide ol { margin: 0; padding-left: 1.3rem; }
+.guide ol li::marker { color: var(--pink); font-weight: 700; }
+.guide b { color: var(--text); }
+@media (max-width: 640px) { .guide dl { grid-template-columns: 1fr; gap: 0; } .guide dd { margin-bottom: .45rem; } }
+@media (max-width: 640px) { .guide { padding: 1.1rem 1rem .9rem; } }
+
 .empty, .notice { max-width: 640px; color: var(--muted); }
 .notice { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 1.1rem 1.2rem; margin: 1.5rem 0; }
 .notice h2 { font: 700 1.05rem var(--body); color: var(--text); margin: 0 0 .3rem; }
@@ -216,8 +239,76 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .88r
   <section class="person wrap" id="person" aria-live="polite"></section>
 </main>
 
+<!-- Shown under the schedule when an organising-team name is chosen. Edit the text here. -->
+<template id="moderator-guide">
+  <aside class="guide" aria-labelledby="guide-title">
+    <h2 id="guide-title">General moderator instructions</h2>
+    <section>
+      <h3>Keynotes, talks and workshops</h3>
+      <h4>Before the session (15-minute briefing with the speaker)</h4>
+      <ul>
+        <li>Ask how to pronounce their name.</li>
+        <li>Tell them a volunteer timekeeper will hold up signs at 5 min, 2 min and 1 min left.</li>
+        <li>Agree on a cue: at 1 minute left, you’ll stand up and walk to the side of the stage. That’s their signal to wrap up.</li>
+        <li>Refresh the speakers’ bios.</li>
+      </ul>
+      <h4>After the session</h4>
+      <ul>
+        <li>Present the gift to the speakers.</li>
+        <li>Direct people to the next place (break, lunch, poster session etc.). If the session is followed by office hours in a different room, announce it.</li>
+      </ul>
+      <h4>What the room volunteers do</h4>
+      <ul>
+        <li>Show the speaker how to attach and use the microphone and how to change slides.</li>
+        <li>Hold up the timekeeping signs (5 min, 2 min, 1 min).</li>
+        <li>Pass the microphone during the Q&amp;A.</li>
+        <li>Keep the doors closed to avoid mid-session walk-ins.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Office hours</h3>
+      <p>Introduce the session: <q>Thank you for the talk. Now you have a chance to ask your questions. The best way is to go to the Swapcard Q&amp;A section, post your question there, and upvote the questions you find most interesting. I’ll ask the most upvoted questions.</q></p>
+      <p>If people aren’t using Swapcard questions (e.g. the most upvoted question has 4 votes or fewer), open the room for direct questions. If someone has a follow-up to a question you asked from Swapcard, it’s okay to let them ask it directly.</p>
+    </section>
+    <section>
+      <h3>Discussion groups</h3>
+      <p>No moderation is needed. Just check that the hosts have everything they need.</p>
+    </section>
+  </aside>
+</template>
+
+<!-- Shown under the schedule when a volunteer's name is chosen (not the organising team). Edit the text here. -->
+<template id="volunteer-info">
+  <aside class="guide" aria-labelledby="info-title">
+    <h2 id="info-title">General volunteer information</h2>
+    <section>
+      <dl>
+        <dt>Slack channel</dt><dd><a href="https://ea-switzerland.slack.com/archives/C0C6B1W8GP4" target="_blank" rel="noopener">Volunteers channel on Slack</a></dd>
+        <dt>Swapcard</dt><dd><a href="https://app.swapcard.com/event/swiss-ai-safety-days/" target="_blank" rel="noopener">app.swapcard.com/event/swiss-ai-safety-days</a></dd>
+        <dt>Map</dt><dd><a href="https://swissaisafetydays.ch/map">swissaisafetydays.ch/map</a></dd>
+        <dt>Volunteers room</dt><dd><b>HG F 33.2</b>. You can leave your belongings there (not supervised).</dd>
+      </dl>
+    </section>
+    <section>
+      <h3>Make sure you have 3 things installed on your phone</h3>
+      <ol>
+        <li><b>Swapcard.</b> During the conference, Swapcard will be the source of truth for the programme.</li>
+        <li><b>Slack.</b> All the communication is in the Slack channel for volunteers.</li>
+        <li><b>Luma app.</b> Only relevant for the registration desk.</li>
+      </ol>
+    </section>
+    <section>
+      <h3>Emergency contact</h3>
+      <dl>
+        <dt>General questions</dt><dd>Volunteers Lead Marina, <a href="tel:+41778159681">+41 77 815 96 81</a></dd>
+        <dt>Ticket scanning app errors</dt><dd>Andre, <a href="tel:+4915203860678">+49 1520 3860678</a></dd>
+      </dl>
+    </section>
+  </aside>
+</template>
+
 <footer>
-  <div class="wrap">Volunteer coordination contact: <a id="contact" href="mailto:marina@aisafety.ch">marina@aisafety.ch</a> and Slack channel.<span id="updated"></span></div>
+  <div class="wrap">Volunteer coordination contact: <a id="contact" href="mailto:marina@aisafety.ch">marina@aisafety.ch</a> and <a href="https://ea-switzerland.slack.com/archives/C0C6B1W8GP4" target="_blank" rel="noopener">Slack channel</a>.<span id="updated"></span></div>
 </footer>
 
 <script>
@@ -388,7 +479,8 @@ const VolunteerPage = (() => {
 
     const day = DAYS.find((d) => d.key === currentDay);
     const { own, tasks } = tasksFor(name, day);
-    if (!tasks.length) { el.innerHTML = `<p class="empty">${esc(name)} has no tasks on ${esc(day.title)}.</p>`; return; }
+    const guide = $(PEOPLE.org.includes(name) ? "#moderator-guide" : "#volunteer-info").innerHTML;   // org team / volunteers
+    if (!tasks.length) { el.innerHTML = `<p class="empty">${esc(name)} has no tasks on ${esc(day.title)}.</p>` + guide; return; }
 
     const timed = own.filter((r) => r.start);
     const tags = [];
@@ -428,7 +520,7 @@ const VolunteerPage = (() => {
 
     el.innerHTML = `<div class="who"><h2>${esc(name)}</h2><ul class="tags">${tags.join("")}</ul>
       <a class="pill" href="${esc(CONFIG.programmeUrl + "#" + day.key)}">See ${esc(day.title.split(" ")[0])} programme</a></div>
-      <ol class="timeline">${items}</ol>`;
+      <ol class="timeline">${items}</ol>${guide}`;
   }
 
   function fillSelect() {
