@@ -301,12 +301,10 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <text text-anchor="middle" font-size="19" font-weight="700" fill="#ece6f0"><tspan x="711" y="545">Registration</tspan><tspan x="711" y="569">desk</tspan></text>
         </g>
 
-        <!-- 1:1 meeting points A–D, evenly spaced along the curved wall of the registration area -->
+        <!-- 1:1 meeting points A & B, either side of the entrance along the curved wall (C & D are on floor D) -->
         <g class="meet" pointer-events="none" text-anchor="middle" font-size="16" font-weight="700">
-          <circle fill="#f39ad9" cx="614" cy="475" r="14"/><text fill="#1a1020" x="614" y="480">A</text>
-          <circle fill="#f39ad9" cx="673" cy="426" r="14"/><text fill="#1a1020" x="673" y="431">B</text>
-          <circle fill="#f39ad9" cx="749" cy="426" r="14"/><text fill="#1a1020" x="749" y="431">C</text>
-          <circle fill="#f39ad9" cx="808" cy="475" r="14"/><text fill="#1a1020" x="808" y="480">D</text>
+          <circle fill="#f39ad9" cx="632" cy="452" r="14"/><text fill="#1a1020" x="632" y="457">A</text>
+          <circle fill="#f39ad9" cx="790" cy="452" r="14"/><text fill="#1a1020" x="790" y="457">B</text>
         </g>
 
         <g class="room" data-room="catering" tabindex="0" role="button" aria-label="Side foyers (Foyer Nord and Foyer Süd): catering. Show times">
@@ -343,7 +341,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <rect x="962" y="904" width="15" height="40" rx="3"/>
         </g>
       </svg>
-      <svg class="map" data-floor="d" viewBox="80 225 1340 960" role="img" aria-label="Map of ETH Zurich main building, floor D: additional seating for lunch and additional meeting spots in foyers D 30.0065 and D 30.0075, either side of the lecture halls" hidden>
+      <svg class="map" data-floor="d" viewBox="80 225 1340 960" role="img" aria-label="Map of ETH Zurich main building, floor D: additional seating for lunch and 1:1 meeting spots in foyers D 30.0065 (meeting point C) and D 30.0075 (meeting point D), either side of the lecture halls" hidden>
         <!-- Building outline (simplified, not to scale) -->
         <g fill="#1f1c24">
           <rect x="110" y="235" width="190" height="220" rx="6"/>
@@ -356,7 +354,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
         <text x="716" y="296" text-anchor="middle" font-size="19" fill="#a8a2ae" letter-spacing="1">Main entrance is one floor up</text>
         <rect x="572" y="543" width="279" height="174" fill="#0e0c11"/>
 
-        <!-- Foyers D 30.0065 and D 30.0075: additional lunch seating and meeting spots -->
+        <!-- Foyers D 30.0065 and D 30.0075: additional lunch seating and 1:1 meeting spots C & D -->
         <g fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="8 6">
           <rect x="300" y="690" width="273" height="350" rx="6"/>
           <rect x="842" y="690" width="278" height="350" rx="6"/>
@@ -375,9 +373,13 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <text x="436" y="717" font-size="16" class="code">D 30.0065</text>
           <text x="981" y="717" font-size="16" class="code">D 30.0075</text>
           <text transform="translate(482 868) rotate(-90)" font-size="16" font-weight="700">Additional lunch seating</text>
-          <text transform="translate(504 868) rotate(-90)" font-size="16" font-weight="700">&amp; meeting spots</text>
+          <text transform="translate(504 868) rotate(-90)" font-size="16" font-weight="700">&amp; 1:1 meeting spots</text>
           <text transform="translate(929 868) rotate(-90)" font-size="16" font-weight="700">Additional lunch seating</text>
-          <text transform="translate(951 868) rotate(-90)" font-size="16" font-weight="700">&amp; meeting spots</text>
+          <text transform="translate(951 868) rotate(-90)" font-size="16" font-weight="700">&amp; 1:1 meeting spots</text>
+        </g>
+        <g class="meet" pointer-events="none" text-anchor="middle" font-size="16" font-weight="700">
+          <circle fill="#f39ad9" cx="540" cy="745" r="14"/><text fill="#1a1020" x="540" y="750">C</text>
+          <circle fill="#f39ad9" cx="882" cy="745" r="14"/><text fill="#1a1020" x="882" y="750">D</text>
         </g>
 
         <!-- Stairs between floors, either side of the central hall -->
@@ -490,7 +492,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
       <li><button type="button" data-room="groups"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#6b48e8"/></svg><span><b>Workshops B</b><small>HG E 1.2</small></span></button></li>
       <li><button type="button" data-room="office"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 0 H21 A21 21 0 0 1 21 42 H0 Z" fill="#fdd3f0"/></svg><span><b>Forum</b><small>HG E 5</small></span></button></li>
       <li><button type="button" data-room="reg"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M1 41 V21 A20 20 0 0 1 41 21 V41 Z" fill="#211e27" stroke="#f39ad9" stroke-opacity=".55" stroke-width="2"/></svg><span><b>Registration desk</b><small>At the Polyterrasse entrance</small></span></button></li>
-      <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="15" fill="#f39ad9"/><text x="21" y="27" text-anchor="middle" font-size="17" font-weight="700" fill="#1a1020">A</text></svg><span><b>1:1 meeting points A–D</b></span></div></li>
+      <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="15" fill="#f39ad9"/><text x="21" y="27" text-anchor="middle" font-size="17" font-weight="700" fill="#1a1020">A</text></svg><span><b>1:1 meeting points A &amp; B</b><small>Meeting points C &amp; D are one floor down</small></span></div></li>
       <li><button type="button" data-room="foyer"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>Org fair / Poster Session</b><small>HG E 4 foyer</small></span></button></li>
       <li><button type="button" data-room="catering"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect width="42" height="42" rx="4" fill="url(#hatch-sw)"/><defs><pattern id="hatch-sw" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="10" height="10" fill="#221d2b"/><rect width="4" height="10" fill="#3a2f4d"/></pattern></defs></svg><span><b>Side foyers</b><small>Catering</small></span></button></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="7" width="38" height="28" rx="5" fill="#0e0c11" stroke="#4fd8d8" stroke-width="2"/></svg><span><b>Cloakroom &amp; restroom</b><small>HG E 41</small></span></div></li>
@@ -500,7 +502,8 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
     </ul>
     <p class="legend-floor" data-floor="d" hidden>FLOOR D</p>
     <ul class="legend" data-floor="d" hidden>
-      <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>Additional lunch seating &amp; meeting spots</b><small>Foyers HG D 30.0065 &amp; D 30.0075</small></span></div></li>
+      <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>Additional lunch seating &amp; 1:1 meeting spots</b><small>Foyers HG D 30.0065 &amp; D 30.0075</small></span></div></li>
+      <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="15" fill="#f39ad9"/><text x="21" y="27" text-anchor="middle" font-size="17" font-weight="700" fill="#1a1020">C</text></svg><span><b>1:1 meeting points C &amp; D</b><small>Meeting points A &amp; B are at the registration desk, one floor up</small></span></div></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="8" y="4" width="26" height="34" rx="3" fill="#1f1c24" stroke="#a8a2ae" stroke-width="2"/><path d="M8 13 H34 M8 21 H34 M8 29 H34" stroke="#a8a2ae" stroke-width="2"/></svg><span><b>Stairs</b><small>Up to floor E and the main entrance</small></span></div></li>
     </ul>
     <p class="legend-floor" data-floor="f" hidden>FLOOR F</p>
