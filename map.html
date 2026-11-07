@@ -247,10 +247,9 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <rect x="1110" y="583" width="290" height="180" rx="90"/>
           <rect x="655" y="1100" width="163" height="70" rx="4"/>
         </g>
-        <!-- Courtyard under the Polyterrasse -->
+        <!-- Courtyard in front of the main entrance -->
         <rect x="370" y="240" width="688" height="303" fill="#121015"/>
         <path d="M378 240 A340 230 0 0 0 1056 240" fill="none" stroke="#6a6470" stroke-width="1.5" stroke-dasharray="4 6"/>
-        <text x="716" y="296" text-anchor="middle" font-size="19" fill="#a8a2ae" letter-spacing="1">Polyterrasse</text>
         <text x="711" y="349" text-anchor="middle" font-size="17" font-weight="700" fill="#f39ad9">Entrance ↓</text>
 
         <!-- Catering areas and the corridor between them -->
@@ -296,7 +295,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <text x="383" y="931" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1020">Workshops A</text>
         </g>
 
-        <g class="room" data-room="reg" tabindex="0" role="button" aria-label="Registration desk at the Polyterrasse entrance. Show opening times">
+        <g class="room" data-room="reg" tabindex="0" role="button" aria-label="Registration desk at the main entrance. Show opening times">
           <path class="shape" d="M572 600 V531 A139 139 0 0 1 850 531 V600 Z" fill="url(#regdots)" stroke="#f39ad9" stroke-opacity=".55" stroke-width="2"/>
           <text text-anchor="middle" font-size="19" font-weight="700" fill="#ece6f0"><tspan x="711" y="545">Registration</tspan><tspan x="711" y="569">desk</tspan></text>
         </g>
@@ -398,7 +397,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
           <rect x="200" y="270" width="1025" height="848"/>
           <rect x="655" y="1100" width="163" height="70" rx="4"/>
         </g>
-        <!-- Above the Polyterrasse entrance -->
+        <!-- Above the main entrance -->
         <rect x="370" y="240" width="688" height="303" fill="#121015"/>
         <path d="M572 543 V531 A139 139 0 0 1 850 531 V543 Z" fill="#2c2a31"/>
         <text x="716" y="296" text-anchor="middle" font-size="19" fill="#a8a2ae" letter-spacing="1">Main entrance is one floor below</text>
@@ -491,7 +490,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
       <li><button type="button" data-room="workshop"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#b48cf2"/></svg><span><b>Workshops A</b><small>HG E 1.1</small></span></button></li>
       <li><button type="button" data-room="groups"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M42 0 H21 A21 21 0 0 0 21 42 H42 Z" fill="#6b48e8"/></svg><span><b>Workshops B</b><small>HG E 1.2</small></span></button></li>
       <li><button type="button" data-room="office"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M0 0 H21 A21 21 0 0 1 21 42 H0 Z" fill="#fdd3f0"/></svg><span><b>Forum</b><small>HG E 5</small></span></button></li>
-      <li><button type="button" data-room="reg"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M1 41 V21 A20 20 0 0 1 41 21 V41 Z" fill="#211e27" stroke="#f39ad9" stroke-opacity=".55" stroke-width="2"/></svg><span><b>Registration desk</b><small>At the Polyterrasse entrance</small></span></button></li>
+      <li><button type="button" data-room="reg"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><path d="M1 41 V21 A20 20 0 0 1 41 21 V41 Z" fill="#211e27" stroke="#f39ad9" stroke-opacity=".55" stroke-width="2"/></svg><span><b>Registration desk</b><small>At the main entrance</small></span></button></li>
       <li><div class="static"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="15" fill="#f39ad9"/><text x="21" y="27" text-anchor="middle" font-size="17" font-weight="700" fill="#1a1020">A</text></svg><span><b>1:1 meeting points A &amp; B</b><small>Meeting points C &amp; D are one floor down</small></span></div></li>
       <li><button type="button" data-room="foyer"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="5" fill="#2a1d2a" stroke="#f39ad9" stroke-width="2" stroke-dasharray="6 4"/></svg><span><b>Org fair / Poster Session</b><small>HG E 4 foyer</small></span></button></li>
       <li><button type="button" data-room="catering"><svg class="sw" viewBox="0 0 42 42" aria-hidden="true"><rect width="42" height="42" rx="4" fill="url(#hatch-sw)"/><defs><pattern id="hatch-sw" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="10" height="10" fill="#221d2b"/><rect width="4" height="10" fill="#3a2f4d"/></pattern></defs></svg><span><b>Side foyers</b><small>Catering</small></span></button></li>
@@ -550,7 +549,7 @@ dialog::backdrop { background: rgba(5, 4, 8, 0.6); backdrop-filter: blur(3px); }
     office:   { code: 'HG E 5',   title: 'Forum',             c: '#fdd3f0', match: s => s.room === 'HG E 5' },
     foyer:    { code: 'HG E 4 · Foyer', title: 'Org fair and posters', c: '#f39ad9',
                 match: s => s.room === FOYER },
-    reg:      { code: 'Polyterrasse entrance', title: 'Registration desk', c: '#b9b2c2',
+    reg:      { code: 'Main entrance', title: 'Registration desk', c: '#b9b2c2',
                 sub: 'Pick up your badge here when you arrive.',
                 match: s => /registration|doors open/i.test(s.title) },
     catering: { code: 'Next to E 1.1/1.2 and E 7', title: 'Side foyers', c: '#8f7bb8',
